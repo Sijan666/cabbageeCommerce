@@ -79,7 +79,7 @@ const Footer = () => {
                 <LuMapPin className="text-white"/>
                 <p className="pt-6 pb-6.25 text-base text-white font-nuni w-[312px]">254 Lillian Blvd, Holbrook</p>
               </Flex>
-              <Flex className={'bg-white w-[320px] justify-between items-center p-1 rounded-sm'}>
+              <Flex className={'bg-white w-[312px] justify-between items-center p-1 rounded-sm'}>
                 <input type="email" placeholder="Enter email address" className="text-[#42518B] bg-white px-4.5 py-3.5 w-full outline-none "/>
                 <Button btnText={'Subscribe'} className={'py-3!'}/>
               </Flex>
