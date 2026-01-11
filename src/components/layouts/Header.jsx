@@ -38,7 +38,7 @@ const Header = () => {
       </div>
       <div className="">
         <Container className="py-7">
-          <Flex className={"justify-between"}>
+          <Flex className={"justify-between items-center"}>
             <Flex>
               <Images imgSrc={Logo} />
               <h3 className="pl-1 text-3xl text-[#232323] font-bold font-int">
