@@ -1,0 +1,15 @@
+.slick-dots {
+  position: absolute;
+  top: 650px;
+}
+
+.slick-active {
+  color: #fff;
+}
+
+.slick-dots li {
+  border-radius: 50%;
+  background: #80b500;
+  color: #fff;
+  font-weight: 700;
+}
