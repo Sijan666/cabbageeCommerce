@@ -1,3 +1,5 @@
+import { FaArrowRightLong } from "react-icons/fa6";
+
 const Button = ({ btnText, className }) => {
   return (
     <button
