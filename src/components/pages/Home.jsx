@@ -1,3 +1,4 @@
+import Ads from "../layouts/Ads";
 import Banner from "../layouts/Banner";
 import Contact from "../layouts/Contact";
 import Deals from "../layouts/Deals";
@@ -11,6 +12,7 @@ const Home = () => {
     return (
         <>
         <Banner/>
+        <Ads/>
         <Featuredproduct/>
         <Deals/>
         <Faciliti />
