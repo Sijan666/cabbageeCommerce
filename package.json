@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "lucide-react": "^0.555.0",
+    "mixitup": "^3.3.2",
     "react": "^19.2.0",
     "react-countdown": "^2.3.6",
     "react-dom": "^19.2.0",
