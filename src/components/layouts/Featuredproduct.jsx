@@ -7,7 +7,7 @@ import stars from '../../assets/stars.png'
 const Featuredproduct = () => {
     return (
         <>
-        <div className="pb-15 pt-50">
+        <div className="pb-15 pt-60">
             <Container>
                 <h3 className='text-[48px] font-int text-[#232323] font-bold text-center'>Featured Products</h3>
                 <p className='text-base font-nuni text-[#546375] pt-5 text-center'>A highly efficient slip-ring scanner for today's diagnostic requirements.</p>
