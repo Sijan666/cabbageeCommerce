@@ -15,15 +15,15 @@ const Ads = () => {
             <Container className={'relative'}>
                 <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-full">
                     <Flex className={'justify-between gap-x-7'}>
-                        <Link to={'/'}>
+                        {/* <Link to={'/'}> */}
                             <Images imgSrc={adss1} className={'w-full'}/>
-                        </Link>
-                        <Link to={'/'}>
+                        {/* </Link> */}
+                        {/* <Link to={'/'}> */}
                             <Images imgSrc={adss2} className={'w-full'}/>
-                        </Link>
-                        <Link to={'/'}>
+                        {/* </Link> */}
+                        {/* <Link to={'/'}> */}
                             <Images imgSrc={adss3} className={'w-full'}/>
-                        </Link>
+                        {/* </Link> */}
                     </Flex>
                 </div>
             </Container>
