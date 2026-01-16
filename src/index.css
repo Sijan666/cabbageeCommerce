@@ -1,15 +1,27 @@
-.slick-dots {
-  position: absolute;
-  top: 650px;
-}
 
-.slick-active {
-  color: #fff;
+
+.slick-dots {
+  top: 550px;
+  position: absolute;
 }
 
 .slick-dots li {
+  background-color: #E2E6B6;
   border-radius: 50%;
-  background: #80b500;
-  color: #fff;
-  font-weight: 700;
+  height: 15px !important;
+  width: 15px !important;
+  border: 1px solid #80B500;
+}
+
+
+.slick-dots li.slick-active {
+  transform: scale(1);
+  border: none;
+  margin-bottom: 10px;
+  background-color: #80B500;
+  border: 1px solid #80B500;
+}
+
+.slick-dots li button::before {
+  content: "" !important;
 }
