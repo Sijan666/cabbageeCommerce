@@ -4,8 +4,21 @@ import Flex from "../Flex";
 import Images from "../Images";
 import Rev from "/src/assets/review.png";
 import logo from "/src/assets/log.png";
+import { useState } from "react";
 
 const Review = () => {
+
+  const [count, setCount] = useState(1);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+  
+  const handleDecrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
   return (
     <div className="bg-[#F7F5EB] py-6">
       <Container>
@@ -48,13 +61,13 @@ const Review = () => {
             <Flex>
               <Button btnText={"ADD TO CART"} />
               <div className="border ml-3.5 mr-1 border-[#D8D4D4] bg-white px-3 py-2.5 text-[#232323] font-nuni text-[18px] font-bold ">
-                1
+                {count}
               </div>
               <div className="">
-                <div className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold mb-1">
+                <div onClick={handleIncrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold mb-1">
                   +
                 </div>
-                <div className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold ">
+                <div onClick={handleDecrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold ">
                   -
                 </div>
               </div>
