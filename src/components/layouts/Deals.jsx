@@ -6,7 +6,7 @@ import Deal from "/src/assets/deal.png";
 
 const Deals = () => {
   return (
-    <div className="bg-[#F7F5EB] my-50">
+    <div className="bg-[#F7F5EB] my-30">
       <Container>
         <Flex className={"pt-[60px] pb-[30px] gap-x-[105px]"}>
           <Images imgSrc={Deal} />
