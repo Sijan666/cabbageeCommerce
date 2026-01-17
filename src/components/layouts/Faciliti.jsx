@@ -11,7 +11,7 @@ import Fac6 from "/src/assets/fac6.png";
 
 const Faciliti = () => {
   return (
-    <div className="my-50">
+    <div className="my-30">
       <Container>
         <div className="text-center mb-1">
           <h3 className="text-5xl font-bold text-[#232323] font-int">
