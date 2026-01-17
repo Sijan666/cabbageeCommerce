@@ -30,7 +30,7 @@ const Header = () => {
               <p className="text-white font-nuni text-base pr-8  border-e-2 border-white/60 mr-4">
                 facebook - behance - interest
               </p>
-              <Images imgSrc={uk} />
+              <Images imgSrc={uk}/>
               <p className="text-white font-nuni text-sm pl-1">EN </p>
             </Flex>
           </Flex>

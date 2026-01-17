@@ -7,6 +7,8 @@ import Featuredproduct from "../layouts/Featuredproduct"
 import Member from "../layouts/Member";
 import Review from "../layouts/Review";
 import Ourproduct from "../layouts/Ourproducts";
+import Topcategories from "../layouts/Topcategories";
+import Topslider from "../layouts/Topslider";
 
 
 const Home = () => {
@@ -17,6 +19,8 @@ const Home = () => {
         <Featuredproduct/>
         <Deals/>
         <Ourproduct/>
+        <Topcategories/>
+        <Topslider/>
         <Faciliti />
         <Review />
         <Member />
