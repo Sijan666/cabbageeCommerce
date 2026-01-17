@@ -28,7 +28,7 @@ const Member = () => {
                 <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
                   Consultant
                 </p>
-                <Flex className={"gap-x-2 justify-center"}>
+                <Flex className={"gap-x-4 justify-center"}>
                   <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
                     <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
                   </div>
@@ -56,7 +56,7 @@ const Member = () => {
                 <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
                   Consultant
                 </p>
-                <Flex className={"gap-x-2 justify-center"}>
+                <Flex className={"gap-x-4 justify-center"}>
                   <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
                     <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
                   </div>
@@ -81,7 +81,7 @@ const Member = () => {
                 <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
                   Consultant
                 </p>
-                <Flex className={"gap-x-2 justify-center"}>
+                <Flex className={"gap-x-4 justify-center"}>
                   <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
                     <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
                   </div>
