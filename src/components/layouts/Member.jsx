@@ -8,7 +8,7 @@ import Images from "../Images";
 
 const Member = () => {
   return (
-    <div className="py-40">
+    <div className="py-35">
       <Container>
         <div className="text-center mb-1">
           <h3 className="text-5xl font-bold text-[#232323] font-int">
