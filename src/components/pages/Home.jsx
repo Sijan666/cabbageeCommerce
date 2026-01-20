@@ -8,6 +8,7 @@ import Review from "../layouts/Review";
 import Member from "../layouts/Member";
 import Contact from "../layouts/Contact";
 import Blog from "../layouts/Blog";
+import CompLogo from "../CompLogo";
 
 const Home = () => {
   return (
@@ -15,12 +16,13 @@ const Home = () => {
       <Banner />
       <About />
       <Service />
-      <Blog />
       <Deals />
       <Faciliti />
       <Review />
       <Member />
       <Contact />
+      <Blog />
+      <CompLogo />
     </>
   );
 };
