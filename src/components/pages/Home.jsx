@@ -10,6 +10,7 @@ import Ourproduct from "../layouts/Ourproducts";
 import Topcategories from "../layouts/Topcategories";
 import Topslider from "../layouts/Topslider";
 import Faq from "../layouts/Faq";
+import Counter from "../layouts/Counter";
 
 
 const Home = () => {
@@ -27,7 +28,7 @@ const Home = () => {
         <Member />
         <Contact />
         <Faq/>
-        
+        <Counter/>
         </>
     )
 }
