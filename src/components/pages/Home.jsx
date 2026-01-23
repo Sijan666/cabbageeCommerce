@@ -9,6 +9,7 @@ import Review from "../layouts/Review";
 import Ourproduct from "../layouts/Ourproducts";
 import Topcategories from "../layouts/Topcategories";
 import Topslider from "../layouts/Topslider";
+import Faq from "../layouts/Faq";
 
 
 const Home = () => {
@@ -25,6 +26,8 @@ const Home = () => {
         <Review />
         <Member />
         <Contact />
+        <Faq/>
+        
         </>
     )
 }
