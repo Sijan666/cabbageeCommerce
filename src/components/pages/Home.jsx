@@ -11,6 +11,8 @@ import Topcategories from "../layouts/Topcategories";
 import Topslider from "../layouts/Topslider";
 import Faq from "../layouts/Faq";
 import Counter from "../layouts/Counter";
+import Blog from "../layouts/Blog";
+import CompLogo from "../layouts/CompLogo";
 
 
 const Home = () => {
@@ -29,6 +31,8 @@ const Home = () => {
         <Contact />
         <Faq/>
         <Counter/>
+        <Blog/>
+        <CompLogo/>
         </>
     )
 }
