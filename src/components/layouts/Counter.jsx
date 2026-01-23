@@ -19,25 +19,25 @@ const Counter = () => {
                 <Flex className={'justify-between'}>
                     <div className="mx-auto text-center">
                         <Images imgSrc={c1} className={'mx-auto'}/>
-                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={560} /></h4>
+                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={560} animateOnVisible={{ triggerOnce: false, rootMargin: '0px 0px -100px 0px' }} /></h4>
                         <p className='text-[#666E77] text-[19px] font-nuni'>Good Reviews</p>
                     </div>
                     <Images imgSrc={path}/>
                     <div className="mx-auto text-center">
                         <Images imgSrc={c2} className={'mx-auto'}/>
-                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={197} /></h4>
+                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={197} animateOnVisible={{ triggerOnce: false, rootMargin: '0px 0px -100px 0px' }}/></h4>
                         <p className='text-[#666E77] text-[19px] font-nuni'>Organic Branch</p>
                     </div>
                     <Images imgSrc={path}/>
                     <div className="mx-auto text-center">
                         <Images imgSrc={c3} className={'mx-auto'}/>
-                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={268} /></h4>
+                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={268} animateOnVisible={{ triggerOnce: false, rootMargin: '0px 0px -100px 0px' }}/></h4>
                         <p className='text-[#666E77] text-[19px] font-nuni'>Cultivator Land</p>
                     </div>
                     <Images imgSrc={path}/>
                     <div className="mx-auto text-center">
                         <Images imgSrc={c4} className={'mx-auto'}/>
-                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={340} /></h4>
+                        <h4 className='text-[42px] font-bold font-int text-[#223645] pt-5 pb-2.5'><SlotCounter value={340} animateOnVisible={{ triggerOnce: false, rootMargin: '0px 0px -100px 0px' }}/></h4>
                         <p className='text-[#666E77] text-[19px] font-nuni'>Total Consumer</p>
                     </div>
                 </Flex>
