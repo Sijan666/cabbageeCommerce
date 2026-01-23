@@ -8,7 +8,7 @@ import Review from "../layouts/Review";
 import Member from "../layouts/Member";
 import Contact from "../layouts/Contact";
 import Blog from "../layouts/Blog";
-import CompLogo from "../CompLogo";
+import CompLogo from "../layouts/CompLogo";
 
 const Home = () => {
   return (
