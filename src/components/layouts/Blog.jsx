@@ -7,7 +7,7 @@ import { FaChevronCircleRight } from "react-icons/fa";
 const Blog = () => {
   return (
     <div className="pt-26 pb-48">
-      <Container>
+      <Container className={'px-3 lg:px-0'}>
         <div className="text-center pb-14">
           <h3 className="text-5xl font-bold text-[#232323] font-int">
             Leatest Blog
