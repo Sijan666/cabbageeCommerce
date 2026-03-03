@@ -8,9 +8,9 @@ import For from "/src/assets/vegFor.png";
 
 const CompLogo = () => {
   return (
-    <div className="relative">
-      <Container className="bg-white px-[110px] py-12 shadow-blog w-full absolute -bottom-18 left-1/2 -translate-x-1/2">
-        <Flex className={"justify-between"}>
+    <div className="lg:relative">
+      <Container className="bg-white lg:px-[110px] py-12 shadow-blog w-full lg:absolute lg:-bottom-18 lg:left-1/2 lg:-translate-x-1/2">
+        <div className={"flex flex-col lg:flex-row items-center gap-y-10 lg:justify-between px-3 lg:px-0"}>
           <Flex className={"gap-x-3.5"}>
             <Images imgSrc={One} />
             <div className="">
@@ -55,7 +55,7 @@ const CompLogo = () => {
               </p>
             </div>
           </Flex>
-        </Flex>
+        </div>
       </Container>
     </div>
   );
