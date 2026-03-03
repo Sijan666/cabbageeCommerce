@@ -18,14 +18,14 @@ const Footer = () => {
     <>
     <div className="bg-[url('/src/assets/footer.png')] py-[172px] bg-no-repeat bg-center bg-cover">
       <div className="">
-        <Container>
-          <Flex className={'justify-between items-start'}>
+        <Container className={'px-3 lg:px-0'}>
+          <div className={'flex flex-col gap-y-10 items-center lg:flex-row justify-between lg:items-start'}>
             {/* about us start */}
-            <div className="">
+            <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int">About Us.</h4>
-              <p className="py-7.5 font-nuni text-base text-white w-[309px]">orporate clients and leisure travelers has been relying on Groundlink for dependable safe, and professional chauffeured car service in major cities across World. Indeed it has been more than one decade and five years that Groundlink</p>
-              <div className="socialIcons flex items-center gap-x-2.5">
-                <div className="flex gap-4">
+              <p className="py-7.5 font-nuni text-base text-white lg:w-[309px]">orporate clients and leisure travelers has been relying on Groundlink for dependable safe, and professional chauffeured car service in major cities across World. Indeed it has been more than one decade and five years that Groundlink</p>
+              <div className="socialIcons">
+                <div className="flex gap-4 justify-center lg:justify-normal">
                   {/* Facebook */}
                   <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
                     <FaFacebook className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
@@ -47,7 +47,7 @@ const Footer = () => {
             </div>
             {/* about us end */}
             {/* useful link start */}
-            <div className="">
+            <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int">Useful Links</h4>
               <ul>
                 <li className="text-base text-white font-nuni pb-4.5 pt-7.5">About</li>
@@ -60,7 +60,7 @@ const Footer = () => {
             </div>
             {/* useful link end */}
             {/* help start */}
-            <div className="">
+            <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int">Help?</h4>
               <ul>
                 <li className="text-base text-white font-nuni pb-4.5 pt-7.5">FAQ</li>
@@ -73,29 +73,29 @@ const Footer = () => {
             </div>
             {/* help end */}
             {/* logo start */}
-            <div className="w-[312px]">
-              <Images imgSrc={footerlogo}/>
-              <p className="pt-6 pb-6.25 text-base text-white font-nuni w-[312px]">We are a team of designers and developers create high quality Magento, Prestashop, </p>
-              <Flex className={'gap-x-4 items-center pb-7'}>
+            <div className="lg:w-[312px] ">
+              <Images imgSrc={footerlogo} className={'mx-auto lg:mx-0'}/>
+              <p className="pt-6 pb-6.25 text-base text-white font-nuni text-center lg:text-left lg:w-[312px]">We are a team of designers and developers create high quality Magento, Prestashop, </p>
+              <Flex className={'gap-x-4 items-center pb-7 justify-center lg:justify-normal'}>
                 <LuMapPin className="text-white"/>
-                <p className="pt-6 pb-6.25 text-base text-white font-nuni w-[312px]">254 Lillian Blvd, Holbrook</p>
+                <p className="pt-6 pb-6.25 text-base text-white font-nuni lg:w-[312px]">254 Lillian Blvd, Holbrook</p>
               </Flex>
-              <Flex className={'bg-white w-[312px] justify-between items-center p-1 rounded-sm'}>
+              <Flex className={'bg-white w-[312px] justify-between items-center p-1 rounded-sm '}>
                 <input type="email" placeholder="Enter email address" className="text-[#42518B] bg-white px-4.5 py-3.5 w-full outline-none "/>
                 <Button btnText={'Subscribe'} className={'py-3!'}/>
               </Flex>
             </div>
             {/* logo end */}
-          </Flex>
+          </div>
         </Container>
       </div>
     </div>
     <div className="bg-[#2b2b49c2] py-5.5">
-      <Container>
-        <Flex className={'justify-between'}>
+      <Container className={'px-3 lg:px-0'}>
+        <div className={'flex flex-col lg:flex-row lg:justify-between justify-center gap-y-5'}>
           <p className="text-base font-nuni text-white">© TunaThemes 2024 All rights reserved.</p>
           <Images imgSrc={f}/>
-        </Flex>
+        </div>
       </Container>
     </div>
     </>
