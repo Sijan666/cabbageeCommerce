@@ -9,6 +9,7 @@ import footerlogo from '../../assets/footerlogo.png'
 import { LuMapPin } from "react-icons/lu"
 import Button from "../Button"
 import f from '../../assets/f.png'
+import { SiVimeo } from "react-icons/si"
 
 
 
@@ -35,7 +36,7 @@ const Footer = () => {
                   </div>
                   {/* Vercel */}
                   <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
-                    <CgVercel className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
+                    <SiVimeo className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
                   </div>
                   {/* Pinterest */}
                   <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
