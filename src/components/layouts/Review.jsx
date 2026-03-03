@@ -65,10 +65,10 @@ const Review = () => {
                 {count}
               </div>
               <div className="">
-                <div onClick={handleIncrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold mb-1">
+                <div onClick={handleIncrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold mb-1 cursor-pointer">
                   +
                 </div>
-                <div onClick={handleDecrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold ">
+                <div onClick={handleDecrement} className="border border-[#D8D4D4] bg-white px-3 py-.5 text-black font-nuni text-sm font-bold cursor-pointer">
                   -
                 </div>
               </div>
