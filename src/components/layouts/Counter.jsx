@@ -14,7 +14,7 @@ import SlotCounter from 'react-slot-counter';
 const Counter = () => {
     return (
         <>
-        <div className="bg-[url('/src/assets/counter.png')] bg-no-repeat bg-center bg-cover py-[72px]">
+        <div className="lg:bg-[url('/src/assets/counter.png')] bg-no-repeat bg-center bg-cover py-[72px]">
             <Container className={'px-3 lg:px-0'}>
                 <div className={'flex flex-col lg:flex-row gap-y-10 items-center lg:justify-between'}>
                     <div className="mx-auto text-center">
