@@ -17,13 +17,13 @@ const Faq = () => {
     return (
         <>
         <div className="pt-25">
-            <Container>
+            <Container className={'px-3 lg:px-0'}>
                 <h3 className='text-[48px] font-int text-[#232323] font-bold text-center'>Some Quesions</h3>
                 <p className='text-base font-nuni text-[#546375] pt-5 text-center'>A highly efficient slip-ring scanner for today's diagnostic requirements.</p>
                 <div className="py-15">
-                    <Flex className={'justify-between gap-x-10'}>
-                        <div className="w-[60%] shadow-customMade rounded-md">
-                            <div className="p-15 h-150">
+                    <div className={'flex flex-col lg:flex-row items-center lg:justify-between gap-x-10'}>
+                        <div className="lg:w-[60%] shadow-customMade rounded-md">
+                            <div className="lg:p-15 lg:h-150">
                                 <Accordion type="single" collapsible defaultValue="inform" className="max-w-lg">
                                     <AccordionItem value="inform" className={'border-0 mb-10'}>
                                         <AccordionTrigger className={'hover:no-underline border border-[#5C727D] px-7.5 py-5 rounded-md hover:bg-[#80B500] hover:text-white duration-300 hover:border-[#80B500] text-[17px] font-int text-[#666E77]'}>
@@ -65,7 +65,7 @@ const Faq = () => {
                         <div className="w-[40%]">
                             <Images imgSrc={jhuri}/>
                         </div>
-                    </Flex>
+                    </div>
                 </div>
             </Container>
         </div>
