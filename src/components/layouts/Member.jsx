@@ -9,16 +9,16 @@ import Images from "../Images";
 const Member = () => {
   return (
     <div className="py-35">
-      <Container>
+      <Container className={'px-3 lg:px-0'}>
         <div className="text-center mb-1">
-          <h3 className="text-5xl font-bold text-[#232323] font-int">
+          <h3 className="lg:text-5xl text-[30px] font-bold text-[#232323] font-int">
             Team Member
           </h3>
           <p className="text-base text-[#546375] font-nuni mt-5">
             A highly efficient slip-ring scanner for today's diagnostic
             requirements.
           </p>
-          <Flex className={"justify-between items-baseline mt-[55px]"}>
+          <div className={"flex flex-col lg:flex-row lg:justify-between items-baseline gap-y-10 mt-[55px]"}>
             <div className="">
               <div className="w-[300px] h-[300px] rounded-full bg-[#C8CACF]"></div>
               <div className="mt-5 text-center">
@@ -97,7 +97,7 @@ const Member = () => {
                 </Flex>
               </div>
             </div>
-          </Flex>
+          </div>
         </div>
       </Container>
     </div>
