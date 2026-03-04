@@ -6,7 +6,7 @@ import con from "/src/assets/contact.png";
 
 const Contact = () => {
   return (
-    <div className="bg-[url(/src/assets/video.png)] bg-no-repeat bg-cover py-20 lg:py-17.5">
+    <div className="bg-[url(/src/assets/video.png)] bg-no-repeat bg-center bg-cover py-20 lg:py-17.5">
       <Container className={'px-3 lg:px-0'}>
         <div className="flex flex-col lg:flex-row items-center lg:justify-between">
           <div className="">
