@@ -45,6 +45,7 @@ const Member = () => {
                 </Flex>
               </div>
             </div>
+            {/* second member */}
             <div className="">
               <div className="rounded-full bg-[#C8CACF]">
                 <Images imgSrc={hMem} />
