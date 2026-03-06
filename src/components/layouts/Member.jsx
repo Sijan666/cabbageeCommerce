@@ -73,6 +73,7 @@ const Member = () => {
                 </Flex>
               </div>
             </div>
+            {/* third member */}
             <div className="">
               <div className="w-[300px] h-[300px] rounded-full bg-[#C8CACF]"></div>
               <div className="mt-5 text-center">
