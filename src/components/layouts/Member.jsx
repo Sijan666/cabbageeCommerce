@@ -19,6 +19,7 @@ const Member = () => {
             requirements.
           </p>
           <div className={"flex flex-col lg:flex-row lg:justify-between items-baseline gap-y-10 mt-[55px]"}>
+            {/* first member */}
             <div className="">
               <div className="w-[300px] h-[300px] rounded-full bg-[#C8CACF]"></div>
               <div className="mt-5 text-center">
@@ -48,7 +49,6 @@ const Member = () => {
               <div className="rounded-full bg-[#C8CACF]">
                 <Images imgSrc={hMem} />
               </div>
-
               <div className="mt-5 text-center">
                 <h5 className="text-[28px] text-[#232323] font-int font-bold">
                   John Abraham
