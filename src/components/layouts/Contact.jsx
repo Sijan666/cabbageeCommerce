@@ -7,7 +7,7 @@ import con from "/src/assets/contact.png";
 const Contact = () => {
   return (
     <div className="bg-[url(/src/assets/video.png)] bg-no-repeat bg-center bg-cover py-20 lg:py-17.5">
-      <Container className={'px-3 lg:px-0'}>
+      <Container className={'px-4 lg:px-0'}>
         <div className="flex flex-col lg:flex-row items-center lg:justify-between">
           <div className="">
             <p className="text-[#80B500] text-base font-bold font-nuni text-center lg:text-left">
@@ -20,7 +20,9 @@ const Contact = () => {
               Cur tantas regiones barbarorum obiit, tot maria transmist summo
               bono fruitur id est voluptate barbarorum
             </p>
-            <Button btnText={"Contact Us"} />
+            <div className="btn w-fit mx-auto lg:mx-0">            
+              <Button btnText={"Contact Us"}/>
+            </div>
           </div>
           <Images imgSrc={con} className={'hidden md:block'}/>
         </div>
