@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Flex from '../Flex';
 import Images from '../Images';
 import Container from '../Container';
 import tc1 from '../../assets/tc1.png';
@@ -7,12 +8,11 @@ import tc3 from '../../assets/tc3.png';
 import tc4 from '../../assets/tc4.png';
 import tc5 from '../../assets/tc5.png';
 
-// Swiper 
+// Swiper Imports
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-
 
 const Topslider = () => {
     const [selected, setSelected] = useState('Herbal , fruits , Juices , ,Package , Fast');
@@ -28,11 +28,7 @@ const Topslider = () => {
                                 modules={[Navigation]}
                                 loop={true}
                                 speed={500}
-                                slidesPerView={5}
-                                navigation={{
-                                    nextEl: '.custom-next',
-                                    prevEl: '.custom-prev',
-                                }}
+                                slidesPerView={5} // Default for largest screen
                                 breakpoints={{
                                     0: {
                                         slidesPerView: 1,
