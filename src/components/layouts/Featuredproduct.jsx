@@ -8,11 +8,11 @@ const Featuredproduct = () => {
     return (
         <>
         <div className="pb-15 pt-60">
-            <Container>
+            <Container className={'px-4 lg:px-0'}>
                 <h3 className='text-[48px] font-int text-[#232323] font-bold text-center'>Featured Products</h3>
                 <p className='text-base font-nuni text-[#546375] pt-5 text-center'>A highly efficient slip-ring scanner for today's diagnostic requirements.</p>
                 <div className="product pt-13">
-                    <Flex className={'justify-between'}>
+                    <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
                         <div className="">
                             <Product 
                                 productImg={''}
@@ -53,8 +53,6 @@ const Featuredproduct = () => {
                                 productOffer={'$46.00'}
                             />
                         </div>
-                    </Flex>
-                    <Flex className={'justify-between pt-6'}>
                         <div className="">
                             <Product 
                                 productImg={''}
@@ -95,7 +93,7 @@ const Featuredproduct = () => {
                                 productOffer={'$46.00'}
                             />
                         </div>
-                    </Flex>
+                    </div>
                 </div>
             </Container>
         </div>
