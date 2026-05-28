@@ -11,13 +11,13 @@ const Ads = () => {
     return (
         <>
         <div className=""> 
-            <Container className={'relative'}>
-                <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-full">
-                    <Flex className={'justify-between gap-x-7'}>
+            <Container className={'lg:relative px-4 lg:px-0'}>
+                <div className="lg:absolute lg:-bottom-30 lg:left-1/2 lg:-translate-x-1/2 w-full">
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7'>
                             <Images imgSrc={adss1} className={'w-full'}/>
                             <Images imgSrc={adss2} className={'w-full'}/>
                             <Images imgSrc={adss3} className={'w-full'}/>
-                    </Flex>
+                    </div>
                 </div>
             </Container>
         </div>
