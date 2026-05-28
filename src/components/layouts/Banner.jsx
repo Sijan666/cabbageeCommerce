@@ -23,20 +23,21 @@ const Banner = () => {
   return (
     <div className="slider-container w-full overflow-hidden">
       <Slider {...settings}>
-        <div className="bg-[url(/src/assets/banner.png)] py-52 bg-no-repeat bg-cover bg-center">
-          <Container>
-            <Flex className={"gap-x-1.5"}>
-              <Images imgSrc={Harb} className={"pb-1"} />
-              <p className="text-[#232323] text-[18px] font-nuni">
+        {/* Slide 1 */}
+        <div className="bg-[url(/src/assets/banner.png)] py-20 md:py-32 lg:py-52 bg-no-repeat bg-cover bg-center">
+          <Container className="px-4 lg:px-0">
+            <Flex className={"gap-x-1.5 items-center"}>
+              <Images imgSrc={Harb} className={"pb-1 w-5 md:w-auto"} />
+              <p className="text-[#232323] text-sm md:text-[18px] font-nuni">
                 100% genuine Products
               </p>
             </Flex>
-            <h1 className="w-[535px] text-[#232323] font-bold font-int text-[70px] leading-[75px] pt-2.5 pb-9">
+            <h1 className="w-full md:w-[535px] text-[#232323] font-bold font-int text-4xl sm:text-5xl md:text-[70px] leading-tight md:leading-[75px] pt-2.5 pb-6 md:pb-9">
               Tasty & Healthy organic Food
             </h1>
             <Button
               btnText={
-                <span className="flex items-center gap-x-2">
+                <span className="flex items-center gap-x-2 text-sm md:text-base">
                   Explore Products
                   <FaArrowRightLong />
                 </span>
@@ -44,20 +45,21 @@ const Banner = () => {
             />
           </Container>
         </div>
-        <div className="bg-[url(/src/assets/slider.png)] py-52 bg-no-repeat bg-cover bg-center">
-          <Container>
-            <Flex className={"gap-x-1.5"}>
-              <Images imgSrc={Harb} className={"pb-1"} />
-              <p className="text-[#232323] text-[18px] font-nuni">
+        {/* Slide 2 */}
+        <div className="bg-[url(/src/assets/slider.png)] py-20 md:py-32 lg:py-52 bg-no-repeat bg-cover bg-center">
+          <Container className="px-4 lg:px-0">
+            <Flex className={"gap-x-1.5 items-center"}>
+              <Images imgSrc={Harb} className={"pb-1 w-5 md:w-auto"} />
+              <p className="text-[#232323] text-sm md:text-[18px] font-nuni">
                 100% genuine Products
               </p>
             </Flex>
-            <h1 className="w-[535px] text-[#232323] font-bold font-int text-[70px] leading-[75px] pt-2.5 pb-9">
+            <h1 className="w-full md:w-[535px] text-[#232323] font-bold font-int text-4xl sm:text-5xl md:text-[70px] leading-tight md:leading-[75px] pt-2.5 pb-6 md:pb-9">
               Tasty & Healthy organic Food
             </h1>
             <Button
               btnText={
-                <span className="flex items-center gap-x-2">
+                <span className="flex items-center gap-x-2 text-sm md:text-base">
                   Explore Products
                   <FaArrowRightLong />
                 </span>
@@ -65,20 +67,21 @@ const Banner = () => {
             />
           </Container>
         </div>
-        <div className="bg-[url(/src/assets/banner.png)] py-52 bg-no-repeat bg-cover bg-center">
-          <Container>
-            <Flex className={"gap-x-1.5"}>
-              <Images imgSrc={Harb} className={"pb-1"} />
-              <p className="text-[#232323] text-[18px] font-nuni">
+        {/* Slide 3 */}
+        <div className="bg-[url(/src/assets/banner.png)] py-20 md:py-32 lg:py-52 bg-no-repeat bg-cover bg-center">
+          <Container className="px-4 lg:px-0">
+            <Flex className={"gap-x-1.5 items-center"}>
+              <Images imgSrc={Harb} className={"pb-1 w-5 md:w-auto"} />
+              <p className="text-[#232323] text-sm md:text-[18px] font-nuni">
                 100% genuine Products
               </p>
             </Flex>
-            <h1 className="w-[535px] text-[#232323] font-bold font-int text-[70px] leading-[75px] pt-2.5 pb-9">
+            <h1 className="w-full md:w-[535px] text-[#232323] font-bold font-int text-4xl sm:text-5xl md:text-[70px] leading-tight md:leading-[75px] pt-2.5 pb-6 md:pb-9">
               Tasty & Healthy organic Food
             </h1>
             <Button
               btnText={
-                <span className="flex items-center gap-x-2">
+                <span className="flex items-center gap-x-2 text-sm md:text-base">
                   Explore Products
                   <FaArrowRightLong />
                 </span>
@@ -86,20 +89,21 @@ const Banner = () => {
             />
           </Container>
         </div>
-        <div className="bg-[url(/src/assets/slider.png)] py-52 bg-no-repeat bg-cover bg-center">
-          <Container>
-            <Flex className={"gap-x-1.5"}>
-              <Images imgSrc={Harb} className={"pb-1"} />
-              <p className="text-[#232323] text-[18px] font-nuni">
+        {/* Slide 4 */}
+        <div className="bg-[url(/src/assets/slider.png)] py-20 md:py-32 lg:py-52 bg-no-repeat bg-cover bg-center">
+          <Container className="px-4 lg:px-0">
+            <Flex className={"gap-x-1.5 items-center"}>
+              <Images imgSrc={Harb} className={"pb-1 w-5 md:w-auto"} />
+              <p className="text-[#232323] text-sm md:text-[18px] font-nuni">
                 100% genuine Products
               </p>
             </Flex>
-            <h1 className="w-[535px] text-[#232323] font-bold font-int text-[70px] leading-[75px] pt-2.5 pb-9">
+            <h1 className="w-full md:w-[535px] text-[#232323] font-bold font-int text-4xl sm:text-5xl md:text-[70px] leading-tight md:leading-[75px] pt-2.5 pb-6 md:pb-9">
               Tasty & Healthy organic Food
             </h1>
             <Button
               btnText={
-                <span className="flex items-center gap-x-2">
+                <span className="flex items-center gap-x-2 text-sm md:text-base">
                   Explore Products
                   <FaArrowRightLong />
                 </span>

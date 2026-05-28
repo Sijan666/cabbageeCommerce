@@ -24,6 +24,7 @@
     "react-slick": "^0.31.0",
     "react-slot-counter": "^3.3.2",
     "slick-carousel": "^1.8.1",
+    "swiper": "^12.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17"
   },
