@@ -75,7 +75,6 @@ const Faciliti = () => {
               </Flex>
             ))}
           </div>
-          
         </Flex>
       </Container>
     </div>
