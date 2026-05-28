@@ -8,25 +8,25 @@ import Images from "../Images";
 
 const Member = () => {
   return (
-    <div className="py-35">
-      <Container className={'px-3 lg:px-0'}>
+    <div className="py-16 lg:py-35">
+      <Container className={'px-4 lg:px-0'}>
         <div className="text-center mb-1">
-          <h3 className="lg:text-5xl text-[30px] font-bold text-[#232323] font-int">
+          <h3 className="text-[30px] md:text-4xl lg:text-5xl font-bold text-[#232323] font-int">
             Team Member
           </h3>
-          <p className="text-base text-[#546375] font-nuni mt-5">
+          <p className="text-sm md:text-base text-[#546375] font-nuni mt-3 md:mt-5 max-w-2xl mx-auto">
             A highly efficient slip-ring scanner for today's diagnostic
             requirements.
           </p>
-          <div className={"flex flex-col lg:flex-row lg:justify-between items-baseline gap-y-10 mt-[55px]"}>
+          <div className={"flex flex-col lg:flex-row lg:justify-between items-center lg:items-start gap-y-12 lg:gap-y-0 mt-10 lg:mt-[55px]"}>
             {/* first member */}
-            <div className="">
-              <div className="w-[300px] h-[300px] rounded-full bg-[#C8CACF]"></div>
+            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
+              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto"></div>
               <div className="mt-5 text-center">
-                <h5 className="text-[28px] text-[#232323] font-int font-bold">
+                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
                   John Abraham
                 </h5>
-                <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
+                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
                   Consultant
                 </p>
                 <Flex className={"gap-x-4 justify-center"}>
@@ -46,15 +46,15 @@ const Member = () => {
               </div>
             </div>
             {/* second member */}
-            <div className="">
-              <div className="rounded-full bg-[#C8CACF]">
-                <Images imgSrc={hMem} />
+            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
+              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto flex justify-center items-center overflow-hidden">
+                <Images imgSrc={hMem} className="w-full h-full object-cover" />
               </div>
               <div className="mt-5 text-center">
-                <h5 className="text-[28px] text-[#232323] font-int font-bold">
+                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
                   John Abraham
                 </h5>
-                <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
+                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
                   Consultant
                 </p>
                 <Flex className={"gap-x-4 justify-center"}>
@@ -74,13 +74,13 @@ const Member = () => {
               </div>
             </div>
             {/* third member */}
-            <div className="">
-              <div className="w-[300px] h-[300px] rounded-full bg-[#C8CACF]"></div>
+            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
+              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto"></div>
               <div className="mt-5 text-center">
-                <h5 className="text-[28px] text-[#232323] font-int font-bold">
+                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
                   John Abraham
                 </h5>
-                <p className="text-xl text-[#80B500] font-nuni pt-2 pb-5">
+                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
                   Consultant
                 </p>
                 <Flex className={"gap-x-4 justify-center"}>
