@@ -14,6 +14,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lenis": "^1.3.23",
     "lucide-react": "^0.555.0",
     "mixitup": "^3.3.2",
     "react": "^19.2.0",
