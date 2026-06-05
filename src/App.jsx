@@ -1,11 +1,13 @@
+import React, { Suspense, lazy } from 'react'
 import './App.css'
-import Home from './components/pages/Home'
 import { Routes , Route } from 'react-router-dom'
-import RootLayouts from './components/layouts/RootLayouts'
-import Error from './components/pages/Error'
-
 import { ReactLenis } from 'lenis/react'
 import 'lenis/dist/lenis.css'
+import Loader from './components/Loader'
+const RootLayouts = lazy(() => import('./components/layouts/RootLayouts'))
+const Home = lazy(() => import('./components/pages/Home'))
+const Error = lazy(() => import('./components/pages/Error'))
+
 
 function App () {
 
@@ -20,12 +22,14 @@ function App () {
   return (
     <>
       <ReactLenis root options={lenisOptions}>
-        <Routes>
-          <Route path="/" element={<RootLayouts />}>
-            <Route index element={<Home/>} />
-          </Route>
-          <Route path="*" element={<Error/>} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<RootLayouts />}>
+              <Route index element={<Home/>} />
+            </Route>
+            <Route path="*" element={<Error/>} />
+          </Routes>
+        </Suspense>
       </ReactLenis>
     </>
   )
