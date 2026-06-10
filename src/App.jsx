@@ -4,10 +4,10 @@ import { Routes , Route } from 'react-router-dom'
 import { ReactLenis } from 'lenis/react'
 import 'lenis/dist/lenis.css'
 import Loader from './components/Loader'
+
 const RootLayouts = lazy(() => import('./components/layouts/RootLayouts'))
 const Home = lazy(() => import('./components/pages/Home'))
 const Error = lazy(() => import('./components/pages/Error'))
-
 
 function App () {
 
