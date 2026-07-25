@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Container from "../Container";
 import Flex from "../Flex";
 import Images from "../Images";
@@ -97,7 +98,9 @@ const Header = () => {
                     key={index}
                     className="relative cursor-pointer group py-2 transition-colors duration-300 hover:text-white"
                   >
-                    {item}
+                    <Link to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
+                      {item}
+                    </Link>
                     {/* Glowing Accent Dot on Hover */}
                     <span className="absolute left-1/2 -bottom-1 w-1.5 h-1.5 bg-[#80B500] rounded-full opacity-0 transform -translate-x-1/2 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_8px_#80B500]"></span>
                   </li>
@@ -129,7 +132,7 @@ const Header = () => {
                   className="font-bold text-[13px] tracking-widest uppercase py-3 px-8 rounded-full bg-[#80B500] text-[#030a0e] shadow-[0_4px_20px_-5px_rgba(128,181,0,0.5)] hover:shadow-[0_8px_25px_-5px_rgba(128,181,0,0.7)] hover:-translate-y-1 transition-all duration-300"
                 />
               </div>
-              {/* Hamburger Menu Icon (Mobile) */}
+              {/* Hamburger (Mobile) */}
               <div
                 className="lg:hidden text-2xl text-white cursor-pointer hover:text-[#80B500] transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -151,7 +154,13 @@ const Header = () => {
                     key={index}
                     className="hover:text-[#80B500] hover:translate-x-2 transition-all cursor-pointer"
                   >
-                    {item}
+                    <Link 
+                      to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full"
+                    >
+                      {item}
+                    </Link>
                   </li>
                 ))}
               </ul>
