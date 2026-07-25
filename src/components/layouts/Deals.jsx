@@ -8,8 +8,6 @@ import Images from "../Images";
 const Deals = () => {
   const [dealProduct, setDealProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const dealProductIds = [15, 18, 22, 25, 30];
   const [currentIndex, setCurrentIndex] = useState(() => {
     const savedIndex = localStorage.getItem('dealCurrentIndex');
@@ -39,7 +37,8 @@ const Deals = () => {
       }
     }
     fetchDealProduct();
-  }, [currentIndex, dealProductIds]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
   useEffect(() => {
     const getTargetTime = () => {
