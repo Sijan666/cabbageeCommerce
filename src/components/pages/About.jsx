@@ -13,7 +13,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css/effect-creative'; // নতুন যুক্ত করা হয়েছে
+import { Pagination, Navigation, EffectCreative } from 'swiper/modules'; // EffectCreative যুক্ত করা হয়েছে
 import Blog from '../layouts/Blog';
 
 const About = () => {
@@ -135,7 +136,19 @@ const About = () => {
                             {/* Main Card Layer */}
                             <div className="relative z-10 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-sm pt-12 pb-16">
                                 <Swiper
-                                    modules={[Pagination, Navigation]}
+                                    modules={[Pagination, Navigation, EffectCreative]}
+                                    effect={'creative'}
+                                    creativeEffect={{
+                                        prev: {
+                                            shadow: true,
+                                            translate: [0, 0, -400],
+                                            opacity: 0,
+                                        },
+                                        next: {
+                                            translate: ['100%', 0, 0],
+                                        },
+                                    }}
+                                    speed={800}
                                     spaceBetween={20}
                                     slidesPerView={1}
                                     navigation={{
