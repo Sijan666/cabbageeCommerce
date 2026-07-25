@@ -5,6 +5,7 @@ import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
 import Loader from './components/Loader';
 import RootLayouts from './components/layouts/RootLayouts';
+import Shop from './components/pages/Shop';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<RootLayouts />}>
             <Route index element={<Home />} /> 
             <Route path="about" element={<About />} />
+            <Route path="shop" element={<Shop />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
