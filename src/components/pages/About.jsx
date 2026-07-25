@@ -13,8 +13,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import 'swiper/css/effect-creative'; // নতুন যুক্ত করা হয়েছে
-import { Pagination, Navigation, EffectCreative } from 'swiper/modules'; // EffectCreative যুক্ত করা হয়েছে
+import 'swiper/css/effect-cards'; // Cards CSS যুক্ত করা হয়েছে
+import { Pagination, Navigation, EffectCards } from 'swiper/modules'; // EffectCards যুক্ত করা হয়েছে
 import Blog from '../layouts/Blog';
 
 const About = () => {
@@ -97,11 +97,9 @@ const About = () => {
                         <Flex className="gap-6 h-[450px] md:h-[600px] w-full">
                             {/* Left Image Placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-0 relative overflow-hidden">
-                                {/* <Images imgSrc={ShopImage1} className="w-full h-full object-cover rounded-sm" /> */}
                             </div>
                             {/* Right Image Placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-[15%] relative overflow-hidden">
-                                {/* <Images imgSrc={ShopImage2} className="w-full h-full object-cover rounded-sm" /> */}
                             </div>
                         </Flex>
                     </div>
@@ -129,28 +127,17 @@ const About = () => {
                         <button className="custom-prev-btn hidden md:flex w-12 h-12 rounded-full border border-[#80B500] items-center justify-center cursor-pointer text-[#80B500] hover:bg-[#80B500] hover:text-white transition-all duration-300 [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed">
                             <HiOutlineArrowLeft className="text-xl" />
                         </button>
+                        
                         {/* Testimonial Card */}
-                        <div className="relative w-full max-w-3xl">
-                            {/* Background Layer */}
-                            <div className="absolute top-6 bottom-6 -left-4 -right-4 md:-left-8 md:-right-8 bg-white/50 shadow-sm rounded-sm z-0"></div>
-                            {/* Main Card Layer */}
-                            <div className="relative z-10 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-sm pt-12 pb-16">
+                        <div className="relative w-full max-w-[600px]"> {/* width একটু কমিয়ে আনা হয়েছে যাতে কার্ডের মত দেখায় */}
+                            <div className="relative z-10 pt-12 pb-16">
                                 <Swiper
-                                    modules={[Pagination, Navigation, EffectCreative]}
-                                    effect={'creative'}
-                                    creativeEffect={{
-                                        prev: {
-                                            shadow: true,
-                                            translate: [0, 0, -400],
-                                            opacity: 0,
-                                        },
-                                        next: {
-                                            translate: ['100%', 0, 0],
-                                        },
+                                    effect={'cards'}
+                                    grabCursor={true}
+                                    modules={[EffectCards, Pagination, Navigation]}
+                                    cardsEffect={{
+                                        slideShadows: false, // শ্যাডো বন্ধ রাখা হয়েছে যাতে ক্লিন লাগে
                                     }}
-                                    speed={800}
-                                    spaceBetween={20}
-                                    slidesPerView={1}
                                     navigation={{
                                         prevEl: '.custom-prev-btn',
                                         nextEl: '.custom-next-btn',
@@ -162,7 +149,8 @@ const About = () => {
                                     className="w-full"
                                 >
                                     {testimonials.map((item) => (
-                                        <SwiperSlide key={item.id} className="px-6 md:px-16 pb-8">
+                                        // প্রতিটি স্লাইডে কার্ডের ডিজাইন দেওয়া হয়েছে
+                                        <SwiperSlide key={item.id} className="bg-white shadow-[0_10px_40px_rgba(0,0,0,0.06)] rounded-xl px-6 md:px-16 py-12 border border-gray-100">
                                             <Flex className="flex-col items-center">
                                                 {/* Avatar */}
                                                 <div className="w-16 h-16 bg-[#e2e2e6] rounded-full mb-4"></div>
@@ -181,8 +169,9 @@ const About = () => {
                                         </SwiperSlide>
                                     ))}
                                 </Swiper>
+                                
                                 {/* Dots */}
-                                <div className="custom-testi-pagination absolute bottom-10 left-0 right-0 flex items-center justify-center gap-x-2 z-20
+                                <div className="custom-testi-pagination absolute bottom-4 left-0 right-0 flex items-center justify-center gap-x-2 z-20
                                     [&_.swiper-pagination-bullet]:w-2
                                     [&_.swiper-pagination-bullet]:h-2
                                     [&_.swiper-pagination-bullet]:bg-[#c0d892]
@@ -199,6 +188,7 @@ const About = () => {
                                 "></div>
                             </div>
                         </div>
+
                         {/* Right Arrow */}
                         <button className="custom-next-btn hidden md:flex w-12 h-12 rounded-full bg-[#80B500] items-center justify-center cursor-pointer text-white shadow-[0_4px_15px_rgba(128,181,0,0.3)] hover:bg-[#6a9600] transition-all duration-300 [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed">
                             <HiOutlineArrowRight className="text-xl" />
