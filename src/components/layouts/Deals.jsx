@@ -14,7 +14,7 @@ const Deals = () => {
     return savedIndex ? Number(savedIndex) : 0;
   });
 
-  // Countdown State
+  // countdown state
   const [timeLeft, setTimeLeft] = useState({
     days: 1,
     hours: 0,
@@ -22,7 +22,7 @@ const Deals = () => {
     seconds: 0
   });
 
-  // Fetch Product
+  // fetch product
   useEffect(() => {
     async function fetchDealProduct() {
       try {
@@ -93,14 +93,14 @@ const Deals = () => {
           </div>
         ) : (
           <Flex className={"flex-col lg:flex-row items-center lg:items-start text-center lg:text-left pt-10 lg:pt-[60px] pb-10 lg:pb-[30px] gap-y-10 lg:gap-y-0 lg:gap-x-[105px]"}>
-            {/* Left Side: API Product Image */}
+            {/* left side: API product image */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <Images 
                 imgSrc={dealProduct?.thumbnail || ""} 
                 className="max-w-full h-[350px] md:h-[420px] object-contain mix-blend-multiply drop-shadow-md transition-all duration-500" 
               />
             </div>
-            {/* Right Side: Product Details & Countdown */}
+            {/* right side: product details & countdown */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
               <p className="text-[#80B500] font-nuni font-bold text-sm md:text-base">
                 Todays Hot Deals
@@ -109,11 +109,11 @@ const Deals = () => {
               <h3 className="text-3xl md:text-4xl lg:text-[42px] text-[#232323] font-bold font-int w-full max-w-[515px] leading-tight lg:leading-[52px] pt-2 pb-4 lg:pb-5">
                 {dealProduct?.title || "Original Stock Honey Combo Package"}
               </h3>
-              {/* Product Description */}
+              {/* product description */}
               <p className="text-sm md:text-base text-[#546375] font-nuni w-full max-w-[410px] line-clamp-3">
                 {dealProduct?.description || "Cur tantas regiones barbarorum obiit, tot maria transmist summo bono fruitur id est voluptate barbarorum"}
               </p>
-              {/* Countdown Timer */}
+              {/* countdown timer */}
               <Flex className={"pt-6 pb-7.5 gap-x-4 sm:gap-x-8 justify-center lg:justify-start"}>
                 <div className="flex flex-col items-center">
                   <div className="relative text-[#80B500] hover:text-white hover:bg-[#80B500] bg-white text-[16px] md:text-[18px] font-bold font-nuni w-12 h-12 md:w-14 md:h-14 rounded-full transition-colors duration-300 cursor-pointer shadow-sm">
