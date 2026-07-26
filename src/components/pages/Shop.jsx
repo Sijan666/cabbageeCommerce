@@ -11,7 +11,7 @@ import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import Product from '../Product';
 
 const Shop = () => {
-    // UI States with localStorage
+    // ui states with localStorage
     const [viewType, setViewType] = useState(() => {
         const savedView = localStorage.getItem('shopViewType');
         return savedView ? savedView : 'grid'; 
@@ -22,18 +22,18 @@ const Shop = () => {
         localStorage.setItem('shopViewType', type);
     };
     
-    // API States
+    // API states
     const [allData, setAllData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     
-    // Filter & Pagination States
+    // filter & pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
     const [sortBy, setSortBy] = useState('best-match');
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch Products
+    // fetch products
     useEffect(() => {
         async function fetchAllDatas() {
             try {
@@ -49,7 +49,7 @@ const Shop = () => {
         fetchAllDatas();
     }, []);
 
-    // Filter and Sort
+    // filter and sort
     const processedData = useMemo(() => {
         let data = [...allData];
 
@@ -76,13 +76,13 @@ const Shop = () => {
         setCurrentPage(1);
     }, [searchQuery, sortBy, perPage]);
 
-    // Pagination
+    // pagination
     const indexOfLastProduct = currentPage * perPage;
     const indexOfFirstProduct = indexOfLastProduct - perPage;
     const currentProducts = processedData.slice(indexOfFirstProduct, indexOfLastProduct);
     const totalPages = Math.ceil(processedData.length / perPage);
 
-    // Handlers
+    // handlers
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         setSearchQuery(searchInput);
@@ -136,7 +136,7 @@ const Shop = () => {
 
     return (
         <main className="w-full font-sans" role="main">
-            {/* Banner */}
+            {/* banner */}
             <section className="relative bg-[#f4f6f8] py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
                 <Container className="px-4 sm:px-8 lg:px-20">
                     <Flex className="flex-col justify-center">
@@ -161,7 +161,7 @@ const Shop = () => {
                     </div>
                 </Container>
             </section>
-            {/* Filter */}
+            {/* filter */}
             <section className="py-8 mb-4" aria-label="Shop Filters and Toolbar">
                 <Container className="px-4 sm:px-8 lg:px-0">
                     <Flex className="flex-col lg:flex-row justify-between items-center gap-6">
@@ -250,7 +250,7 @@ const Shop = () => {
                     </Flex>
                 </Container>
             </section>
-            {/* Products & Pagination Section */}
+            {/* products & pagination section */}
             <section className="py-10 mb-20 bg-white">
                 <Container className="px-4 sm:px-8 lg:px-0">
                     {isLoading ? (
@@ -264,7 +264,7 @@ const Shop = () => {
                         </div>
                     ) : (
                         <>
-                            {/* Product Grid / List */}
+                            {/* product grid and list */}
                             <div className={`grid gap-6 ${viewType === 'grid' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'}`}>
                                 {currentProducts.map((product) => {
                                     const dynamicReviewCount = (product.id * 17) % 150 + 15;
@@ -283,7 +283,7 @@ const Shop = () => {
                                     );
                                 })}
                             </div>
-                            {/* Pagination */}
+                            {/* pagination */}
                             {processedData.length > perPage && (
                                 <Flex className="justify-center items-center gap-3 mt-16 font-nuni font-bold">
                                     <button 
