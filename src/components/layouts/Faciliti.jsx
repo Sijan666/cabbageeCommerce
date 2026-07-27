@@ -12,23 +12,36 @@ import Fac5 from "/src/assets/fac5.png";
 import Fac6 from "/src/assets/fac6.png";
 
 const Faciliti = () => {
-  const [product, setProduct] = useState(null);
+  const [productsList, setProductsList] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCenterProduct = async () => {
+    const fetchCenterProducts = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("https://dummyjson.com/products/category/groceries?limit=1");
-        setProduct(response.data.products[0]);
+        const response = await axios.get("https://dummyjson.com/products/category/groceries");
+        setProductsList(response.data.products);
       } catch (error) {
         console.error("Data not found", error.message);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchCenterProduct();
+    fetchCenterProducts();
   }, []);
+
+  useEffect(() => {
+    if (productsList.length === 0) return;
+
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % productsList.length);
+    }, 10 * 60 * 1000); 
+
+    return () => clearInterval(intervalId);
+  }, [productsList]);
+
+  const product = productsList[currentIndex];
 
   const leftFeatures = product ? [
     { 
@@ -67,7 +80,7 @@ const Faciliti = () => {
   ] : [];
 
   return (
-    <div className="mt-20 lg:mt-60 mb-16 lg:mb-24 overflow-hidden">
+    <div className="mt-20 lg:mt-25 mb-16 lg:mb-24 overflow-hidden">
       <Container className="px-4 md:px-8 lg:px-0">
         {/* Header */}
         <div className="text-center mb-16 md:mb-20">
@@ -84,11 +97,11 @@ const Faciliti = () => {
               <div className="w-14 h-14 border-4 border-[#F4F9EB] border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : product ? (
-          <Flex className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-16 lg:gap-y-0 lg:gap-x-8">
+          <Flex className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-16 lg:gap-y-0 lg:gap-x-8 transition-opacity duration-500">
             {/* Left */}
             <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
               {leftFeatures.map((item, index) => (
-                <Flex key={index} className="group flex-col sm:flex-row-reverse items-center sm:items-start text-center sm:text-right gap-y-4 sm:gap-y-0 sm:gap-x-5 cursor-pointer">
+                <Flex key={index} className="group flex-col sm:flex-row-reverse items-center sm:items-start text-center sm:text-right gap-y-4 sm:gap-y-0 sm:gap-x-5">
                   <div className="shrink-0 w-[70px] h-[70px] bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
                     <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
@@ -124,7 +137,7 @@ const Faciliti = () => {
                   <h4 className="text-[24px] font-int font-bold text-[#232323] line-clamp-1">
                     {product.title}
                   </h4>
-                  <button className="mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300">
+                  <button className="cursor-pointer mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300">
                     View Details
                   </button>
                 </div>
@@ -133,7 +146,7 @@ const Faciliti = () => {
             {/* Right */}
             <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
               {rightFeatures.map((item, index) => (
-                <Flex key={index} className="group flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-y-4 sm:gap-y-0 sm:gap-x-5 cursor-pointer">
+                <Flex key={index} className="group flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-y-4 sm:gap-y-0 sm:gap-x-5">
                   <div className="shrink-0 w-[70px] h-[70px] bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
                     <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
