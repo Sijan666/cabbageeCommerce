@@ -122,7 +122,6 @@ const TopCategories = () => {
                             <p className="text-gray-400 font-nuni text-sm">Loading amazing categories...</p>
                         </div>
                     )}
-                    
                 </div>
             </Container>
         </section>
