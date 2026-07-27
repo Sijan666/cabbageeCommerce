@@ -8,18 +8,21 @@ import mixitup from 'mixitup';
 const Ourproducts = () => {
     const containerRef = useRef(null);
     const mixerRef = useRef(null);
-    
-    // API States
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
 
-    // Fetch Products
+    // fetch products
     useEffect(() => {
         async function fetchProducts() {
             try {
                 setIsLoading(true);
                 const response = await axios.get("https://dummyjson.com/products?limit=12");
-                setProducts(response.data.products);
+                const fetchedProducts = response.data.products;
+                
+                setProducts(fetchedProducts);
+                const uniqueCategories = [...new Set(fetchedProducts.map(item => item.category))];
+                setCategories(uniqueCategories);
             } catch (error) {
                 console.error("data not found", error.message);
             } finally {
@@ -29,7 +32,7 @@ const Ourproducts = () => {
         fetchProducts();
     }, []);
 
-    // Initialize Mixitup AFTER data is loaded
+    // mixitup
     useEffect(() => {
         if (!isLoading && products.length > 0 && containerRef.current) {
             if (mixerRef.current) {
@@ -44,16 +47,13 @@ const Ourproducts = () => {
                 }
             });
         }
-
-        // Cleanup function
+        // cleanup function
         return () => {
             if (mixerRef.current) {
                 mixerRef.current.destroy();
             }
         };
     }, [products, isLoading]);
-
-    const mixCategories = ['food', 'veg', 'dried', 'bread', 'fish'];
 
     return (
         <div className="pb-10 md:pb-15">
@@ -64,18 +64,24 @@ const Ourproducts = () => {
                 <p className='text-sm md:text-base font-nuni text-[#546375] pt-3 md:pt-5 text-center'>
                     A highly efficient slip-ring scanner for today's diagnostic requirements.
                 </p>
-                {/* Filter Buttons */}
+                {/* filter */}
                 <div className="pt-6 md:pt-9">
                     <Flex className={'justify-center gap-x-4 sm:gap-x-6 md:gap-x-10 gap-y-3 flex-wrap'}>
-                        <p data-filter="all" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>All</p>
-                        <p data-filter=".food" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>Food & Drinks</p>
-                        <p data-filter=".veg" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>Vegetables</p>
-                        <p data-filter=".dried" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>Dried Foods</p>
-                        <p data-filter=".bread" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>Bread & Cake</p>
-                        <p data-filter=".fish" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>Fish & Meat</p>
+                        <p data-filter="all" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>
+                            All
+                        </p>
+                        {categories.map((category, index) => (
+                            <p 
+                                key={index} 
+                                data-filter={`.${category}`} 
+                                className='capitalize font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'
+                            >
+                                {category.replace("-", " ")}
+                            </p>
+                        ))}
                     </Flex>
                 </div>
-                {/* Products Grid */}
+                {/* Products */}
                 <div className="product pt-10 md:pt-13" ref={containerRef}>
                     {isLoading ? (
                         <div className="flex justify-center items-center h-[300px]">
@@ -83,10 +89,9 @@ const Ourproducts = () => {
                         </div>
                     ) : (
                         <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6'>
-                            {products.map((product, index) => {
-                                const randomCategory = mixCategories[index % mixCategories.length];
+                            {products.map((product) => {
                                 return (
-                                    <div key={product.id} className={`mix ${randomCategory}`}>
+                                    <div key={product.id} className={`mix ${product.category}`}>
                                         <ProductforOurProducts 
                                             productsImg={
                                                 <img 
