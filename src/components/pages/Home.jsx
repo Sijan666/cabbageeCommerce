@@ -9,7 +9,6 @@ import Member from "../layouts/Member";
 import Review from "../layouts/Review";
 import Ourproduct from "../layouts/Ourproducts";
 import Topcategories from "../layouts/Topcategories";
-import Topslider from "../layouts/Topslider";
 import Faq from "../layouts/Faq";
 import Counter from "../layouts/Counter";
 import Blog from "../layouts/Blog";
@@ -29,7 +28,6 @@ const Home = () => {
             <Deals/>
             <Ourproduct/>
             <Topcategories/>
-            <Topslider/>
             <Faciliti />
             <Review />
             <Member />
