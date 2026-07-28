@@ -16,9 +16,9 @@ function App() {
   const lenisOptions = {
     lerp: 0.08,
     smoothWheel: true,
-    syncTouch: true,
+    syncTouch: false, // এটি false করে দেওয়ায় মোবাইলে নেটিভ স্ক্রল কাজ করবে
     wheelMultiplier: 1,
-    touchMultiplier: 2, 
+    // touchMultiplier: 2, // এটি আর প্রয়োজন নেই, তাই রিমুভ করে দিতে পারেন
   };
 
   return (
