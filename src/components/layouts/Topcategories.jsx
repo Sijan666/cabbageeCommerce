@@ -109,7 +109,7 @@ const TopCategories = () => {
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
-                            {/* Navigation Arrows */}
+                            {/* navigation arrows */}
                             <div className="custom-prev absolute top-[40%] -translate-y-1/2 -left-4 md:-left-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300">
                                 <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
