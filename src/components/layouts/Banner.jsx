@@ -93,7 +93,7 @@ const Banner = () => {
             return (
               <SwiperSlide key={index}>
                 <div className="relative w-full min-h-[550px] sm:min-h-[600px] lg:h-[750px] flex items-center justify-center overflow-hidden bg-[#F9FAFB] py-12 lg:py-0">
-                  {/* Background Watermark */}
+                  {/* background watermark */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden select-none">
                     <h1 className="text-[25vw] sm:text-[20vw] font-black font-int text-gray-900 opacity-[0.02] uppercase whitespace-nowrap tracking-tighter">
                       {data.name.replace('-', '')}
@@ -101,7 +101,7 @@ const Banner = () => {
                   </div>
                   <Container className="px-4 sm:px-6 lg:px-8 relative z-10 w-full h-full flex flex-col justify-center">
                     <Flex className="flex-col-reverse lg:flex-row items-center justify-between gap-y-8 lg:gap-y-0 h-full">
-                      {/* Left Column */}
+                      {/* left */}
                       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left z-10">
                         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5">
                           <Images imgSrc={Harb} className="w-4 sm:w-5 lg:w-6 object-contain pb-1" />
@@ -113,11 +113,11 @@ const Banner = () => {
                           <span className="block text-[#223645]">{firstPart}</span>
                           <span className="text-[#80B500]">{secondPart}</span>
                         </h2>
-                        {/* Description & Price */}
+                        {/* description & price */}
                         <p className="text-[#546375] font-nuni text-sm sm:text-base lg:text-lg xl:text-xl max-w-md lg:max-w-lg mb-6 sm:mb-8 font-medium leading-relaxed px-4 lg:px-0">
                           Upgrade your lifestyle with our premium <span className="font-bold text-[#223645]">{data.productName}</span>. Starting from <span className="font-bold text-[#80B500] text-lg sm:text-xl lg:text-2xl">${data.price}</span>
                         </p>
-                        {/* Button */}
+                        {/* button */}
                         <button 
                           onClick={() => handleRoute(data.slug)}
                           className="cursor-pointer group flex items-center justify-center gap-2 sm:gap-3 bg-[#80B500] hover:bg-[#223645] text-white px-7 py-3 sm:px-8 sm:py-3.5 lg:px-10 lg:py-4 rounded-full font-nuni text-xs sm:text-sm lg:text-base font-bold tracking-widest uppercase transition-all duration-500 hover:shadow-[0_10px_30px_rgba(128,181,0,0.3)] hover:-translate-y-1"
@@ -126,7 +126,7 @@ const Banner = () => {
                           <HiOutlineArrowLongRight className="text-xl sm:text-2xl group-hover:translate-x-2 transition-transform duration-300" />
                         </button>
                       </div>
-                      {/* Right Side Image */}
+                      {/* right image */}
                       <div className="w-full lg:w-1/2 flex justify-center items-center relative h-[250px] sm:h-80 lg:h-full">
                         <div className="absolute w-[200px] h-[200px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] bg-[#80B500] opacity-[0.04] rounded-full blur-[50px] lg:blur-[60px] pointer-events-none"></div>
                         <div 
