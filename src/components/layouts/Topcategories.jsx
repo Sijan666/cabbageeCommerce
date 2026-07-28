@@ -4,13 +4,6 @@ import axios from 'axios';
 import Images from '../Images';
 import Container from '../Container';
 
-// Image
-import tc1 from '../../assets/tc1.png';
-import tc2 from '../../assets/tc2.png';
-import tc3 from '../../assets/tc3.png';
-import tc4 from '../../assets/tc4.png';
-import tc5 from '../../assets/tc5.png';
-
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -21,18 +14,35 @@ const TopCategories = () => {
     const [categories, setCategories] = useState([]);
     const [selected, setSelected] = useState('');
     const navigate = useNavigate();
-    const categoryImages = [tc1, tc2, tc3, tc4, tc5];
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchCategoriesWithImages = async () => {
             try {
-                const response = await axios.get("https://dummyjson.com/products/categories");
-                setCategories(response.data);
+                const response = await axios.get("https://dummyjson.com/products?limit=100");
+                const products = response.data.products;
+                const uniqueCategories = [];
+                const seenCategories = new Set();
+
+                products.forEach(product => {
+                    const catSlug = typeof product.category === 'object' ? product.category.slug : product.category;
+                    const catName = typeof product.category === 'object' ? product.category.name : product.category;
+
+                    if (!seenCategories.has(catSlug)) {
+                        seenCategories.add(catSlug);
+                        uniqueCategories.push({
+                            slug: catSlug,
+                            name: catName,
+                            image: product.thumbnail
+                        });
+                    }
+                });
+                setCategories(uniqueCategories);
             } catch (error) {
                 console.error("Failed to fetch categories:", error.message);
             }
         };
-        fetchCategories();
+        
+        fetchCategoriesWithImages();
     }, []);
 
     const handleCategoryClick = (categorySlug) => {
@@ -83,26 +93,21 @@ const TopCategories = () => {
                                 }}
                                 className="w-full px-2"
                             >
-                                {categories.map((cat, index) => {
-                                    const catSlug = cat.slug || cat;
-                                    const catName = cat.name || cat;
-                                    const image = categoryImages[index % categoryImages.length];
-                                    return (
-                                        <SwiperSlide key={index}>
-                                            <div 
-                                                className="flex flex-col items-center justify-center text-center outline-none cursor-pointer group py-4" 
-                                                onClick={() => handleCategoryClick(catSlug)}
-                                            >
-                                                <div className="w-[100px] h-[100px] rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400">
-                                                    <Images imgSrc={image} className="w-[50px] object-contain group-hover:scale-110 transition-transform duration-300"/>
-                                                </div>
-                                                <h4 className={`text-[16px] md:text-[18px] capitalize font-bold font-int pt-6 transition-colors duration-300 ${selected === catSlug ? 'text-[#80B500]' : 'text-[#232323] group-hover:text-[#80B500]'}`}>
-                                                    {catName.replace('-', ' ')}
-                                                </h4>
+                                {categories.map((cat, index) => (
+                                    <SwiperSlide key={index}>
+                                        <div 
+                                            className="flex flex-col items-center justify-center text-center outline-none cursor-pointer group py-4" 
+                                            onClick={() => handleCategoryClick(cat.slug)}
+                                        >
+                                            <div className="w-[100px] h-[100px] rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400 overflow-hidden">
+                                                <Images imgSrc={cat.image} className="w-[70px] h-[70px] object-contain group-hover:scale-110 transition-transform duration-300"/>
                                             </div>
-                                        </SwiperSlide>
-                                    );
-                                })}
+                                            <h4 className={`text-[16px] md:text-[18px] capitalize font-bold font-int pt-6 transition-colors duration-300 ${selected === cat.slug ? 'text-[#80B500]' : 'text-[#232323] group-hover:text-[#80B500]'}`}>
+                                                {cat.name.replace('-', ' ')}
+                                            </h4>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
                             </Swiper>
                             {/* Navigation Arrows */}
                             <div className="custom-prev absolute top-[40%] -translate-y-1/2 -left-4 md:-left-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300">
