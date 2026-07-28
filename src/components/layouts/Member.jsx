@@ -1,105 +1,107 @@
+import React, { useState } from "react";
 import Container from "../Container";
-import hMem from "/src/assets/hMember.png";
 import Flex from "../Flex";
-import { FaTwitter } from "react-icons/fa";
-import { FaFacebookF } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import Images from "../Images";
 
 const Member = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [teamMembers, setTeamMembers] = useState([
+    {
+      id: 1,
+      name: "John Abraham",
+      role: "Lead Consultant",
+      img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
+      socials: [
+        { icon: FaTwitter, link: "" },
+        { icon: FaFacebookF, link: "" },
+        { icon: FaInstagram, link: "" },
+        { icon: FaLinkedinIn, link: "" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Sarah Connor",
+      role: "Medical Specialist",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+      socials: [
+        { icon: FaTwitter, link: "" },
+        { icon: FaFacebookF, link: "" },
+        { icon: FaInstagram, link: "" },
+        { icon: FaLinkedinIn, link: "" },
+      ],
+    },
+    {
+      id: 3,
+      name: "Michael Smith",
+      role: "Senior Surgeon",
+      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
+      socials: [
+        { icon: FaTwitter, link: "" },
+        { icon: FaFacebookF, link: "" },
+        { icon: FaInstagram, link: "" },
+        { icon: FaLinkedinIn, link: "" },
+      ],
+    },
+  ]);
+
   return (
-    <div className="py-16 lg:py-35">
-      <Container className={'px-4 lg:px-0'}>
-        <div className="text-center mb-1">
-          <h3 className="text-[30px] md:text-4xl lg:text-5xl font-bold text-[#232323] font-int">
-            Team Member
+    <div className="py-20 lg:py-32 bg-[#F9FBF5]">
+      <Container className={"px-4 lg:px-0"}>
+        <div className="text-center mb-16">
+          <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm">
+            Meet The Experts
+          </span>
+          <h3 className="text-[36px] md:text-5xl lg:text-6xl font-extrabold text-[#232323] font-int mt-3 mb-5">
+            Our Team Members
           </h3>
-          <p className="text-sm md:text-base text-[#546375] font-nuni mt-3 md:mt-5 max-w-2xl mx-auto">
-            A highly efficient slip-ring scanner for today's diagnostic
-            requirements.
+          <p className="text-base md:text-lg text-[#546375] font-nuni max-w-2xl mx-auto">
+            A highly efficient slip-ring scanner for today's diagnostic requirements, brought to you by our dedicated professionals.
           </p>
-          <div className={"flex flex-col lg:flex-row lg:justify-between items-center lg:items-start gap-y-12 lg:gap-y-0 mt-10 lg:mt-[55px]"}>
-            {/* first member */}
-            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
-              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto"></div>
-              <div className="mt-5 text-center">
-                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
-                  John Abraham
+        </div>
+        {/* team */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {teamMembers.map((member) => (
+            <div 
+              key={member.id} 
+              className="group cursor-pointer flex flex-col items-center"
+            >
+              <div className="relative w-full aspect-4/5 rounded-4xl overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] hover:-translate-y-2">
+                {/* image */}
+                <Images 
+                  imgSrc={member.img} 
+                  className="w-full h-full object-cover bg-gray-100 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110" 
+                  alt={member.name} 
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                {/* social icons */}
+                <div className="absolute bottom-0 left-0 w-full p-8 flex justify-center gap-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out z-10">
+                  {member.socials.map((social, index) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={index}
+                        href={social.link}
+                        className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex justify-center items-center text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                      >
+                        <Icon size={16} />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* info */}
+              <div className="mt-8 text-center px-4 w-full">
+                <h5 className="text-[24px] md:text-[26px] text-[#232323] font-int font-extrabold group-hover:text-[#80B500] transition-colors duration-300 truncate">
+                  {member.name}
                 </h5>
-                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
-                  Consultant
+                <p className="text-xs md:text-sm font-nuni font-bold text-gray-500 uppercase tracking-widest mt-2 truncate">
+                  {member.role}
                 </p>
-                <Flex className={"gap-x-4 justify-center"}>
-                  <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaFacebookF className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaInstagram className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                </Flex>
               </div>
+              
             </div>
-            {/* second member */}
-            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
-              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto flex justify-center items-center overflow-hidden">
-                <Images imgSrc={hMem} className="w-full h-full object-cover" />
-              </div>
-              <div className="mt-5 text-center">
-                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
-                  John Abraham
-                </h5>
-                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
-                  Consultant
-                </p>
-                <Flex className={"gap-x-4 justify-center"}>
-                  <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaFacebookF className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaInstagram className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                </Flex>
-              </div>
-            </div>
-            {/* third member */}
-            <div className="w-full sm:w-[80%] md:w-1/2 lg:w-[31%] flex flex-col items-center">
-              <div className="w-[250px] h-[250px] xl:w-[300px] xl:h-[300px] rounded-full bg-[#C8CACF] mx-auto"></div>
-              <div className="mt-5 text-center">
-                <h5 className="text-[24px] xl:text-[28px] text-[#232323] font-int font-bold">
-                  John Abraham
-                </h5>
-                <p className="text-lg xl:text-xl text-[#80B500] font-nuni pt-1 xl:pt-2 pb-4 xl:pb-5">
-                  Consultant
-                </p>
-                <Flex className={"gap-x-4 justify-center"}>
-                  <div className="group cursor-pointer duration-300  hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaFacebookF className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaInstagram className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                  <div className="group cursor-pointer duration-300 hover:bg-[#80B500] relative h-[35px] w-[35px] rounded-full bg-[#80B500]/20">
-                    <FaTwitter className="group-hover:text-white absolute text-[#232323] text-sm left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
-                  </div>
-                </Flex>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </Container>
     </div>
