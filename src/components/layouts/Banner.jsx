@@ -7,7 +7,7 @@ import Images from "../Images";
 import Harb from "/src/assets/herb.png";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 
-// Swiper Imports
+// swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
