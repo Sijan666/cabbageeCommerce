@@ -105,7 +105,7 @@ const Deals = () => {
               <p className="text-[#80B500] font-nuni font-bold text-sm md:text-base">
                 Todays Hot Deals
               </p>
-              {/* Product Title */}
+              {/* product title */}
               <h3 className="text-3xl md:text-4xl lg:text-[42px] text-[#232323] font-bold font-int w-full max-w-[515px] leading-tight lg:leading-[52px] pt-2 pb-4 lg:pb-5">
                 {dealProduct?.title || "Original Stock Honey Combo Package"}
               </h3>
