@@ -1,105 +1,122 @@
-import { FaFacebook } from "react-icons/fa"
-import Container from "../Container"
-import Flex from "../Flex"
-import { BsTwitter } from "react-icons/bs"
-import { CgVercel } from "react-icons/cg"
-import { PiPinterestLogo } from "react-icons/pi"
-import Images from "../Images"
-import footerlogo from '../../assets/footerlogo.png'
-import { LuMapPin } from "react-icons/lu"
-import Button from "../Button"
-import f from '../../assets/f.png'
-import { SiVimeo } from "react-icons/si"
-
-
+import React from "react";
+import { FaFacebook } from "react-icons/fa";
+import { BsTwitter } from "react-icons/bs";
+import { SiVimeo } from "react-icons/si";
+import { PiPinterestLogo } from "react-icons/pi";
+import { LuMapPin } from "react-icons/lu";
+import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCcApplePay, FaGooglePay } from "react-icons/fa6";
+import Container from "../Container";
+import Images from "../Images";
+import Button from "../Button";
+import footerlogo from '../../assets/footerlogo.png';
 
 const Footer = () => {
   return (
     <>
-    <div className="bg-[url('/src/assets/footer.png')] py-[172px] bg-no-repeat bg-center bg-cover">
-      <div className="">
-        <Container className={'px-3 lg:px-0'}>
-          <div className={'flex flex-col gap-y-10 items-center lg:flex-row justify-between lg:items-start'}>
-            {/* about us start */}
+      <footer className="bg-[url('/src/assets/footer.png')] py-20 lg:py-[110px] bg-no-repeat bg-center bg-cover relative">
+        <div className="absolute inset-0 bg-[#0B1120]/80 pointer-events-none"></div>
+        <Container className="px-4 lg:px-0 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 items-start">
+            {/* about us */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int">About Us.</h4>
-              <p className="py-7.5 font-nuni text-base text-white lg:w-[309px]">orporate clients and leisure travelers has been relying on Groundlink for dependable safe, and professional chauffeured car service in major cities across World. Indeed it has been more than one decade and five years that Groundlink</p>
-              <div className="socialIcons">
-                <div className="flex gap-4 justify-center lg:justify-normal">
-                  {/* Facebook */}
-                  <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
-                    <FaFacebook className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
-                  </div>
-                  {/* Twitter */}
-                  <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
-                    <BsTwitter className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
-                  </div>
-                  {/* Vercel */}
-                  <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
-                    <SiVimeo className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
-                  </div>
-                  {/* Pinterest */}
-                  <div className="p-4 bg-[#E2E2EB] rounded-full hover:bg-[#80B500] group cursor-pointer transition-all duration-300">
-                    <PiPinterestLogo className="text-[15px] text-[#6A7695] duration-300 group-hover:text-[#FBFBFD]" />
-                  </div>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">
+                About Us
+              </h4>
+              <p className="font-nuni text-sm md:text-base text-gray-300 leading-relaxed mb-6">
+                Corporate clients and leisure travelers have been relying on Cabbage for dependable, safe, and professional service across major cities worldwide.
+              </p>
+              {/* social icons */}
+              <div className="flex gap-3 justify-center lg:justify-start">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
+                  <FaFacebook className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
+                  <BsTwitter className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
+                  <SiVimeo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
+                </div>
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
+                  <PiPinterestLogo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
                 </div>
               </div>
             </div>
-            {/* about us end */}
-            {/* useful link start */}
+            {/* useful links */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int">Useful Links</h4>
-              <ul>
-                <li className="text-base text-white font-nuni pb-4.5 pt-7.5">About</li>
-                <li className="text-base text-white font-nuni pb-4.5">News</li>
-                <li className="text-base text-white font-nuni pb-4.5">Partners</li>
-                <li className="text-base text-white font-nuni pb-4.5">Room Details</li>
-                <li className="text-base text-white font-nuni pb-4.5">Gallery</li>
-                <li className="text-base text-white font-nuni pb-4.5">Contacts</li>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">
+                Useful Links
+              </h4>
+              <ul className="space-y-3">
+                {["About", "News", "Partners", "Shop", "Gallery", "Contacts"].map((item, index) => (
+                  <li key={index}>
+                    <a href="#" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            {/* useful link end */}
-            {/* help start */}
+            {/* help */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int">Help?</h4>
-              <ul>
-                <li className="text-base text-white font-nuni pb-4.5 pt-7.5">FAQ</li>
-                <li className="text-base text-white font-nuni pb-4.5">Term & conditions</li>
-                <li className="text-base text-white font-nuni pb-4.5">Reporting</li>
-                <li className="text-base text-white font-nuni pb-4.5">Documentation</li>
-                <li className="text-base text-white font-nuni pb-4.5">Support Policy</li>
-                <li className="text-base text-white font-nuni pb-4.5">Privacy</li>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">
+                Help
+              </h4>
+              <ul className="space-y-3">
+                {["FAQ", "Term & Conditions", "Reporting", "Documentation", "Support Policy", "Privacy"].map((item, index) => (
+                  <li key={index}>
+                    <a href="#" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            {/* help end */}
-            {/* logo start */}
-            <div className="lg:w-[312px] ">
-              <Images imgSrc={footerlogo} className={'mx-auto lg:mx-0'}/>
-              <p className="pt-6 pb-6.25 text-base text-white font-nuni text-center lg:text-left lg:w-[312px]">We are a team of designers and developers create high quality Magento, Prestashop, </p>
-              <Flex className={'gap-x-4 items-center pb-7 justify-center lg:justify-normal'}>
-                <LuMapPin className="text-white"/>
-                <p className="pt-6 pb-6.25 text-base text-white font-nuni lg:w-[312px]">254 Lillian Blvd, Holbrook</p>
-              </Flex>
-              <Flex className={'bg-white w-[312px] justify-between items-center p-1 rounded-sm '}>
-                <input type="email" placeholder="Enter email address" className="text-[#42518B] bg-white px-4.5 py-3.5 w-full outline-none "/>
-                <Button btnText={'Subscribe'} className={'py-3!'}/>
-              </Flex>
+            {/* newsletter & contact */}
+            <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
+              <Images imgSrc={footerlogo} className="mx-auto lg:mx-0 mb-4" />
+              <p className="text-sm md:text-base text-gray-300 font-nuni mb-6 leading-relaxed">
+                We are a team of designers and developers creating high-quality organic solutions.
+              </p>
+              <div className="flex items-center gap-x-3 mb-6 justify-center lg:justify-start">
+                <LuMapPin className="text-[#80B500] text-xl shrink-0" />
+                <p className="text-sm md:text-base text-gray-300 font-nuni">
+                  254 Lillian Blvd, Holbrook
+                </p>
+              </div>
+              {/* Newsletter */}
+              <div className="w-full max-w-[320px] bg-white flex items-center justify-between p-1 rounded-md shadow-sm">
+                <input 
+                  type="email" 
+                  placeholder="Enter email address" 
+                  className="text-[#232323] bg-transparent px-3 py-2.5 w-full outline-none text-sm font-nuni placeholder:text-gray-400"
+                />
+                <Button btnText={'Subscribe'} className={'py-2.5! px-4! text-xs font-bold'} />
+              </div>
             </div>
-            {/* logo end */}
+          </div>
+        </Container>
+      </footer>
+      {/* Copyright */}
+      <div className="bg-[#070C17] py-5 border-t border-white/5">
+        <Container className="px-4 lg:px-0">
+          <div className="flex flex-col sm:flex-row lg:justify-between justify-center items-center gap-y-4 text-center">
+            {/* Copyright Text */}
+            <p className="text-sm font-nuni text-gray-400">
+              © Cabbage 2026 All rights reserved.
+            </p>
+            {/* payment method icons */}
+            <div className="flex items-center gap-3 text-2xl text-gray-400">
+              <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" title="Visa" />
+              <FaCcMastercard className="hover:text-white transition-colors duration-300 cursor-pointer" title="MasterCard" />
+              <FaCcPaypal className="hover:text-white transition-colors duration-300 cursor-pointer" title="PayPal" />
+              <FaCcApplePay className="hover:text-white transition-colors duration-300 cursor-pointer" title="Apple Pay" />
+              <FaGooglePay className="hover:text-white transition-colors duration-300 cursor-pointer text-3xl" title="Google Pay" />
+            </div>
           </div>
         </Container>
       </div>
-    </div>
-    <div className="bg-[#2b2b49c2] py-5.5">
-      <Container className={'px-3 lg:px-0'}>
-        <div className={'flex flex-col lg:flex-row lg:justify-between justify-center gap-y-5'}>
-          <p className="text-base font-nuni text-white">© TunaThemes 2024 All rights reserved.</p>
-          <Images imgSrc={f}/>
-        </div>
-      </Container>
-    </div>
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
