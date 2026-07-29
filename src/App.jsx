@@ -11,6 +11,8 @@ import CategoryProducts from './components/pages/CategoryProducts';
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
 const Error = lazy(() => import('./components/pages/Error'));
+const Cart = lazy(() => import('./components/pages/Cart'));
+const Wishlist = lazy(() => import('./components/pages/Wishlist'));
 
 function App() {
   const lenisOptions = {
@@ -28,7 +30,9 @@ function App() {
             <Route index element={<Home />} /> 
             <Route path="about" element={<About />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="/category/:categoryName" element={<CategoryProducts />} />
+            <Route path="category/:categoryName" element={<CategoryProducts />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="wishlist" element={<Wishlist />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
