@@ -15,6 +15,7 @@ const Faciliti = () => {
   const [productsList, setProductsList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
     const fetchCenterProducts = async () => {
@@ -35,8 +36,14 @@ const Faciliti = () => {
     if (productsList.length === 0) return;
 
     const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % productsList.length);
-    }, 10 * 60 * 1000); 
+      setIsFading(true);
+      
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % productsList.length);
+        setIsFading(false);
+      }, 500);
+      
+    }, 120000);
 
     return () => clearInterval(intervalId);
   }, [productsList]);
@@ -97,7 +104,7 @@ const Faciliti = () => {
               <div className="w-14 h-14 border-4 border-[#F4F9EB] border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : product ? (
-          <Flex className="flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-16 lg:gap-y-0 lg:gap-x-8 transition-opacity duration-500">
+          <Flex className={`flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-16 lg:gap-y-0 lg:gap-x-8 transition-all duration-500 ease-in-out ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             {/* Left */}
             <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
               {leftFeatures.map((item, index) => (
