@@ -9,7 +9,6 @@ import {
 import { FaHeadset, FaEnvelope, FaComments, FaArrowRight } from "react-icons/fa"
 
 const Faq = () => {
-    // অর্গানিক ফুড স্টোরের জন্য একদম সঠিক (Accurate) এবং রিয়েলিস্টিক ডাটা
     const faqData = [
         {
             id: "item-1",
