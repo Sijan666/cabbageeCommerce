@@ -54,7 +54,7 @@ const Review = () => {
             <div className="w-12 h-12 border-4 border-gray-200 border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : (
-          <Flex className={"flex-col lg:flex-row justify-between items-center lg:items-start gap-y-12 lg:gap-y-0 lg:gap-x-16"}>
+          <Flex className={"flex-col lg:flex-row justify-between items-center gap-y-12 lg:gap-y-0 lg:gap-x-16"}>
             <div className="w-full lg:w-1/2 flex justify-center">
               <div className="relative w-full max-w-[500px]">
                 <div className="absolute inset-0 bg-white/60 rounded-3xl blur-xl transition-all duration-500"></div>
