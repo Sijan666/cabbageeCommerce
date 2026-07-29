@@ -111,19 +111,22 @@ const Header = () => {
             <Flex className="items-center gap-x-5 md:gap-x-7">
               {/* Action Icons */}
               <Flex className="hidden sm:flex gap-x-3 items-center">
-                <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                {/* Wishlist Link */}
+                <Link to="/wishlist" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <MdFavoriteBorder className="text-[19px]" />
-                </div>
+                </Link>
+                {/* User Icon */}
                 <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <FaRegUser className="text-[16px]" />
                 </div>
-                <div className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                {/* Cart Link */}
+                <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <BsCart3 className="text-[18px]" />
                   {/* Glowing Notification Badge */}
                   <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
                     2
                   </span>
-                </div>
+                </Link>
               </Flex>
               {/* Get Quote Button */}
               <div className="hidden md:block">
@@ -164,16 +167,18 @@ const Header = () => {
                   </li>
                 ))}
               </ul>
-              {/* Mobile */}
+              {/* Mobile Action Icons */}
               <Flex className="mt-6 pt-6 border-t border-white/10 gap-x-5 justify-center sm:hidden">
-                <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500]" />
+                <Link to="/wishlist" onClick={() => setIsMenuOpen(false)}>
+                  <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500]" />
+                </Link>
                 <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500]" />
-                <div className="relative">
+                <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
                   <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500]" />
                   <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                     2
                   </span>
-                </div>
+                </Link>
               </Flex>
               <div className="mt-6 md:hidden">
                 <Button
