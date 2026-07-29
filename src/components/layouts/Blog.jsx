@@ -36,27 +36,27 @@ const Blog = () => {
   ];
 
   return (
-    <div className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#0B1120]">
+    <div className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#F9FBF5]">
       <Container className={"px-4 lg:px-0"}>
         {/* header */}
-        <div className="flex flex-col md:flex-row items-end justify-between border-b border-white/10 pb-8 md:pb-10 mb-10 md:mb-14">
+        <div className="flex flex-col md:flex-row items-end justify-between border-b border-gray-200 pb-8 md:pb-10 mb-10 md:mb-14">
           <div className="w-full md:w-2/3">
             <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-3 block">
               Our Insights
             </span>
-            <h3 className="text-4xl md:text-[50px] font-bold text-white font-int leading-tight">
+            <h3 className="text-4xl md:text-[50px] font-bold text-[#232323] font-int leading-tight">
               Latest Articles
             </h3>
           </div>
           <div className="w-full md:w-1/3 text-left md:text-right mt-4 md:mt-0">
-            <p className="text-sm md:text-base text-gray-400 font-nuni leading-relaxed">
+            <p className="text-sm md:text-base text-[#546375] font-nuni leading-relaxed">
               Read our latest articles on organic farming, healthy recipes, and tips for a sustainable lifestyle.
             </p>
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* featured */}
-          <div className="lg:col-span-2 lg:row-span-2 bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+          <div className="lg:col-span-2 lg:row-span-2 bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
             {/* image */}
             <div className="w-full h-[300px] md:h-[400px]">
               <img 
@@ -71,19 +71,19 @@ const Blog = () => {
                 <span className="bg-[#80B500]/10 text-[#80B500] border border-[#80B500]/20 px-3 py-1 rounded-full text-xs font-bold font-nuni uppercase tracking-wider">
                   {blogData[0].category}
                 </span>
-                <Flex className="items-center gap-2 text-gray-400">
+                <Flex className="items-center gap-2 text-[#546375]">
                   <FaRegCalendarDays className="text-[#80B500] text-sm" />
                   <p className="text-sm font-nuni">{blogData[0].date}</p>
                 </Flex>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold font-int text-white leading-tight mb-4 group-hover:text-[#80B500] transition-colors duration-300">
+              <h3 className="text-2xl md:text-3xl font-bold font-int text-[#232323] leading-tight mb-4 group-hover:text-[#80B500] transition-colors duration-300">
                 {blogData[0].title}
               </h3>
-              <p className="text-gray-400 font-nuni leading-relaxed mb-8 max-w-2xl">
+              <p className="text-[#546375] font-nuni leading-relaxed mb-8 max-w-2xl">
                 {blogData[0].excerpt}
               </p>
-              <Flex className="items-center justify-between text-white mt-auto border-t border-white/10 pt-6">
-                <Flex className="items-center gap-2 text-gray-400">
+              <Flex className="items-center justify-between text-[#232323] mt-auto border-t border-gray-200 pt-6">
+                <Flex className="items-center gap-2 text-[#546375]">
                   <FaRegEye className="text-[#80B500] text-lg" />
                   <p className="text-sm font-nuni">{blogData[0].views}</p>
                 </Flex>
@@ -94,7 +94,7 @@ const Blog = () => {
             </div>
           </div>
           {/* card 1 */}
-          <div className="lg:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+          <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
             <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
               <img 
                 src={blogData[1].image} 
@@ -102,18 +102,18 @@ const Blog = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="flex items-center gap-3 mb-4 text-gray-400">
+            <div className="flex items-center gap-3 mb-4 text-[#546375]">
               <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
                 {blogData[1].category}
               </span>
-              <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
               <p className="text-xs font-nuni">{blogData[1].date}</p>
             </div>
-            <h3 className="text-xl font-bold font-int text-white leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
+            <h3 className="text-xl font-bold font-int text-[#232323] leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
               {blogData[1].title}
             </h3>
-            <Flex className="items-center justify-between text-white mt-auto pt-4 border-t border-white/10">
-              <Flex className="items-center gap-2 text-gray-500">
+            <Flex className="items-center justify-between text-[#232323] mt-auto pt-4 border-t border-gray-200">
+              <Flex className="items-center gap-2 text-[#546375]">
                 <FaRegEye className="text-[#80B500] text-sm" />
                 <p className="text-xs font-nuni">{blogData[1].views}</p>
               </Flex>
@@ -121,7 +121,7 @@ const Blog = () => {
             </Flex>
           </div>
           {/* Card 2 */}
-          <div className="lg:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+          <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
             <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
               <img 
                 src={blogData[2].image} 
@@ -129,18 +129,18 @@ const Blog = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="flex items-center gap-3 mb-4 text-gray-400">
+            <div className="flex items-center gap-3 mb-4 text-[#546375]">
               <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
                 {blogData[2].category}
               </span>
-              <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
               <p className="text-xs font-nuni">{blogData[2].date}</p>
             </div>
-            <h3 className="text-xl font-bold font-int text-white leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
+            <h3 className="text-xl font-bold font-int text-[#232323] leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
               {blogData[2].title}
             </h3>
-            <Flex className="items-center justify-between text-white mt-auto pt-4 border-t border-white/10">
-              <Flex className="items-center gap-2 text-gray-500">
+            <Flex className="items-center justify-between text-[#232323] mt-auto pt-4 border-t border-gray-200">
+              <Flex className="items-center gap-2 text-[#546375]">
                 <FaRegEye className="text-[#80B500] text-sm" />
                 <p className="text-xs font-nuni">{blogData[2].views}</p>
               </Flex>
