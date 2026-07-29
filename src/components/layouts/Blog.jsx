@@ -1,127 +1,151 @@
+import React from "react";
 import Container from "../Container";
 import Flex from "../Flex";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCalendarDays } from "react-icons/fa6";
-import { FaChevronCircleRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 
 const Blog = () => {
+
+  const blogData = [
+    {
+      id: 1,
+      category: "Health & Wellness",
+      title: "The Surprising Health Benefits of Eating Fresh Organic Greens",
+      excerpt: "Discover how incorporating fresh, pesticide-free greens into your daily diet can boost your energy levels and improve your overall well-being. From farm directly to your table, our organic approach ensures you get the maximum nutrition.",
+      views: "238 Views",
+      date: "July 25, 2026",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 2,
+      category: "Farm to Table",
+      title: "How We Source Our Organic Vegetables",
+      views: "185 Views",
+      date: "July 18, 2026",
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop",
+    },
+    {
+      id: 3,
+      category: "Recipes",
+      title: "5 Delicious Ways to Cook Organic Cabbage",
+      views: "342 Views",
+      date: "July 10, 2026",
+      image: "https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=600&auto=format&fit=crop",
+    },
+  ];
+
   return (
-    <div className="pt-16 md:pt-26 pb-24 md:pb-48">
-      <Container className={'px-4 lg:px-0'}>
-        <div className="text-center pb-10 md:pb-14">
-          <h3 className="text-3xl md:text-5xl font-bold text-[#232323] font-int">
-            Leatest Blog
-          </h3>
-          <p className="text-sm md:text-base text-[#546375] font-nuni mt-3 md:mt-5">
-            A highly efficient slip-ring scanner for today's diagnostic
-            requirements.
-          </p>
+    <div className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#0B1120]">
+      <Container className={"px-4 lg:px-0"}>
+        {/* header */}
+        <div className="flex flex-col md:flex-row items-end justify-between border-b border-white/10 pb-8 md:pb-10 mb-10 md:mb-14">
+          <div className="w-full md:w-2/3">
+            <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-3 block">
+              Our Insights
+            </span>
+            <h3 className="text-4xl md:text-[50px] font-bold text-white font-int leading-tight">
+              Latest Articles
+            </h3>
+          </div>
+          <div className="w-full md:w-1/3 text-left md:text-right mt-4 md:mt-0">
+            <p className="text-sm md:text-base text-gray-400 font-nuni leading-relaxed">
+              Read our latest articles on organic farming, healthy recipes, and tips for a sustainable lifestyle.
+            </p>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7.5">
-          {/* Blog Card 1 */}
-          <div className="rounded-xl shadow-blog group overflow-hidden">
-            <div className="mx-3 mt-3 h-[250px] md:h-[280px] bg-[#C8CACF] rounded-sm block"></div>
-            <div className="px-4.5 pb-7">
-              <Flex className={"pt-5.5 pb-3"}>
-                <Flex className={"border-r-2 border-[#80B500]/35 pr-1.5"}>
-                  <FaRegEye className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    238 Views
-                  </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* featured */}
+          <div className="lg:col-span-2 lg:row-span-2 bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+            {/* image */}
+            <div className="w-full h-[300px] md:h-[400px]">
+              <img 
+                src={blogData[0].image} 
+                alt={blogData[0].title} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* content */}
+            <div className="p-8 md:p-10 flex flex-col grow">
+              <div className="flex items-center gap-4 mb-4">
+                <span className="bg-[#80B500]/10 text-[#80B500] border border-[#80B500]/20 px-3 py-1 rounded-full text-xs font-bold font-nuni uppercase tracking-wider">
+                  {blogData[0].category}
+                </span>
+                <Flex className="items-center gap-2 text-gray-400">
+                  <FaRegCalendarDays className="text-[#80B500] text-sm" />
+                  <p className="text-sm font-nuni">{blogData[0].date}</p>
                 </Flex>
-                <Flex className={"ml-2"}>
-                  <FaRegCalendarDays className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    July 27, 2020
-                  </p>
-                </Flex>
-              </Flex>
-              <h3 className="text-xl md:text-2xl text-[#232323] font-bold font-int w-full leading-8 md:leading-10 group-hover:underline hover:cursor-pointer">
-                Pure is the most healthy and most nourishing food
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold font-int text-white leading-tight mb-4 group-hover:text-[#80B500] transition-colors duration-300">
+                {blogData[0].title}
               </h3>
-              <p className="text-sm text-[#647589] font-nuni w-full leading-6 md:leading-7 py-4 md:py-5.5">
-                Owt to do with me cracking goal arse over tit cup of tea brolly
-                in my flat victoria sponge cup of
+              <p className="text-gray-400 font-nuni leading-relaxed mb-8 max-w-2xl">
+                {blogData[0].excerpt}
               </p>
-              <Flex
-                className={
-                  "items-baseline text-[#232323] group-hover:text-[#80B500] duration-500"
-                }
-              >
-                <p className="font-bold font-nuni text-sm md:text-base pr-2">Read More</p>
-                <FaChevronCircleRight />
+              <Flex className="items-center justify-between text-white mt-auto border-t border-white/10 pt-6">
+                <Flex className="items-center gap-2 text-gray-400">
+                  <FaRegEye className="text-[#80B500] text-lg" />
+                  <p className="text-sm font-nuni">{blogData[0].views}</p>
+                </Flex>
+                <Flex className="items-center gap-2 font-bold font-nuni text-sm uppercase tracking-widest group-hover:text-[#80B500] transition-colors duration-300">
+                  Read Article <FaArrowRight />
+                </Flex>
               </Flex>
             </div>
           </div>
-          {/* Blog Card 2 */}
-          <div className="rounded-xl shadow-blog group overflow-hidden">
-            <div className="mx-3 mt-3 h-[250px] md:h-[280px] bg-[#C8CACF] rounded-sm block"></div>
-            <div className="px-4.5 pb-7">
-              <Flex className={"pt-5.5 pb-3"}>
-                <Flex className={"border-r-2 border-[#80B500]/35 pr-1.5"}>
-                  <FaRegEye className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    238 Views
-                  </p>
-                </Flex>
-                <Flex className={"ml-2"}>
-                  <FaRegCalendarDays className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    July 27, 2020
-                  </p>
-                </Flex>
-              </Flex>
-              <h3 className="text-xl md:text-2xl text-[#232323] font-bold font-int w-full leading-8 md:leading-10 group-hover:underline hover:cursor-pointer">
-                Nature's Path Organic Food Blog is a place to find
-              </h3>
-              <p className="text-sm text-[#647589] font-nuni w-full leading-6 md:leading-7 py-4 md:py-5.5">
-                Owt to do with me cracking goal arse over tit cup of tea brolly
-                in my flat victoria sponge cup of
-              </p>
-              <Flex
-                className={
-                  "items-baseline text-[#232323] group-hover:text-[#80B500] duration-500"
-                }
-              >
-                <p className="font-bold font-nuni text-sm md:text-base pr-2">Read More</p>
-                <FaChevronCircleRight />
-              </Flex>
+          {/* card 1 */}
+          <div className="lg:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+            <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
+              <img 
+                src={blogData[1].image} 
+                alt={blogData[1].title} 
+                className="w-full h-full object-cover"
+              />
             </div>
+            <div className="flex items-center gap-3 mb-4 text-gray-400">
+              <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
+                {blogData[1].category}
+              </span>
+              <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+              <p className="text-xs font-nuni">{blogData[1].date}</p>
+            </div>
+            <h3 className="text-xl font-bold font-int text-white leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
+              {blogData[1].title}
+            </h3>
+            <Flex className="items-center justify-between text-white mt-auto pt-4 border-t border-white/10">
+              <Flex className="items-center gap-2 text-gray-500">
+                <FaRegEye className="text-[#80B500] text-sm" />
+                <p className="text-xs font-nuni">{blogData[1].views}</p>
+              </Flex>
+              <FaArrowRight className="group-hover:text-[#80B500] transition-colors duration-300" />
+            </Flex>
           </div>
-          {/* Blog Card 3 */}
-          <div className="rounded-xl shadow-blog group overflow-hidden">
-            <div className="mx-3 mt-3 h-[250px] md:h-[280px] bg-[#C8CACF] rounded-sm block"></div>
-            <div className="px-4.5 pb-7">
-              <Flex className={"pt-5.5 pb-3"}>
-                <Flex className={"border-r-2 border-[#80B500]/35 pr-1.5"}>
-                  <FaRegEye className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    238 Views
-                  </p>
-                </Flex>
-                <Flex className={"ml-2"}>
-                  <FaRegCalendarDays className="text-[#80B500]" />
-                  <p className="pl-1.5 text-sm text-[#647589] font-nuni">
-                    July 27, 2020
-                  </p>
-                </Flex>
-              </Flex>
-              <h3 className="text-xl md:text-2xl text-[#232323] font-bold font-int w-full leading-8 md:leading-10 group-hover:underline hover:cursor-pointer">
-                Organics is a hair care brand known for its focus on inco
-              </h3>
-              <p className="text-sm text-[#647589] font-nuni w-full leading-6 md:leading-7 py-4 md:py-5.5">
-                Owt to do with me cracking goal arse over tit cup of tea brolly
-                in my flat victoria sponge cup of
-              </p>
-              <Flex
-                className={
-                  "items-baseline text-[#232323] group-hover:text-[#80B500] duration-500"
-                }
-              >
-                <p className="font-bold font-nuni text-sm md:text-base pr-2">Read More</p>
-                <FaChevronCircleRight />
-              </Flex>
+          {/* Card 2 */}
+          <div className="lg:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
+            <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
+              <img 
+                src={blogData[2].image} 
+                alt={blogData[2].title} 
+                className="w-full h-full object-cover"
+              />
             </div>
+            <div className="flex items-center gap-3 mb-4 text-gray-400">
+              <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
+                {blogData[2].category}
+              </span>
+              <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
+              <p className="text-xs font-nuni">{blogData[2].date}</p>
+            </div>
+            <h3 className="text-xl font-bold font-int text-white leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
+              {blogData[2].title}
+            </h3>
+            <Flex className="items-center justify-between text-white mt-auto pt-4 border-t border-white/10">
+              <Flex className="items-center gap-2 text-gray-500">
+                <FaRegEye className="text-[#80B500] text-sm" />
+                <p className="text-xs font-nuni">{blogData[2].views}</p>
+              </Flex>
+              <FaArrowRight className="group-hover:text-[#80B500] transition-colors duration-300" />
+            </Flex>
           </div>
         </div>
       </Container>
