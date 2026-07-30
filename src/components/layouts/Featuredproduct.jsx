@@ -3,6 +3,7 @@ import axios from 'axios';
 import Container from '../Container';
 import Flex from '../Flex';
 import Product from '../Product';
+import Images from '../Images';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
 const Featuredproduct = () => {
@@ -69,7 +70,7 @@ const Featuredproduct = () => {
                 <div className="product pt-10 md:pt-13">
                     {/* Loader */}
                     {isLoading ? (
-                        <div className="flex justify-center items-center h-[300px]">
+                        <div className="flex justify-center items-center h-75">
                             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
@@ -77,11 +78,20 @@ const Featuredproduct = () => {
                             {featuredProducts.map((product) => (
                                 <Product 
                                     key={product.id}
-                                    productImg={<img src={product.thumbnail} alt={product.title} className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm" />}
+                                    productId={product.id}
+                                    imgString={product.thumbnail}
+                                    productImg={
+                                        <Images 
+                                            imgSrc={product.thumbnail} 
+                                            alt={product.title} 
+                                            className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm" 
+                                        />
+                                    }
                                     productTitle={product.title}
                                     productPrice={`$${product.price.toFixed(2)}`}
                                     productOffer={product.discountPercentage ? getOriginalPrice(product.price, product.discountPercentage) : null}
                                     badge={product.discountPercentage > 0 ? `-${Math.round(product.discountPercentage)}%` : null}
+                                    // eslint-disable-next-line react-hooks/purity
                                     productRatings={renderStars(product.rating, product.reviews?.length || Math.floor(Math.random() * 20) + 10)}
                                 />
                             ))}
