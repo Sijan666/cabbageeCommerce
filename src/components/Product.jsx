@@ -1,11 +1,14 @@
+// Product.jsx
 import React from 'react';
 import Flex from './Flex';
 import { IoCartOutline } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
 import { GoZoomIn } from 'react-icons/go';
 import { useStore } from '../store/useStore';
+import { Link } from 'react-router-dom';
 
 const Product = ({ 
+    productId,
     imgString, 
     productImg, 
     isList, 
@@ -13,29 +16,31 @@ const Product = ({
     productRatings, 
     badge, 
     productTitle, 
-    productPrice, 
+    productPrice, 5
     productOffer 
 }) => {
     const { addToCart, addToWishlist } = useStore();
 
     const productData = {
-        id: productTitle,
+        id: productId || productTitle,
         title: productTitle,
         price: parseFloat(productPrice?.replace('$', '') || 0), 
         image: imgString || "", 
     };
+
     const iconClass = "bg-white text-[#80B500] rounded-full p-2.5 hover:bg-[#80B500] hover:text-white duration-300 cursor-pointer opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100";
 
     return (
         <div className={`w-full group duration-300 overflow-hidden bg-white shadow-customMade border border-[#e5e5e5] hover:border-[#80B500] rounded-md 
             ${isList ? 'flex flex-col sm:flex-row p-4 gap-6 items-center' : 'pt-2 px-2 pb-5 sm:pb-7'}
         `}>
-            {/* Image Section */}
+            {/* image section */}
             <div className={`bg-[#f4f6f8] rounded-md group-hover:bg-[#e8ecef] duration-300 relative flex justify-center items-center overflow-hidden shrink-0 
                 ${isList ? 'w-full sm:w-[280px] h-[220px]' : 'w-full h-[200px] sm:h-[231px]'}
             `}>
-                {productImg}
-                {/* Hover Action Icons */}
+                <Link to={`/shop/${productId}`} className="w-full h-full flex items-center justify-center">
+                    {productImg}
+                </Link>
                 {!isList && (
                     <Flex className="gap-x-[11px] absolute opacity-0 group-hover:opacity-100 duration-300 bottom-10 sm:bottom-15 left-1/2 -translate-x-1/2">
                         <div onClick={() => addToCart(productData)} className={iconClass}>
@@ -44,15 +49,14 @@ const Product = ({
                         <div onClick={() => addToWishlist(productData)} className={`${iconClass} delay-100`}>
                             <GrFavorite className="text-[14px]" />
                         </div>
-                        <div className={`${iconClass} delay-200`}>
+                        <Link to={`/shop/${productId}`} className={`${iconClass} delay-200 flex items-center justify-center`}>
                             <GoZoomIn className="text-[14px]" />
-                        </div>
+                        </Link>
                     </Flex>
                 )}
             </div>
-            {/* Content Section */}
+            {/* content section */}
             <div className={`w-full ${isList ? 'flex-1 flex flex-col justify-center' : ''}`}>
-                {/* Ratings & Badge */}
                 <div className="flex justify-between mt-[15px] sm:mt-[21px] items-center px-1 sm:px-2 gap-x-2">
                     <div className="flex items-center gap-x-1 sm:w-auto shrink-0">
                         {productRatings}
@@ -65,13 +69,13 @@ const Product = ({
                         </p>
                     )}
                 </div>
-                {/* Title */}
                 <h4 className={`text-[#232323] font-bold font-int pt-[5px] px-1 sm:px-2 
                     ${isList ? 'text-[18px] sm:text-[22px] mt-2 mb-2 whitespace-normal' : 'text-[14px] sm:text-base truncate'}
                 `}>
-                    {productTitle}
+                    <Link to={`/shop/${productId}`} className="hover:text-[#80B500] transition-colors">
+                        {productTitle}
+                    </Link>
                 </h4>
-                {/* Pricing */}
                 <div className="flex pt-2 sm:pt-[13px] items-baseline gap-x-2 px-1 sm:px-2 flex-wrap">
                     <p className={`font-bold text-[#283C54] font-nuni ${isList ? 'text-[18px] sm:text-[20px]' : 'text-[13px] sm:text-[15px]'}`}>
                         {productPrice}
@@ -82,7 +86,6 @@ const Product = ({
                         </p>
                     )}
                 </div>
-                {/* List View Details */}
                 {isList && (
                     <div className="px-1 sm:px-2 mt-4">
                         <p className="text-gray-500 font-nuni text-[14px] leading-relaxed line-clamp-2 sm:line-clamp-3 mb-5 pr-0 sm:pr-10">

@@ -11,7 +11,6 @@ import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import Product from '../Product';
 
 const Shop = () => {
-    // ui states with localStorage
     const [viewType, setViewType] = useState(() => {
         const savedView = localStorage.getItem('shopViewType');
         return savedView ? savedView : 'grid'; 
@@ -271,8 +270,10 @@ const Shop = () => {
                                     return (
                                         <Product 
                                             key={product.id}
+                                            productId={product.id}
                                             isList={viewType === 'list'}
                                             productDesc={product.description}
+                                            imgString={product.thumbnail} 
                                             productImg={<img src={product.thumbnail} alt={product.title} className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm" />}
                                             productTitle={product.title}
                                             productPrice={`$${product.price.toFixed(2)}`}

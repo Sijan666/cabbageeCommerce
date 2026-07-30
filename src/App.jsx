@@ -7,6 +7,7 @@ import Loader from './components/Loader';
 import RootLayouts from './components/layouts/RootLayouts';
 import Shop from './components/pages/Shop';
 import CategoryProducts from './components/pages/CategoryProducts';
+import ProductDetails from './components/pages/ProductDetails';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -33,6 +34,7 @@ function App() {
             <Route path="category/:categoryName" element={<CategoryProducts />} />
             <Route path="cart" element={<Cart />} />
             <Route path="wishlist" element={<Wishlist />} />
+            <Route path="/shop/:id" element={<ProductDetails />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
