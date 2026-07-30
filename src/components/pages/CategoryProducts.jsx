@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Container from '../Container';
 import ProductforOurProducts from '../ProductsforOurProducts';
+import Images from '../Images';
 
 const CategoryProducts = () => {
     const { categoryName } = useParams(); 
@@ -71,7 +72,7 @@ const CategoryProducts = () => {
                 {/* products */}
                 <div>
                     {isLoading ? (
-                        <div className="flex justify-center items-center h-[300px]">
+                        <div className="flex justify-center items-center h-75">
                             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : products.length > 0 ? (
@@ -79,11 +80,13 @@ const CategoryProducts = () => {
                             {products.map((product) => (
                                 <div key={product.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
                                     <ProductforOurProducts 
+                                        productId={product.id}
+                                        imgString={product.thumbnail}
                                         productsImg={
-                                            <img 
-                                                src={product.thumbnail} 
+                                            <Images
+                                                imgSrc={product.thumbnail} 
                                                 alt={product.title} 
-                                                className="w-full h-[150px] md:h-[200px] object-contain mix-blend-multiply drop-shadow-sm p-4" 
+                                                className="w-full h-37.5 md:h-50 object-contain mix-blend-multiply drop-shadow-sm p-4" 
                                             />
                                         }
                                         productsTitle={product.title}
