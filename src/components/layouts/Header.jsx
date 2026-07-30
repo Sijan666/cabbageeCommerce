@@ -6,6 +6,7 @@ import Images from "../Images";
 import Button from "../Button";
 import uk from "/src/assets/uk.png";
 import Logo from "/src/assets/logo.png";
+import { useStore } from "../../store/useStore";
 
 // Icons
 import { SlLocationPin } from "react-icons/sl";
@@ -18,7 +19,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Dynamic Scroll Effect
+  const { cart, wishlist } = useStore();
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -77,31 +79,28 @@ const Header = () => {
         }`}>
         <Container className="px-5 lg:px-0">
           <Flex className="justify-between items-center">
-            {/* Logo */}
-            <Flex className="items-center cursor-pointer group">
-              <div className="relative">
-                <Images
-                  imgSrc={Logo}
-                  className="w-9 md:w-11 relative z-10 transform group-hover:rotate-360 transition-transform duration-700 ease-in-out"
-                />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#80B500]/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-              <h3 className="pl-3 text-2xl md:text-[28px] text-white font-black font-int tracking-tight">
-                Cabbage<span className="text-[#80B500]">.</span>
-              </h3>
-            </Flex>
+            <Link to="/">
+              <Flex className="items-center cursor-pointer group">
+                <div className="relative">
+                  <Images
+                    imgSrc={Logo}
+                    className="w-9 md:w-11 relative z-10 transform group-hover:rotate-360 transition-transform duration-700 ease-in-out"
+                  />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#80B500]/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                <h3 className="pl-3 text-2xl md:text-[28px] text-white font-black font-int tracking-tight">
+                  Cabbage<span className="text-[#80B500]">.</span>
+                </h3>
+              </Flex>
+            </Link>
             {/* Desktop Nav Links */}
             <div className="hidden lg:block">
               <ul className="flex gap-x-10 items-center font-nuni text-[14px] font-bold text-white/80 uppercase tracking-widest">
                 {navLinks.map((item, index) => (
-                  <li
-                    key={index}
-                    className="relative cursor-pointer group py-2 transition-colors duration-300 hover:text-white"
-                  >
+                  <li key={index} className="relative cursor-pointer group py-2 transition-colors duration-300 hover:text-white">
                     <Link to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
                       {item}
                     </Link>
-                    {/* Glowing Accent Dot on Hover */}
                     <span className="absolute left-1/2 -bottom-1 w-1.5 h-1.5 bg-[#80B500] rounded-full opacity-0 transform -translate-x-1/2 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_8px_#80B500]"></span>
                   </li>
                 ))}
@@ -109,23 +108,29 @@ const Header = () => {
             </div>
             {/* Icons & Action Button */}
             <Flex className="items-center gap-x-5 md:gap-x-7">
-              {/* Action Icons */}
+              {/* Desktop Action Icons */}
               <Flex className="hidden sm:flex gap-x-3 items-center">
-                {/* Wishlist Link */}
-                <Link to="/wishlist" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                {/* Wishlist Icon */}
+                <Link to="/wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <MdFavoriteBorder className="text-[19px]" />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
+                      {wishlist.length}
+                    </span>
+                  )}
                 </Link>
                 {/* User Icon */}
                 <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <FaRegUser className="text-[16px]" />
                 </div>
-                {/* Cart Link */}
+                {/* Cart Icon */}
                 <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
                   <BsCart3 className="text-[18px]" />
-                  {/* Glowing Notification Badge */}
-                  <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
-                    2
-                  </span>
+                  {cart.length > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
+                      {cart.length}
+                    </span>
+                  )}
                 </Link>
               </Flex>
               {/* Get Quote Button */}
@@ -153,10 +158,7 @@ const Header = () => {
             <div className="pb-5 border-t border-white/10">
               <ul className="flex flex-col gap-y-4 font-nuni text-[15px] font-bold text-white/80 uppercase tracking-wider pt-5 px-2">
                 {navLinks.map((item, index) => (
-                  <li
-                    key={index}
-                    className="hover:text-[#80B500] hover:translate-x-2 transition-all cursor-pointer"
-                  >
+                  <li key={index} className="hover:text-[#80B500] hover:translate-x-2 transition-all cursor-pointer">
                     <Link 
                       to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                       onClick={() => setIsMenuOpen(false)}
@@ -169,15 +171,22 @@ const Header = () => {
               </ul>
               {/* Mobile Action Icons */}
               <Flex className="mt-6 pt-6 border-t border-white/10 gap-x-5 justify-center sm:hidden">
-                <Link to="/wishlist" onClick={() => setIsMenuOpen(false)}>
+                <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="relative">
                   <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500]" />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                      {wishlist.length}
+                    </span>
+                  )}
                 </Link>
                 <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500]" />
                 <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
                   <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500]" />
-                  <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
-                    2
-                  </span>
+                  {cart.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                      {cart.length}
+                    </span>
+                  )}
                 </Link>
               </Flex>
               <div className="mt-6 md:hidden">
