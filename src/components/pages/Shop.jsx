@@ -72,6 +72,7 @@ const Shop = () => {
     }, [allData, searchQuery, sortBy]);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentPage(1);
     }, [searchQuery, sortBy, perPage]);
 
@@ -182,7 +183,7 @@ const Shop = () => {
                                     id="perPage"
                                     value={perPage}
                                     onChange={(e) => setPerPage(Number(e.target.value))}
-                                    className="h-[34px] border border-[#e5e5e5] text-[#888888] text-[13px] rounded-[3px] px-2 focus:outline-none font-nuni cursor-pointer bg-white"
+                                    className="h-8.5 border border-[#e5e5e5] text-[#888888] text-[13px] rounded-[3px] px-2 focus:outline-none font-nuni cursor-pointer bg-white"
                                 >
                                     <option value="12">12</option>
                                     <option value="24">24</option>
@@ -197,7 +198,7 @@ const Shop = () => {
                                     id="sortBy"
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
-                                    className="h-[34px] border border-[#e5e5e5] text-[#888888] text-[13px] rounded-[3px] px-2 pr-4 focus:outline-none font-nuni cursor-pointer bg-white"
+                                    className="h-8.5 border border-[#e5e5e5] text-[#888888] text-[13px] rounded-[3px] px-2 pr-4 focus:outline-none font-nuni cursor-pointer bg-white"
                                 >
                                     <option value="best-match">Best Match</option>
                                     <option value="price-low">Price: Low to High</option>
@@ -208,7 +209,7 @@ const Shop = () => {
                             <Flex className="items-center gap-2">
                                 <button
                                     onClick={() => handleViewChange('grid')}
-                                    className={`h-[34px] w-[34px] flex items-center justify-center rounded-[3px] transition-all duration-200 border cursor-pointer ${
+                                    className={`h-8.5 w-8.5 flex items-center justify-center rounded-[3px] transition-all duration-200 border cursor-pointer ${
                                         viewType === 'grid' 
                                             ? 'border-transparent shadow-[0_3px_10px_rgba(0,0,0,0.06)] bg-white text-[#232323]' 
                                             : 'border-[#e5e5e5] bg-white text-[#888888] hover:text-[#232323]'
@@ -218,7 +219,7 @@ const Shop = () => {
                                 </button>
                                 <button
                                     onClick={() => handleViewChange('list')}
-                                    className={`h-[34px] w-[34px] flex items-center justify-center rounded-[3px] transition-all duration-200 border cursor-pointer ${
+                                    className={`h-8.5 w-8.5 flex items-center justify-center rounded-[3px] transition-all duration-200 border cursor-pointer ${
                                         viewType === 'list' 
                                             ? 'border-transparent shadow-[0_3px_10px_rgba(0,0,0,0.06)] bg-white text-[#232323]' 
                                             : 'border-[#e5e5e5] bg-white text-[#888888] hover:text-[#232323]'
@@ -228,7 +229,7 @@ const Shop = () => {
                                 </button>
                             </Flex>
                             <form 
-                                className="flex items-center h-[34px]"
+                                className="flex items-center h-8.5"
                                 onSubmit={handleSearchSubmit}
                             >
                                 <input 
@@ -236,7 +237,7 @@ const Shop = () => {
                                     placeholder="Search" 
                                     value={searchInput}
                                     onChange={(e) => setSearchInput(e.target.value)}
-                                    className="h-full bg-[#f4f6f8] text-[13px] text-[#666666] px-3 w-[120px] sm:w-[130px] outline-none rounded-l-[3px] font-nuni placeholder:text-[#a0a0a0]"
+                                    className="h-full bg-[#f4f6f8] text-[13px] text-[#666666] px-3 w-30 sm:w-32.5 outline-none rounded-l-[3px] font-nuni placeholder:text-[#a0a0a0]"
                                 />
                                 <button 
                                     type="submit"
@@ -253,7 +254,7 @@ const Shop = () => {
             <section className="py-10 mb-20 bg-white">
                 <Container className="px-4 sm:px-8 lg:px-0">
                     {isLoading ? (
-                        <div className="flex justify-center items-center h-[400px]">
+                        <div className="flex justify-center items-center h-100">
                             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : processedData.length === 0 ? (
@@ -304,7 +305,7 @@ const Shop = () => {
                                                 <button
                                                     key={index}
                                                     onClick={() => paginate(index + 1)}
-                                                    className={`w-[42px] h-[42px] flex items-center justify-center rounded-full transition-all cursor-pointer text-[15px] ${
+                                                    className={`w-10.5 h-10.5 flex items-center justify-center rounded-full transition-all cursor-pointer text-[15px] ${
                                                         currentPage === index + 1
                                                         ? 'bg-[#80B500] text-white shadow-[0_4px_10px_rgba(128,181,0,0.3)]'
                                                         : 'bg-white text-[#666666] shadow-[0_0_15px_rgba(0,0,0,0.04)] hover:text-[#80B500]'
