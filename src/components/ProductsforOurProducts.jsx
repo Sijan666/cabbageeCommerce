@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Flex from './Flex';
-import Images from './Images'; // <-- আপনার কাস্টম ইমেজ কম্পোনেন্ট
+import Images from './Images';
 import { IoCartOutline, IoCart, IoClose } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
 import { FaHeart } from 'react-icons/fa';
@@ -59,7 +59,6 @@ const ProductforOurProducts = ({
     };
 
     const baseIconClass = "rounded-full p-2.5 duration-300 cursor-pointer flex items-center justify-center opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100";
-    const activeIconClass = "rounded-full p-2.5 duration-300 cursor-pointer flex items-center justify-center opacity-100 translate-y-0";
 
     return (
         <>
@@ -71,7 +70,7 @@ const ProductforOurProducts = ({
                         <div 
                             onClick={handleCartToggle} 
                             className={`
-                                ${isAlreadyInCart ? activeIconClass : baseIconClass} 
+                                ${baseIconClass} 
                                 ${isAlreadyInCart ? 'bg-[#80B500] text-white' : 'bg-white text-[#80B500] hover:bg-[#80B500] hover:text-white'}
                             `}
                         >
@@ -81,7 +80,7 @@ const ProductforOurProducts = ({
                         <div 
                             onClick={handleWishlistToggle} 
                             className={`
-                                ${isAlreadyInWishlist ? activeIconClass : `${baseIconClass} delay-100`} 
+                                ${baseIconClass} delay-100 
                                 ${isAlreadyInWishlist ? 'bg-[#80B500] text-white' : 'bg-white text-[#80B500] hover:bg-[#80B500] hover:text-white'}
                             `}
                         >
