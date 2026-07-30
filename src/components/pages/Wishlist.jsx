@@ -54,8 +54,11 @@ const Wishlist = () => {
                     {wishlist.map((item) => (
                         <div key={item.id} className="bg-white border border-[#e5e5e5] rounded-xl p-5 flex flex-col group hover:border-[#80B500] transition-colors duration-300">
                             {/* Image */}
-                            <div className="relative w-full h-[180px] rounded-xl overflow-hidden mb-5 bg-[#f4f6f8] flex items-center justify-center">
-                                <Images imgSrc={item.image} className="w-auto h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                            <div className="relative w-full h-45 rounded-xl overflow-hidden mb-5 bg-[#f4f6f8] flex items-center justify-center">
+                                <Images 
+                                    imgSrc={item.image} 
+                                    className="w-auto h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                />
                                 {/* Delete Button */}
                                 <button 
                                     onClick={() => removeFromWishlist(item.id)}
