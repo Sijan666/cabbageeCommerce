@@ -93,14 +93,14 @@ const Deals = () => {
           </div>
         ) : (
           <Flex className={"flex-col lg:flex-row items-center lg:items-start text-center lg:text-left pt-10 lg:pt-15 pb-10 lg:pb-7.5 gap-y-10 lg:gap-y-0 lg:gap-x-26.25"}>
-            {/* left side: API product image */}
+            {/* left side */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <Images 
                 imgSrc={dealProduct?.thumbnail || ""} 
                 className="max-w-full h-87.5 md:h-105 object-contain mix-blend-multiply drop-shadow-md transition-all duration-500" 
               />
             </div>
-            {/* right side: product details & countdown */}
+            {/* right side */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
               <p className="text-[#80B500] font-nuni font-bold text-sm md:text-base">
                 Todays Hot Deals
