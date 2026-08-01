@@ -21,14 +21,13 @@ import { useStore } from '../../store/useStore';
 
 const ProductDetails = () => {
     const { id } = useParams();
+    // eslint-disable-next-line no-unused-vars
     const { addToCart, addToWishlist, removeFromWishlist, wishlist, cart } = useStore();
-
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('description');
-
     const currentId = product ? product.id : null;
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
 
@@ -48,7 +47,6 @@ const ProductDetails = () => {
                 setIsLoading(false);
             }
         };
-
         fetchProduct();
         window.scrollTo(0, 0);
     }, [id]);
@@ -64,7 +62,6 @@ const ProductDetails = () => {
     }, [product]);
 
     const categoryName = product?.category?.replaceAll('-', ' ') || '';
-
     const originalPrice = product?.discountPercentage
         ? product.price / (1 - product.discountPercentage / 100)
         : product?.price || 0;
@@ -126,7 +123,7 @@ const ProductDetails = () => {
     return (
         <main className="min-h-screen bg-[#F7F9F2] py-8 font-nuni lg:py-12">
             <Container className="px-4 lg:px-0">
-                {/* Breadcrumbs */}
+                {/* breadcrumbs */}
                 <nav className="mb-8">
                     <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
                         <BreadcrumbLink to="/" title="Home" />
@@ -139,15 +136,13 @@ const ProductDetails = () => {
                             capitalize
                         />
                         <IoChevronForward className="hidden text-xs sm:block" />
-                        <li className="hidden max-w-[250px] truncate font-bold text-[#232323] sm:block">
+                        <li className="hidden max-w-62.5 truncate font-bold text-[#232323] sm:block">
                             {product.title}
                         </li>
                     </ol>
                 </nav>
-
-                {/* Main Section */}
-                <section className="grid overflow-hidden rounded-[32px] border border-[#E4E8DF] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] lg:grid-cols-2">
-                    {/* Left: Images Showcase */}
+                <section className="grid overflow-hidden rounded-4xl border border-[#E4E8DF] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] lg:grid-cols-2">
+                    {/* left */}
                     <div className="border-b border-[#E4E8DF] p-6 lg:border-b-0 lg:border-r lg:p-10">
                         <div className="flex flex-col-reverse gap-4 sm:flex-row">
                             {images.length > 1 && (
@@ -171,23 +166,20 @@ const ProductDetails = () => {
                                     ))}
                                 </div>
                             )}
-
-                            <div className="relative flex min-h-[380px] flex-1 items-center justify-center rounded-[24px] bg-[#F4F7F0] p-8 sm:min-h-[500px]">
+                            <div className="relative flex min-h-95 flex-1 items-center justify-center rounded-3xl bg-[#F4F7F0] p-8 sm:min-h-125">
                                 {product.discountPercentage > 0 && (
                                     <span className="absolute left-6 top-6 rounded-full bg-[#80B500] px-4 py-1.5 text-xs font-bold text-white shadow-md">
                                         -{Math.round(product.discountPercentage)}% OFF
                                     </span>
                                 )}
-
                                 <Images
                                     imgSrc={selectedImage || product.thumbnail}
-                                    className="max-h-[420px] w-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
+                                    className="max-h-105 w-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                                 />
                             </div>
                         </div>
                     </div>
-
-                    {/* Right: Product Info & Actions */}
+                    {/* right */}
                     <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-12">
                         <Link
                             to={`/category/${product.category}`}
@@ -195,11 +187,9 @@ const ProductDetails = () => {
                         >
                             {categoryName}
                         </Link>
-
                         <h1 className="mb-4 font-int text-3xl font-black text-[#232323] sm:text-4xl leading-tight">
                             {product.title}
                         </h1>
-
                         <div className="mb-5 flex items-center gap-3">
                             <div className="flex items-center gap-1 bg-[#FFF9E6] px-2.5 py-1 rounded-lg">
                                 <IoStar className="text-[#FFB800]" />
@@ -211,11 +201,9 @@ const ProductDetails = () => {
                                 ({product.reviews?.length || 12} verified reviews)
                             </span>
                         </div>
-
                         <p className="mb-6 leading-relaxed text-[#70766B]">
                             {product.description}
                         </p>
-
                         <div className="mb-8 flex flex-wrap items-baseline gap-4 border-y border-[#E4E8DF] py-5">
                             <span className="text-4xl font-black text-[#80B500]">
                                 ${product.price.toFixed(2)}
@@ -226,8 +214,7 @@ const ProductDetails = () => {
                                 </span>
                             )}
                         </div>
-
-                        {/* Stock & Quantity Box */}
+                        {/* stock & quantity Box */}
                         <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#E4E8DF] bg-[#FAFBF9] p-5">
                             <div>
                                 <p className="text-xs uppercase tracking-wider text-gray-400 font-bold mb-1">
@@ -237,7 +224,6 @@ const ProductDetails = () => {
                                     {isInStock ? `In Stock (${product.stock} items available)` : 'Out of stock'}
                                 </p>
                             </div>
-
                             <div className="flex h-12 items-center rounded-xl border border-[#E4E8DF] bg-white px-2 shadow-sm">
                                 <QuantityButton
                                     icon={<IoRemove />}
@@ -254,23 +240,21 @@ const ProductDetails = () => {
                                 />
                             </div>
                         </div>
-
-                        {/* Action Buttons */}
+                        {/* action buttons */}
                         <div className="flex flex-col gap-3.5 sm:flex-row">
                             <button
                                 type="button"
                                 disabled={!isInStock}
                                 onClick={() => addToCart(getProductData())}
-                                className="flex min-h-[56px] flex-1 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#80B500] px-6 font-bold text-white shadow-lg shadow-[#80B500]/20 transition-all hover:bg-[#6F9F00] hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300"
+                                className="flex min-h-14 flex-1 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#80B500] px-6 font-bold text-white shadow-lg shadow-[#80B500]/20 transition-all hover:bg-[#6F9F00] hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300"
                             >
                                 <IoCartOutline className="text-2xl" />
                                 Add to Cart · ${(product.price * quantity).toFixed(2)}
                             </button>
-
                             <button
                                 type="button"
                                 onClick={handleWishlistToggle}
-                                className={`flex min-h-[56px] min-w-[56px] cursor-pointer items-center justify-center rounded-2xl border transition-all ${
+                                className={`flex min-h-14 min-w-14 cursor-pointer items-center justify-center rounded-2xl border transition-all ${
                                     isAlreadyInWishlist
                                         ? 'border-[#80B500] bg-[#80B500]/10 text-[#80B500]'
                                         : 'border-[#E4E8DF] bg-white text-[#232323] hover:border-[#80B500] hover:text-[#80B500]'
@@ -284,8 +268,7 @@ const ProductDetails = () => {
                                 )}
                             </button>
                         </div>
-
-                        {/* Trust Badges */}
+                        {/* badges */}
                         <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#E4E8DF] pt-6">
                             <div className="flex items-center gap-3">
                                 <IoCarOutline className="text-2xl text-[#80B500]" />
@@ -302,8 +285,7 @@ const ProductDetails = () => {
                         </div>
                     </div>
                 </section>
-
-                {/* Additional Details Tabs Section */}
+                {/* additional details */}
                 <section className="mt-12 rounded-[28px] border border-[#E4E8DF] bg-white p-6 sm:p-10 shadow-sm">
                     <div className="flex border-b border-[#E4E8DF] gap-8">
                         <button
@@ -329,7 +311,6 @@ const ProductDetails = () => {
                             )}
                         </button>
                     </div>
-
                     <div className="py-6 text-[#70766B] leading-relaxed">
                         {activeTab === 'description' ? (
                             <div>
@@ -366,7 +347,6 @@ const ProductDetails = () => {
         </main>
     );
 };
-
 const BreadcrumbLink = ({ to, title, capitalize = false }) => (
     <li>
         <Link
@@ -379,7 +359,6 @@ const BreadcrumbLink = ({ to, title, capitalize = false }) => (
         </Link>
     </li>
 );
-
 const QuantityButton = ({ icon, onClick, disabled }) => (
     <button
         type="button"
