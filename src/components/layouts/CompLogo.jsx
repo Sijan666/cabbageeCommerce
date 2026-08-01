@@ -38,7 +38,7 @@ const CompLogo = () => {
   return (
     <div className="lg:relative z-20">
       {/* Banner */}
-      <Container className="bg-white lg:px-12 xl:px-[110px] py-10 lg:py-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 rounded-2xl w-full lg:absolute lg:-bottom-18 lg:left-1/2 lg:-translate-x-1/2">
+      <Container className="bg-white lg:px-12 xl:px-27.5 py-10 lg:py-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 rounded-2xl w-full lg:absolute lg:-bottom-18 lg:left-1/2 lg:-translate-x-1/2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 px-4 lg:px-0">
           {features.map((feature) => (
             <Flex key={feature.id} className="items-center gap-x-4 lg:justify-center group cursor-pointer">
