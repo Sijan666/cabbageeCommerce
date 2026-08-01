@@ -47,7 +47,7 @@ const Review = () => {
 
   return (
     <div className="bg-[#F7F5EB] py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white opacity-40 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-200 bg-white opacity-40 blur-[120px] rounded-full pointer-events-none"></div>
       <Container className="px-4 lg:px-0 relative z-10">
         {loading ? (
           <div className="flex justify-center items-center py-32">
@@ -56,16 +56,16 @@ const Review = () => {
         ) : (
           <Flex className={"flex-col lg:flex-row justify-between items-center gap-y-12 lg:gap-y-0 lg:gap-x-16"}>
             <div className="w-full lg:w-1/2 flex justify-center">
-              <div className="relative w-full max-w-[500px]">
+              <div className="relative w-full max-w-125">
                 <div className="absolute inset-0 bg-white/60 rounded-3xl blur-xl transition-all duration-500"></div>
-                <div className="bg-white/80 backdrop-blur-sm p-10 md:p-16 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white relative flex justify-center items-center overflow-hidden min-h-[350px]">
+                <div className="bg-white/80 backdrop-blur-sm p-10 md:p-16 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white relative flex justify-center items-center overflow-hidden min-h-87.5">
                   <div className="absolute top-6 left-6 bg-[#80B500] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">
                     -{Math.round(product?.discountPercentage || 0)}%
                   </div>
                   <Images 
                     imgSrc={product?.thumbnail} 
                     alt={product?.title}
-                    className="w-full max-w-[280px] md:max-w-[320px] object-contain drop-shadow-2xl mx-auto" 
+                    className="w-full max-w-70 md:max-w-[320px] object-contain drop-shadow-2xl mx-auto" 
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@ const Review = () => {
                       }`}
                     >
                       {activeWeight === weight && (
-                        <div className="absolute top-0 left-0 w-full h-[3px] bg-[#80B500]"></div>
+                        <div className="absolute top-0 left-0 w-full h-0.75 bg-[#80B500]"></div>
                       )}
                       {weight}
                     </div>
@@ -126,7 +126,7 @@ const Review = () => {
                 </Flex>
               </div>
               <Flex className="items-center flex-wrap gap-4 w-full">
-                <Flex className="items-center bg-white rounded-md shadow-sm border border-gray-200 h-[50px]">
+                <Flex className="items-center bg-white rounded-md shadow-sm border border-gray-200 h-12.5">
                   <button 
                     onClick={handleDecrement} 
                     className="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors rounded-l-md font-bold text-lg cursor-pointer"
@@ -143,7 +143,7 @@ const Review = () => {
                     +
                   </button>
                 </Flex>
-                <button className="h-[50px] bg-[#80B500] hover:bg-[#6c9a00] text-white px-8 rounded-md font-bold font-nuni text-base transition-all duration-300 shadow-[0_10px_20px_rgba(128,181,0,0.2)] hover:shadow-[0_10px_25px_rgba(128,181,0,0.35)] hover:-translate-y-0.5 flex items-center gap-2 group cursor-pointer">
+                <button className="h-12.5 bg-[#80B500] hover:bg-[#6c9a00] text-white px-8 rounded-md font-bold font-nuni text-base transition-all duration-300 shadow-[0_10px_20px_rgba(128,181,0,0.2)] hover:shadow-[0_10px_25px_rgba(128,181,0,0.35)] hover:-translate-y-0.5 flex items-center gap-2 group cursor-pointer">
                   <svg className="w-5 h-5 group-hover:animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
