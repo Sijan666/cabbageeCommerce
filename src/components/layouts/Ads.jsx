@@ -39,7 +39,6 @@ const Ads = () => {
         const changeCardsSequentially = async () => {
             const shuffled = [...allDeals].sort(() => 0.5 - Math.random());
             const newDeals = shuffled.slice(0, 3);
-
             for (let i = 0; i < 3; i++) {
                 if (!isMounted) break;
                 setFadeStates(prev => {
