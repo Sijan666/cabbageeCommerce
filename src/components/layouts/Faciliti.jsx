@@ -100,7 +100,7 @@ const Faciliti = () => {
           </p>
         </div>
         {isLoading ? (
-          <div className="flex justify-center items-center h-[400px]">
+          <div className="flex justify-center items-center h-100">
               <div className="w-14 h-14 border-4 border-[#F4F9EB] border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : product ? (
@@ -109,14 +109,14 @@ const Faciliti = () => {
             <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
               {leftFeatures.map((item, index) => (
                 <Flex key={index} className="group flex-col sm:flex-row-reverse items-center sm:items-start text-center sm:text-right gap-y-4 sm:gap-y-0 sm:gap-x-5">
-                  <div className="shrink-0 w-[70px] h-[70px] bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
+                  <div className="shrink-0 w-17.5 h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
                     <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
                   <div className="w-full sm:pt-1">
                     <h5 className="text-[#223645] text-xl md:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
                       {item.title}
                     </h5>
-                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-[260px] mt-2 leading-relaxed sm:ml-auto">
+                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-65 mt-2 leading-relaxed sm:ml-auto">
                       {item.desc}
                     </p>
                   </div>
@@ -125,8 +125,8 @@ const Faciliti = () => {
             </div>
             {/* API Product */}
             <div className="w-full lg:w-1/3 flex flex-col items-center justify-center order-first lg:order-0 mb-12 lg:mb-0 relative group">
-              <div className="text-center w-full max-w-[350px]">
-                <div className="relative bg-white rounded-full w-[280px] h-[280px] sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500">
+              <div className="text-center w-full max-w-87.5">
+                <div className="relative bg-white rounded-full w-70 h-70 sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500">
                   <img 
                     src={product.thumbnail} 
                     alt={product.title} 
@@ -154,14 +154,14 @@ const Faciliti = () => {
             <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
               {rightFeatures.map((item, index) => (
                 <Flex key={index} className="group flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-y-4 sm:gap-y-0 sm:gap-x-5">
-                  <div className="shrink-0 w-[70px] h-[70px] bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
+                  <div className="shrink-0 w-17.5 h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
                     <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
                   <div className="w-full sm:pt-1">
                     <h5 className="text-[#223645] text-xl md:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
                       {item.title}
                     </h5>
-                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-[260px] mt-2 leading-relaxed">
+                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-65 mt-2 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
