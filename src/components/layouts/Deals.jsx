@@ -92,12 +92,12 @@ const Deals = () => {
             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <Flex className={"flex-col lg:flex-row items-center lg:items-start text-center lg:text-left pt-10 lg:pt-[60px] pb-10 lg:pb-[30px] gap-y-10 lg:gap-y-0 lg:gap-x-[105px]"}>
+          <Flex className={"flex-col lg:flex-row items-center lg:items-start text-center lg:text-left pt-10 lg:pt-15 pb-10 lg:pb-7.5 gap-y-10 lg:gap-y-0 lg:gap-x-26.25"}>
             {/* left side: API product image */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <Images 
                 imgSrc={dealProduct?.thumbnail || ""} 
-                className="max-w-full h-[350px] md:h-[420px] object-contain mix-blend-multiply drop-shadow-md transition-all duration-500" 
+                className="max-w-full h-87.5 md:h-105 object-contain mix-blend-multiply drop-shadow-md transition-all duration-500" 
               />
             </div>
             {/* right side: product details & countdown */}
@@ -106,11 +106,11 @@ const Deals = () => {
                 Todays Hot Deals
               </p>
               {/* product title */}
-              <h3 className="text-3xl md:text-4xl lg:text-[42px] text-[#232323] font-bold font-int w-full max-w-[515px] leading-tight lg:leading-[52px] pt-2 pb-4 lg:pb-5">
+              <h3 className="text-3xl md:text-4xl lg:text-[42px] text-[#232323] font-bold font-int w-full max-w-128.75 leading-tight lg:leading-13 pt-2 pb-4 lg:pb-5">
                 {dealProduct?.title || "Original Stock Honey Combo Package"}
               </h3>
               {/* product description */}
-              <p className="text-sm md:text-base text-[#546375] font-nuni w-full max-w-[410px] line-clamp-3">
+              <p className="text-sm md:text-base text-[#546375] font-nuni w-full max-w-102.5 line-clamp-3">
                 {dealProduct?.description || "Cur tantas regiones barbarorum obiit, tot maria transmist summo bono fruitur id est voluptate barbarorum"}
               </p>
               {/* countdown timer */}
