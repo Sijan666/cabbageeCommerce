@@ -85,7 +85,7 @@ const Ads = () => {
                                 return (
                                     <div 
                                         key={index} 
-                                        className={`${style.bg} rounded-md overflow-hidden shadow-lg hover:shadow-2xl relative flex items-center p-6 md:p-8 min-h-[180px] md:min-h-[220px] transition-transform duration-300 transform hover:-translate-y-2`}
+                                        className={`${style.bg} rounded-md overflow-hidden shadow-lg hover:shadow-2xl relative flex items-center p-6 md:p-8 min-h-45 md:min-h-55 transition-transform duration-300 transform`}
                                     >
                                         <div className={`w-[60%] z-10 text-white transition-opacity duration-300 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}>
                                             <p className="text-xs font-semibold uppercase mb-2 tracking-wide opacity-90">
