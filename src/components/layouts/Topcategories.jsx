@@ -52,7 +52,7 @@ const TopCategories = () => {
 
     return (
         <section className="w-full mb-16 md:mb-28"> 
-            <div className="bg-linear-to-b from-[#2A2B2D] to-[#424345] pt-20 md:pt-28 pb-[140px] md:pb-[180px] relative overflow-hidden">
+            <div className="bg-linear-to-b from-[#2A2B2D] to-[#424345] pt-20 md:pt-28 pb-35 md:pb-45 relative overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-white opacity-[0.02] blur-[100px] pointer-events-none"></div>
                 <Container className="px-4 lg:px-0 relative z-10">
                     <div className="text-center">
@@ -66,7 +66,7 @@ const TopCategories = () => {
                 </Container>
             </div>
             {/* Slider */}
-            <Container className="px-4 lg:px-0 relative z-20 -mt-[90px] md:-mt-[110px]">
+            <Container className="px-4 lg:px-0 relative z-20 -mt-22.5 md:-mt-27.5">
                 <div className='bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-50 p-6 md:p-10 lg:py-12 lg:px-14 w-full mx-auto relative'>
                     {categories.length > 0 ? (
                         <div className="relative">
@@ -99,8 +99,8 @@ const TopCategories = () => {
                                             className="flex flex-col items-center justify-center text-center outline-none cursor-pointer group py-4" 
                                             onClick={() => handleCategoryClick(cat.slug)}
                                         >
-                                            <div className="w-[100px] h-[100px] rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400 overflow-hidden">
-                                                <Images imgSrc={cat.image} className="w-[70px] h-[70px] object-contain group-hover:scale-110 transition-transform duration-300"/>
+                                            <div className="w-25 h-25 rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400 overflow-hidden">
+                                                <Images imgSrc={cat.image} className="w-17.5 h-17.5 object-contain group-hover:scale-110 transition-transform duration-300"/>
                                             </div>
                                             <h4 className={`text-[16px] md:text-[18px] capitalize font-bold font-int pt-6 transition-colors duration-300 ${selected === cat.slug ? 'text-[#80B500]' : 'text-[#232323] group-hover:text-[#80B500]'}`}>
                                                 {cat.name.replace('-', ' ')}
