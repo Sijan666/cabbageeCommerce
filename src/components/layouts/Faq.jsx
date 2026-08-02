@@ -35,7 +35,7 @@ const Faq = () => {
     return (
         <div className="py-20 lg:py-28 bg-[#F9FBF5]">
             <Container className="px-4 lg:px-0">
-                {/* Header */}
+                {/* header */}
                 <div className="text-center mb-16">
                     <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-2 block">
                         Get Your Answers
@@ -47,9 +47,9 @@ const Faq = () => {
                         Find answers to the most common questions about our organic products, shipping, and returns.
                     </p>
                 </div>
-                {/* Main Content */}
+                {/* main content */}
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-                    {/* Left Side */}
+                    {/* left side */}
                     <div className="w-full lg:w-1/2 flex flex-col">
                         <Accordion type="single" collapsible defaultValue="item-1" className="w-full h-full">
                             {faqData.map((faq) => (
@@ -68,12 +68,12 @@ const Faq = () => {
                             ))}
                         </Accordion>
                     </div>
-                    {/* Right Side */}
+                    {/* right side */}
                     <div className="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
-                        {/* Live Chat */}
+                        {/* live chat */}
                         <div className="md:col-span-2 relative bg-[#0B1120] rounded-3xl p-8 md:p-10 overflow-hidden group cursor-pointer border border-white/10 shadow-lg hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] transition-shadow duration-300 flex flex-col justify-center">
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#80B500]/30 rounded-full blur-[70px] group-hover:bg-[#80B500]/40 transition-colors duration-500 pointer-events-none"></div>
-                            {/* Header */}
+                            {/* header */}
                             <div className="flex justify-between items-start mb-8 relative z-10">
                                 <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex justify-center items-center border border-white/10">
                                     <FaComments className="text-[#80B500] text-2xl" />
@@ -83,16 +83,16 @@ const Faq = () => {
                                     <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">Online</span>
                                 </div>
                             </div>
-                            {/* Text */}
+                            {/* text */}
                             <div className="relative z-10">
                                 <h4 className="text-white text-[28px] font-int font-bold mb-3 group-hover:text-[#80B500] transition-colors duration-300">Live Chat Support</h4>
-                                <p className="text-gray-400 font-nuni text-base mb-8 max-w-[350px]">Can't find the answer? Chat with our organic food experts directly.</p>
+                                <p className="text-gray-400 font-nuni text-base mb-8 max-w-87.5">Can't find the answer? Chat with our organic food experts directly.</p>
                                 <div className="flex items-center text-white font-bold text-sm font-int uppercase tracking-widest group-hover:text-[#80B500] transition-colors duration-300">
                                     Start Chatting <FaArrowRight className="ml-2 text-[#80B500]" />
                                 </div>
                             </div>
                         </div>
-                        {/* Call Us */}
+                        {/* call us */}
                         <div className="col-span-1 bg-white border border-gray-100 shadow-sm rounded-3xl p-6 md:p-8 cursor-pointer hover:border-[#80B500]/30 hover:shadow-lg transition-all duration-300 group flex flex-col justify-center">
                             <div className="w-12 h-12 bg-[#F9FBF5] rounded-full flex justify-center items-center mb-5 group-hover:bg-[#80B500] transition-colors duration-300">
                                 <FaHeadset className="text-[#80B500] text-xl group-hover:text-white transition-colors duration-300" />
@@ -100,7 +100,7 @@ const Faq = () => {
                             <h4 className="text-[#232323] font-int font-bold text-xl mb-1">Call Us</h4>
                             <p className="text-[#546375] font-nuni text-sm">+880 123 456 789</p>
                         </div>
-                        {/* Email */}
+                        {/* email */}
                         <div className="col-span-1 bg-linear-to-br from-[#80B500] to-[#658f00] rounded-3xl p-6 md:p-8 cursor-pointer hover:shadow-xl hover:shadow-[#80B500]/40 transition-shadow duration-300 group flex flex-col justify-center overflow-hidden relative">
                             <div className="absolute -bottom-4 -right-4 text-white/10 text-7xl -rotate-12 pointer-events-none">
                                 <FaEnvelope />
