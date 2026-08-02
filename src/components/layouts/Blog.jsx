@@ -58,7 +58,7 @@ const Blog = () => {
           {/* featured */}
           <div className="lg:col-span-2 lg:row-span-2 bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
             {/* image */}
-            <div className="w-full h-[300px] md:h-[400px]">
+            <div className="w-full h-75 md:h-100">
               <img 
                 src={blogData[0].image} 
                 alt={blogData[0].title} 
@@ -95,7 +95,7 @@ const Blog = () => {
           </div>
           {/* card 1 */}
           <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
-            <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
+            <div className="w-full h-45 rounded-xl overflow-hidden mb-6">
               <img 
                 src={blogData[1].image} 
                 alt={blogData[1].title} 
@@ -122,7 +122,7 @@ const Blog = () => {
           </div>
           {/* Card 2 */}
           <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
-            <div className="w-full h-[180px] rounded-xl overflow-hidden mb-6">
+            <div className="w-full h-45 rounded-xl overflow-hidden mb-6">
               <img 
                 src={blogData[2].image} 
                 alt={blogData[2].title} 
