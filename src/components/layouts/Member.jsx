@@ -99,7 +99,6 @@ const Member = () => {
                   {member.role}
                 </p>
               </div>
-              
             </div>
           ))}
         </div>
