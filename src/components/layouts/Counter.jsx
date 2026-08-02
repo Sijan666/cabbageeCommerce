@@ -1,6 +1,5 @@
 import React from 'react'
 import Container from '../Container'
-import Flex from '../Flex'
 import Images from '../Images'
 
 import c1 from '../../assets/c1.png'
