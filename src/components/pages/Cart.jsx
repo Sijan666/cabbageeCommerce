@@ -99,7 +99,7 @@ const Cart = () => {
                             ))}
                         </div>
                     </div>
-                    {/* ===================== Order Summary ===================== */}
+                    {/* Order Summary */}
                     <div className="w-full lg:w-1/3 bg-white border border-[#e5e5e5] rounded-xl p-6 lg:p-8 sticky top-32">
                         <h3 className="text-xl font-bold font-int text-[#232323] border-b border-gray-100 pb-4 mb-6">
                             Order Summary
