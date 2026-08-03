@@ -11,7 +11,7 @@ import { useStore } from "../../store/useStore";
 const Wishlist = () => {
     const { wishlist, removeFromWishlist, addToCart } = useStore();
 
-    // Empty Wishlist State
+    // empty wishlist state
     if (wishlist.length === 0) {
         return (
             <div className="bg-[#F9FBF5] min-h-[70vh] py-24 flex items-center justify-center">
@@ -40,7 +40,7 @@ const Wishlist = () => {
     return (
         <div className="bg-[#F9FBF5] min-h-[70vh] py-20 pb-24">
             <Container className="px-4 lg:px-0">
-                {/* Header */}
+                {/* header */}
                 <div className="mb-10 text-center md:text-left">
                     <h2 className="text-3xl md:text-4xl font-black font-int text-[#232323] mb-2">
                         My Wishlist
@@ -49,17 +49,17 @@ const Wishlist = () => {
                         Review your favorite items and add them to your cart.
                     </p>
                 </div>
-                {/* Wishlist Grid */}
+                {/* wishlist */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {wishlist.map((item) => (
                         <div key={item.id} className="bg-white border border-[#e5e5e5] rounded-xl p-5 flex flex-col group hover:border-[#80B500] transition-colors duration-300">
-                            {/* Image */}
+                            {/* image */}
                             <div className="relative w-full h-45 rounded-xl overflow-hidden mb-5 bg-[#f4f6f8] flex items-center justify-center">
                                 <Images 
                                     imgSrc={item.image} 
                                     className="w-auto h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                                 />
-                                {/* Delete Button */}
+                                {/* delete button */}
                                 <button 
                                     onClick={() => removeFromWishlist(item.id)}
                                     className="absolute top-3 right-3 bg-red-50 text-red-500 p-2.5 rounded-full hover:bg-red-500 hover:text-white transition-colors cursor-pointer"
@@ -67,7 +67,7 @@ const Wishlist = () => {
                                     <FaTrash className="text-sm" />
                                 </button>
                             </div>
-                            {/* Details */}
+                            {/* details */}
                             <h4 className="text-lg font-bold font-int text-[#232323] mb-2 line-clamp-1">
                                 {item.title}
                             </h4>
@@ -76,7 +76,7 @@ const Wishlist = () => {
                                     ${item.price.toFixed(2)}
                                 </span>
                             </Flex>
-                            {/* Action Button */}
+                            {/* action */}
                             <button 
                                 onClick={() => addToCart(item)}
                                 className="cursor-pointer w-full py-3 rounded-md font-bold font-nuni uppercase tracking-widest flex items-center justify-center gap-2 transition-all duration-300 bg-[#f4f6f8] text-[#232323] hover:bg-[#80B500] hover:text-white"
