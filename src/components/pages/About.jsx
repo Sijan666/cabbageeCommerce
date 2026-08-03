@@ -94,9 +94,9 @@ const About = () => {
                                 <p className="text-gray-400 text-xs md:text-sm mt-1 font-nuni">/ Shop Director</p>
                             </div>
                         </div>
-                        {/* Right Side: Images */}
+                        {/* right side: images */}
                         <Flex className="gap-4 md:gap-6 h-75 sm:h-100 md:h-125 lg:h-150 w-full" aria-hidden="true">
-                            {/* Left Image Placeholder */}
+                            {/* left image placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-0 relative overflow-hidden">
                                 {/* Add Images here */}
                             </div>
@@ -108,7 +108,7 @@ const About = () => {
                     </div>
                 </Container>
             </section>
-            {/* Video Banner Section */}
+            {/* video Banner Section */}
             <section className="w-full h-62.5 sm:h-75 md:h-100 lg:h-112.5 bg-[#7a7a7a] flex items-center justify-center bg-cover bg-center" aria-label="Promotional Video">
                 <button 
                     type="button"
@@ -118,9 +118,9 @@ const About = () => {
                     <FaPlay className="text-[#80B500] text-xl sm:text-2xl md:text-3xl ml-1 sm:ml-2 group-hover:text-[#6a9600] transition-colors" aria-hidden="true" />
                 </button>
             </section>
-            {/* Team Member Section */}
+            {/* team member section */}
             <Member />
-            {/* Client Testimonial Section */}
+            {/* client testimonial section */}
             <section className="bg-[#f9f8f3] py-16 md:py-24" aria-labelledby="testimonial-heading">
                 <Container className="px-4 sm:px-8 lg:px-20 text-center">
                     <h2 id="testimonial-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#232323] mb-3 font-int">
@@ -130,7 +130,7 @@ const About = () => {
                         A highly efficient slip-ring scanner for today's diagnostic requirements.
                     </p>
                     <Flex className="items-center justify-center gap-x-2 sm:gap-x-4 md:gap-x-12 relative">
-                        {/* Left Arrow */}
+                        {/* left arrow */}
                         <button 
                             type="button"
                             aria-label="Previous testimonial"
@@ -138,7 +138,7 @@ const About = () => {
                         >
                             <HiOutlineArrowLeft className="text-lg md:text-xl" aria-hidden="true" />
                         </button>
-                        {/* Testimonial Card */}
+                        {/* testimonial card */}
                         <div className="relative w-full max-w-[90vw] sm:max-w-112.5 md:max-w-150 mx-auto">
                             <div className="relative z-10 pt-8 md:pt-12 pb-12 md:pb-16">
                                 <Swiper
@@ -161,16 +161,16 @@ const About = () => {
                                     {testimonials.map((item) => (
                                         <SwiperSlide key={item.id} className="bg-white shadow-[0_10px_40px_rgba(0,0,0,0.06)] rounded-xl px-5 sm:px-8 md:px-16 py-8 md:py-12 border border-gray-100 box-border">
                                             <Flex className="flex-col items-center">
-                                                {/* Avatar */}
+                                                {/* avatar */}
                                                 <div className="w-14 h-14 md:w-16 md:h-16 bg-[#e2e2e6] rounded-full mb-3 md:mb-4 shrink-0" aria-hidden="true"></div>
-                                                {/* Info */}
+                                                {/* info */}
                                                 <h4 className="text-[#232323] font-bold text-base md:text-lg font-int mb-1 text-center">
                                                     {item.name}
                                                 </h4>
                                                 <p className="text-gray-400 text-[11px] md:text-xs font-nuni mb-4 md:mb-6 text-center">
                                                     {item.designation}
                                                 </p>
-                                                {/* Text */}
+                                                {/* text */}
                                                 <p className="text-[#6b7280] text-xs sm:text-sm md:text-[15px] leading-relaxed md:leading-relaxed font-nuni text-center line-clamp-6 md:line-clamp-none">
                                                     {item.text}
                                                 </p>
@@ -178,7 +178,7 @@ const About = () => {
                                         </SwiperSlide>
                                     ))}
                                 </Swiper>
-                                {/* Dots */}
+                                {/* dots */}
                                 <div 
                                     className="custom-testi-pagination absolute bottom-0 md:bottom-4 left-0 right-0 flex items-center justify-center gap-x-2 z-20
                                     [&_.swiper-pagination-bullet]:w-2
