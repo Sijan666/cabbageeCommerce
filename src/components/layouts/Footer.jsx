@@ -13,7 +13,7 @@ import footerlogo from '../../assets/footerlogo.png';
 const Footer = () => {
   return (
     <>
-      <footer className="bg-[url('/src/assets/footer.png')] py-20 lg:py-[110px] bg-no-repeat bg-center bg-cover relative">
+      <footer className="bg-[url('/src/assets/footer.png')] py-20 lg:py-27.5 bg-no-repeat bg-center bg-cover relative">
         <div className="absolute inset-0 bg-[#0B1120]/80 pointer-events-none"></div>
         <Container className="px-4 lg:px-0 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 items-start">
