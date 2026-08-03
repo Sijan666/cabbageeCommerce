@@ -90,7 +90,6 @@ const Ads = () => {
                                             <p className="text-xs font-semibold uppercase mb-2 tracking-wide opacity-90">
                                                 {style.label}
                                             </p>
-                                            
                                             <h3 className="text-3xl md:text-4xl font-bold mb-1 leading-tight text-white drop-shadow-md">
                                                 {Math.round(ad?.discountPercentage || 0)}% OFF
                                             </h3>
