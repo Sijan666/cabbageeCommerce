@@ -95,7 +95,7 @@ const About = () => {
                             </div>
                         </div>
                         {/* Right Side: Images */}
-                        <Flex className="gap-4 md:gap-6 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full" aria-hidden="true">
+                        <Flex className="gap-4 md:gap-6 h-75 sm:h-100 md:h-125 lg:h-150 w-full" aria-hidden="true">
                             {/* Left Image Placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-0 relative overflow-hidden">
                                 {/* Add Images here */}
@@ -109,7 +109,7 @@ const About = () => {
                 </Container>
             </section>
             {/* Video Banner Section */}
-            <section className="w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] bg-[#7a7a7a] flex items-center justify-center bg-cover bg-center" aria-label="Promotional Video">
+            <section className="w-full h-62.5 sm:h-75 md:h-100 lg:h-112.5 bg-[#7a7a7a] flex items-center justify-center bg-cover bg-center" aria-label="Promotional Video">
                 <button 
                     type="button"
                     aria-label="Play promotional video"
@@ -139,7 +139,7 @@ const About = () => {
                             <HiOutlineArrowLeft className="text-lg md:text-xl" aria-hidden="true" />
                         </button>
                         {/* Testimonial Card */}
-                        <div className="relative w-full max-w-[90vw] sm:max-w-[450px] md:max-w-[600px] mx-auto">
+                        <div className="relative w-full max-w-[90vw] sm:max-w-112.5 md:max-w-150 mx-auto">
                             <div className="relative z-10 pt-8 md:pt-12 pb-12 md:pb-16">
                                 <Swiper
                                     effect={'cards'}
