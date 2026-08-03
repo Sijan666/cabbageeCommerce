@@ -61,7 +61,7 @@ const Banner = () => {
   return (
     <div className="w-full bg-[#F9FAFB] overflow-hidden relative">
       {isLoading ? (
-        <div className="w-full h-[450px] sm:h-[550px] lg:h-[750px] flex justify-center items-center">
+        <div className="w-full h-112.5 sm:h-137.5 lg:h-187.5 flex justify-center items-center">
           <div className="w-12 h-12 border-4 border-gray-200 border-t-[#80B500] rounded-full animate-spin"></div>
         </div>
       ) : bannerData.length > 0 ? (
@@ -92,7 +92,7 @@ const Banner = () => {
 
             return (
               <SwiperSlide key={index}>
-                <div className="relative w-full min-h-[550px] sm:min-h-[600px] lg:h-[750px] flex items-center justify-center overflow-hidden bg-[#F9FAFB] py-12 lg:py-0">
+                <div className="relative w-full min-h-137.5 sm:min-h-150 lg:h-187.5 flex items-center justify-center overflow-hidden bg-[#F9FAFB] py-12 lg:py-0">
                   {/* background watermark */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden select-none">
                     <h1 className="text-[25vw] sm:text-[20vw] font-black font-int text-gray-900 opacity-[0.02] uppercase whitespace-nowrap tracking-tighter">
@@ -127,15 +127,15 @@ const Banner = () => {
                         </button>
                       </div>
                       {/* right image */}
-                      <div className="w-full lg:w-1/2 flex justify-center items-center relative h-[250px] sm:h-80 lg:h-full">
-                        <div className="absolute w-[200px] h-[200px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] bg-[#80B500] opacity-[0.04] rounded-full blur-[50px] lg:blur-[60px] pointer-events-none"></div>
+                      <div className="w-full lg:w-1/2 flex justify-center items-center relative h-62.5 sm:h-80 lg:h-full">
+                        <div className="absolute w-50 h-50 sm:w-87.5 sm:h-87.5 lg:w-112.5 lg:h-112.5 bg-[#80B500] opacity-[0.04] rounded-full blur-[50px] lg:blur-[60px] pointer-events-none"></div>
                         <div 
                           onClick={() => handleRoute(data.slug)} 
                           className="relative z-10 w-[65%]} sm:w-[70%] lg:w-[85%] lg:max-w-[600px] flex justify-center items-center cursor-pointer group"
                         >
                           <Images 
                             imgSrc={data.image} 
-                            className="max-h-[220px] sm:max-h-[300px] md:max-h-[380px] lg:max-h-[550px] object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-[1.5s]" 
+                            className="max-h-55 sm:max-h-75 md:max-h-95 lg:max-h-137.5 object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-[1.5s]" 
                           />
                         </div>
                       </div>
