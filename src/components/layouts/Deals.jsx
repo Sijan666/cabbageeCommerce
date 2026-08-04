@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Button from "../Button";
 import Container from "../Container";
@@ -157,10 +158,14 @@ const Deals = () => {
                 </div>
               </Flex>
               <Flex className={"gap-x-4 items-center flex-col sm:flex-row gap-y-4 sm:gap-y-0"}>
-                <Button btnText={"Shop Now"} className="w-full sm:w-auto cursor-pointer" />
-                <u className="text-[#80B500] text-sm md:text-base font-bold font-nuni cursor-pointer hover:text-[#6a9600] transition-colors">
-                  Deal of The Day (${dealProduct?.price || "32.00"})
-                </u>
+                <Link to={`/product/${dealProduct?.id || dealProductIds[currentIndex]}`} className="w-full sm:w-auto block">
+                  <Button btnText={"Shop Now"} className="w-full sm:w-auto cursor-pointer" />
+                </Link>
+                <Link to={`/product/${dealProduct?.id || dealProductIds[currentIndex]}`}>
+                  <u className="text-[#80B500] text-sm md:text-base font-bold font-nuni cursor-pointer hover:text-[#6a9600] transition-colors">
+                    Deal of The Day (${dealProduct?.price || "32.00"})
+                  </u>
+                </Link>
               </Flex>
             </div>
           </Flex>
