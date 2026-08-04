@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Images from '../Images';
 import Container from '../Container';
@@ -13,7 +13,6 @@ import 'swiper/css/navigation';
 const TopCategories = () => {
     const [categories, setCategories] = useState([]);
     const [selected, setSelected] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCategoriesWithImages = async () => {
@@ -44,11 +43,6 @@ const TopCategories = () => {
         
         fetchCategoriesWithImages();
     }, []);
-
-    const handleCategoryClick = (categorySlug) => {
-        setSelected(categorySlug);
-        navigate(`/category/${categorySlug}`); 
-    };
 
     return (
         <section className="w-full mb-16 md:mb-28"> 
@@ -95,9 +89,10 @@ const TopCategories = () => {
                             >
                                 {categories.map((cat, index) => (
                                     <SwiperSlide key={index}>
-                                        <div 
+                                        <Link 
+                                            to={`/category/${cat.slug}`}
                                             className="flex flex-col items-center justify-center text-center outline-none cursor-pointer group py-4" 
-                                            onClick={() => handleCategoryClick(cat.slug)}
+                                            onClick={() => setSelected(cat.slug)}
                                         >
                                             <div className="w-25 h-25 rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400 overflow-hidden">
                                                 <Images imgSrc={cat.image} className="w-17.5 h-17.5 object-contain group-hover:scale-110 transition-transform duration-300"/>
@@ -105,7 +100,7 @@ const TopCategories = () => {
                                             <h4 className={`text-[16px] md:text-[18px] capitalize font-bold font-int pt-6 transition-colors duration-300 ${selected === cat.slug ? 'text-[#80B500]' : 'text-[#232323] group-hover:text-[#80B500]'}`}>
                                                 {cat.name.replace('-', ' ')}
                                             </h4>
-                                        </div>
+                                        </Link>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
