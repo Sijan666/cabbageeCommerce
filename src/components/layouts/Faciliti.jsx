@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Container from "../Container";
 import Flex from "../Flex";
@@ -43,7 +44,7 @@ const Faciliti = () => {
         setIsFading(false);
       }, 500);
       
-    }, 120000);
+    }, 100000);
 
     return () => clearInterval(intervalId);
   }, [productsList]);
@@ -126,27 +127,34 @@ const Faciliti = () => {
             {/* API Product */}
             <div className="w-full lg:w-1/3 flex flex-col items-center justify-center order-first lg:order-0 mb-12 lg:mb-0 relative group">
               <div className="text-center w-full max-w-87.5">
-                <div className="relative bg-white rounded-full w-70 h-70 sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500">
-                  <img 
-                    src={product.thumbnail} 
-                    alt={product.title} 
-                    className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500" 
-                  />
-                  {/* price badge */}
-                  <div className="absolute top-4 right-4 bg-[#80B500] text-white font-bold font-nuni px-4 py-2 rounded-full shadow-md transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
-                    ${product.price}
+                {/* Product Image Link */}
+                <Link to={`/product/${product.id}`} className="block">
+                  <div className="relative bg-white rounded-full w-70 h-70 sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500 cursor-pointer">
+                    <img 
+                      src={product.thumbnail} 
+                      alt={product.title} 
+                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500" 
+                    />
+                    {/* price badge */}
+                    <div className="absolute top-4 right-4 bg-[#80B500] text-white font-bold font-nuni px-4 py-2 rounded-full shadow-md transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                      ${product.price}
+                    </div>
                   </div>
-                </div>
+                </Link>
                 <div className="mt-8">
                   <p className="text-[#80B500] font-nuni font-bold text-sm tracking-widest uppercase mb-2">
                     {product.brand ? `${product.brand} - ` : ''}{product.category.replace('-', ' ')}
                   </p>
+                  {/* Product Title Link */}
                   <h4 className="text-[24px] font-int font-bold text-[#232323] line-clamp-1">
-                    {product.title}
+                    <Link to={`/product/${product.id}`} className="hover:text-[#80B500] transition-colors">
+                      {product.title}
+                    </Link>
                   </h4>
-                  <button className="cursor-pointer mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300">
+                  {/* View Details Button Link */}
+                  <Link to={`/product/${product.id}`} className="inline-block mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300 cursor-pointer">
                     View Details
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
