@@ -55,9 +55,9 @@ const Header = () => {
             {/* Right Side: Socials & Language */}
             <Flex className="items-center justify-center gap-x-6">
               <Flex className="items-center gap-x-4">
-                <FaFacebookF className="hover:text-[#80B500] hover:scale-110 text-[12px] cursor-pointer transition-all duration-300" />
-                <FaBehance className="hover:text-[#80B500] hover:scale-110 text-[13px] cursor-pointer transition-all duration-300" />
-                <FaPinterestP className="hover:text-[#80B500] hover:scale-110 text-[12px] cursor-pointer transition-all duration-300" />
+                <FaFacebookF className="hover:text-[#80B500] text-[12px] cursor-pointer transition-colors duration-300" />
+                <FaBehance className="hover:text-[#80B500] text-[13px] cursor-pointer transition-colors duration-300" />
+                <FaPinterestP className="hover:text-[#80B500] text-[12px] cursor-pointer transition-colors duration-300" />
               </Flex>
               <div className="w-px h-3 bg-white/10"></div>
               <Flex className="items-center gap-x-2 cursor-pointer group">
@@ -111,7 +111,7 @@ const Header = () => {
               {/* Desktop Action Icons */}
               <Flex className="hidden sm:flex gap-x-3 items-center">
                 {/* Wishlist Icon */}
-                <Link to="/wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                <Link to="/wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <MdFavoriteBorder className="text-[19px]" />
                   {wishlist.length > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
@@ -120,11 +120,11 @@ const Header = () => {
                   )}
                 </Link>
                 {/* User Icon */}
-                <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <FaRegUser className="text-[16px]" />
                 </div>
                 {/* Cart Icon */}
-                <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-all duration-300 cursor-pointer">
+                <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <BsCart3 className="text-[18px]" />
                   {cart.length > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
@@ -135,10 +135,12 @@ const Header = () => {
               </Flex>
               {/* Get Quote Button */}
               <div className="hidden md:block">
-                <Button
-                  btnText="GET A QUOTE"
-                  className="font-bold text-[13px] tracking-widest uppercase py-3 px-8 rounded-full bg-[#80B500] text-[#030a0e] shadow-[0_4px_20px_-5px_rgba(128,181,0,0.5)] hover:shadow-[0_8px_25px_-5px_rgba(128,181,0,0.7)] hover:-translate-y-1 transition-all duration-300"
-                />
+                <Link to="/quote">
+                  <Button
+                    btnText="GET A QUOTE"
+                    className="font-bold text-[13px] tracking-widest uppercase py-3 px-8 rounded-full bg-[#80B500] text-[#030a0e] shadow-[0_4px_20px_-5px_rgba(128,181,0,0.5)] hover:shadow-[0_8px_25px_-5px_rgba(128,181,0,0.7)] transition-shadow duration-300 cursor-pointer"
+                  />
+                </Link>
               </div>
               {/* Hamburger (Mobile) */}
               <div
@@ -158,7 +160,7 @@ const Header = () => {
             <div className="pb-5 border-t border-white/10">
               <ul className="flex flex-col gap-y-4 font-nuni text-[15px] font-bold text-white/80 uppercase tracking-wider pt-5 px-2">
                 {navLinks.map((item, index) => (
-                  <li key={index} className="hover:text-[#80B500] hover:translate-x-2 transition-all cursor-pointer">
+                  <li key={index} className="hover:text-[#80B500] transition-colors cursor-pointer">
                     <Link 
                       to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                       onClick={() => setIsMenuOpen(false)}
@@ -172,16 +174,16 @@ const Header = () => {
               {/* Mobile Action Icons */}
               <Flex className="mt-6 pt-6 border-t border-white/10 gap-x-5 justify-center sm:hidden">
                 <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="relative">
-                  <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500]" />
+                  <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
                   {wishlist.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                       {wishlist.length}
                     </span>
                   )}
                 </Link>
-                <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500]" />
+                <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" />
                 <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
-                  <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500]" />
+                  <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
                   {cart.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                       {cart.length}
@@ -189,11 +191,14 @@ const Header = () => {
                   )}
                 </Link>
               </Flex>
+              {/* Mobile Quote Button */}
               <div className="mt-6 md:hidden">
-                <Button
-                  btnText="GET A QUOTE"
-                  className="w-full justify-center py-3.5 rounded-md bg-[#80B500] text-[#030a0e] font-bold tracking-widest shadow-[0_0_15px_rgba(128,181,0,0.3)]"
-                />
+                <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
+                  <Button
+                    btnText="GET A QUOTE"
+                    className="w-full justify-center py-3.5 rounded-md bg-[#80B500] text-[#030a0e] font-bold tracking-widest shadow-[0_0_15px_rgba(128,181,0,0.3)] cursor-pointer"
+                  />
+                </Link>
               </div>
             </div>
           </div>
