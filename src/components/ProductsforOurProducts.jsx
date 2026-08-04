@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Flex from './Flex';
 import Images from './Images';
 import { IoCartOutline, IoCart, IoClose } from 'react-icons/io5';
@@ -64,7 +65,9 @@ const ProductforOurProducts = ({
         <>
             <div className={`w-full pb-5 sm:pb-7 ${className} shadow-customMade border border-[#FFFFFF] hover:border hover:border-[#80B500] group duration-300 overflow-hidden`}>
                 <div className="bg-[#C8CACF] h-50 sm:h-57.75 w-full group-hover:bg-[#E0E2EB] duration-300 relative flex justify-center items-center overflow-hidden">
-                    {productsImg}
+                    <Link to={`/product/${productId}`} className="w-full h-full flex items-center justify-center">
+                        {productsImg}
+                    </Link>
                     <Flex className={'gap-x-2.75 absolute bottom-10 sm:bottom-15 left-1/2 -translate-x-1/2 z-10'}>
                         {/* Cart Icon */}
                         <div 
@@ -96,7 +99,11 @@ const ProductforOurProducts = ({
                     </Flex>
                 </div>
                 <div className="text-center pt-3 px-2 sm:px-3">
-                    <h4 className='text-[#232323] text-[14px] sm:text-base font-bold font-int pt-1.25 truncate'>{productsTitle}</h4>
+                    <h4 className='text-[#232323] text-[14px] sm:text-base font-bold font-int pt-1.25 truncate'>
+                        <Link to={`/product/${productId}`} className="hover:text-[#80B500] transition-colors">
+                            {productsTitle}
+                        </Link>
+                    </h4>
                     <p className='pt-2 sm:pt-4 pb-1 sm:pb-2 text-[#546375] font-nuni text-[11px] sm:text-[12px] truncate'>{productsBrand}</p>
                     <p className='text-[13px] sm:text-[14px] text-[#80B500] font-nuni'>{productsPrice}</p>
                 </div>
