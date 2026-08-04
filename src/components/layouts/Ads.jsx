@@ -19,9 +19,11 @@ const Ads = () => {
     useEffect(() => {
         const fetchTopDiscounts = async () => {
             try {
-                const response = await axios.get('https://dummyjson.com/products?limit=50&select=title,category,discountPercentage,thumbnail');
+                // API-তে id যুক্ত করা হয়েছে
+                const response = await axios.get('https://dummyjson.com/products?limit=50&select=id,title,category,discountPercentage,thumbnail');
                 const sortedProducts = response.data.products.sort((a, b) => b.discountPercentage - a.discountPercentage);
                 const topFifteenDeals = sortedProducts.slice(0, 15);
+                
                 setAllDeals(topFifteenDeals);
                 setDisplayedDeals(topFifteenDeals.slice(0, 3));
                 setLoading(false);
@@ -36,9 +38,11 @@ const Ads = () => {
     useEffect(() => {
         if (allDeals.length === 0) return;
         let isMounted = true; 
+        
         const changeCardsSequentially = async () => {
             const shuffled = [...allDeals].sort(() => 0.5 - Math.random());
             const newDeals = shuffled.slice(0, 3);
+            
             for (let i = 0; i < 3; i++) {
                 if (!isMounted) break;
                 setFadeStates(prev => {
@@ -46,21 +50,26 @@ const Ads = () => {
                     next[i] = true;
                     return next;
                 });
+                
                 await new Promise(res => setTimeout(res, 400));
                 if (!isMounted) break;
+                
                 setDisplayedDeals(prev => {
                     const next = [...prev];
                     next[i] = newDeals[i];
                     return next;
                 });
+                
                 setFadeStates(prev => {
                     const next = [...prev];
                     next[i] = false;
                     return next;
                 });
+                
                 await new Promise(res => setTimeout(res, 200)); 
             }
         };
+        
         const interval = setInterval(changeCardsSequentially, 10000);
         return () => {
             isMounted = false;
@@ -81,10 +90,12 @@ const Ads = () => {
                             {displayedDeals.map((ad, index) => {
                                 const style = cardStyles[index];
                                 const isFading = fadeStates[index]; 
+                                
                                 return (
-                                    <div 
+                                    <Link 
+                                        to={`/product/${ad?.id}`} 
                                         key={index} 
-                                        className={`${style.bg} rounded-md overflow-hidden shadow-lg hover:shadow-2xl relative flex items-center p-6 md:p-8 min-h-45 md:min-h-55 transition-transform duration-300 transform`}
+                                        className={`block ${style.bg} rounded-md overflow-hidden shadow-lg hover:shadow-2xl relative flex items-center p-6 md:p-8 min-h-45 md:min-h-55 transition-transform duration-300 transform`}
                                     >
                                         <div className={`w-[60%] z-10 text-white transition-opacity duration-300 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}>
                                             <p className="text-xs font-semibold uppercase mb-2 tracking-wide opacity-90">
@@ -96,16 +107,15 @@ const Ads = () => {
                                             <p className="text-sm md:text-base mb-5 capitalize opacity-95 line-clamp-1">
                                                 {ad?.title}
                                             </p>
-                                            <Link 
-                                                to={`/product/${ad?.id}`} 
-                                                className="inline-flex items-center text-sm font-bold hover:underline"
-                                            >
+                                            
+                                            <span className="inline-flex items-center text-sm font-bold hover:underline cursor-pointer">
                                                 Shop Now 
                                                 <svg className="w-4 h-4 ml-1 bg-white text-black rounded-full p-0.5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                                 </svg>
-                                            </Link>
+                                            </span>
                                         </div>
+                                        
                                         <div className={`w-[50%] absolute right-[-5%] top-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out transform ${isFading ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}`}>
                                             <Images 
                                                 imgSrc={ad?.thumbnail} 
@@ -113,7 +123,7 @@ const Ads = () => {
                                                 className="w-full h-auto object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)] max-h-40"
                                             />
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })}
                         </div>
