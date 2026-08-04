@@ -8,6 +8,7 @@ import RootLayouts from './components/layouts/RootLayouts';
 import Shop from './components/pages/Shop';
 import CategoryProducts from './components/pages/CategoryProducts';
 import ProductDetails from './components/pages/ProductDetails';
+import Quote from './components/pages/Quote';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -35,6 +36,7 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="product/:id" element={<ProductDetails />} />
+            <Route path="quote" element={<Quote />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
