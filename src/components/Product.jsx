@@ -68,7 +68,7 @@ const Product = ({
                 <div className={`bg-[#f4f6f8] rounded-md group-hover:bg-[#e8ecef] duration-300 relative flex justify-center items-center overflow-hidden shrink-0 
                     ${isList ? 'w-full sm:w-70 h-55' : 'w-full h-50 sm:h-57.75'}
                 `}>
-                    <Link to={`/shop/${productId}`} className="w-full h-full flex items-center justify-center">
+                    <Link to={`/product/${productId}`} className="w-full h-full flex items-center justify-center">
                         {productImg}
                     </Link>
                     {!isList && (
@@ -105,7 +105,7 @@ const Product = ({
                     <h4 className={`text-[#232323] font-bold font-int pt-1.25 px-1 sm:px-2 
                         ${isList ? 'text-[18px] sm:text-[22px] mt-2 mb-2 whitespace-normal' : 'text-[14px] sm:text-base truncate'}
                     `}>
-                        <Link to={`/shop/${productId}`} className="hover:text-[#80B500] transition-colors">
+                        <Link to={`/product/${productId}`} className="hover:text-[#80B500] transition-colors">
                             {productTitle}
                         </Link>
                     </h4>
