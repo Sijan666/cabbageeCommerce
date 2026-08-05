@@ -120,9 +120,9 @@ const Header = () => {
                   )}
                 </Link>
                 {/* User Icon */}
-                <div className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
+                <Link to="/login" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <FaRegUser className="text-[16px]" />
-                </div>
+                </Link>
                 {/* Cart Icon */}
                 <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <BsCart3 className="text-[18px]" />
@@ -133,7 +133,7 @@ const Header = () => {
                   )}
                 </Link>
               </Flex>
-              {/* Get Quote Button */}
+              {/* Get Quote Button (Desktop) */}
               <div className="hidden md:block">
                 <Link to="/quote">
                   <Button
@@ -181,7 +181,10 @@ const Header = () => {
                     </span>
                   )}
                 </Link>
-                <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" />
+                {/* User Icon (Mobile) */}
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" />
+                </Link>
                 <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
                   <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
                   {cart.length > 0 && (
