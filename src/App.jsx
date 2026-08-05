@@ -18,7 +18,7 @@ const Wishlist = lazy(() => import('./components/pages/Wishlist'));
 
 function App() {
   const lenisOptions = {
-    lerp: 0.08,
+    lerp: 0.1,
     smoothWheel: true,
     syncTouch: false,
     wheelMultiplier: 1,
