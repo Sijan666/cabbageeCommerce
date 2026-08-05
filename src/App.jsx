@@ -10,6 +10,9 @@ import CategoryProducts from './components/pages/CategoryProducts';
 import ProductDetails from './components/pages/ProductDetails';
 import Quote from './components/pages/Quote';
 import Login from './components/pages/Login';
+import Blogs from './components/pages/Blogs';
+import BlogDetails from './components/pages/BlogDetails';
+import Contact from './components/pages/Contact';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -39,6 +42,9 @@ function App() {
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="quote" element={<Quote />} />
             <Route path="login" element={<Login />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="/blogs/:id" element={<BlogDetails />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
