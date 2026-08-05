@@ -41,7 +41,6 @@ const Cart = () => {
     return (
         <div className="bg-[#F9FBF5] min-h-[70vh] py-20 pb-24">
             <Container className="px-4 lg:px-0">
-                {/* Header */}
                 <div className="mb-10 text-center md:text-left">
                     <h2 className="text-3xl md:text-4xl font-black font-int text-[#232323] mb-2">
                         Shopping Cart
