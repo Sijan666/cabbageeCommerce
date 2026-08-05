@@ -29,7 +29,8 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = ["Home", "About", "Shop", "Pages", "Blog", "Contact"];
+  // এখানে Pages রিমুভ করা হয়েছে এবং Blog এর নাম Blogs করা হয়েছে
+  const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
 
   return (
     <>
