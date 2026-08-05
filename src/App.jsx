@@ -9,6 +9,7 @@ import Shop from './components/pages/Shop';
 import CategoryProducts from './components/pages/CategoryProducts';
 import ProductDetails from './components/pages/ProductDetails';
 import Quote from './components/pages/Quote';
+import Login from './components/pages/Login';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -37,6 +38,7 @@ function App() {
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="quote" element={<Quote />} />
+            <Route path="login" element={<Login />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
