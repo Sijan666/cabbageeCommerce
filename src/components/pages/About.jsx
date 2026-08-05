@@ -42,7 +42,6 @@ const testimonials = [
 const About = () => {
     return (
         <main className="w-full font-sans" role="main">
-            {/* Banner Section */}
             <section className="relative bg-[#f4f6f8] py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
                 <Container className="px-4 sm:px-8 lg:px-20">
                     <Flex className="flex-col justify-center">
@@ -68,11 +67,11 @@ const About = () => {
                     </div>
                 </Container>
             </section>
-            {/* Main Content Section */}
+            {/* Main Content */}
             <section className="py-16 md:py-20" aria-labelledby="about-details-heading">
                 <Container className="px-4 sm:px-8 lg:px-20">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-                        {/* Left Side: Text Content */}
+                        {/* Left Side: Text */}
                         <div>
                             <span className="text-[#84b544] font-medium text-sm md:text-base mb-4 block font-nuni">
                                 Know More About Shop
@@ -108,7 +107,7 @@ const About = () => {
                     </div>
                 </Container>
             </section>
-            {/* video Banner Section */}
+            {/* video banner */}
             <section className="w-full h-62.5 sm:h-75 md:h-100 lg:h-112.5 bg-[#7a7a7a] flex items-center justify-center bg-cover bg-center" aria-label="Promotional Video">
                 <button 
                     type="button"
@@ -118,9 +117,9 @@ const About = () => {
                     <FaPlay className="text-[#80B500] text-xl sm:text-2xl md:text-3xl ml-1 sm:ml-2 group-hover:text-[#6a9600] transition-colors" aria-hidden="true" />
                 </button>
             </section>
-            {/* team member section */}
+            {/* team member */}
             <Member />
-            {/* client testimonial section */}
+            {/* client testimonial */}
             <section className="bg-[#f9f8f3] py-16 md:py-24" aria-labelledby="testimonial-heading">
                 <Container className="px-4 sm:px-8 lg:px-20 text-center">
                     <h2 id="testimonial-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#232323] mb-3 font-int">
@@ -212,7 +211,7 @@ const About = () => {
                     </Flex>
                 </Container>
             </section>
-            {/* Blog Section */}
+            {/* Blog */}
             <Blog />
         </main>
     );
