@@ -90,7 +90,6 @@ const Faciliti = () => {
   return (
     <div className="mt-20 lg:mt-25 mb-16 lg:mb-24 overflow-hidden">
       <Container className="px-4 md:px-8 lg:px-0">
-        {/* Header */}
         <div className="text-center mb-16 md:mb-20">
           <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
             Product Spotlight
@@ -127,7 +126,7 @@ const Faciliti = () => {
             {/* API Product */}
             <div className="w-full lg:w-1/3 flex flex-col items-center justify-center order-first lg:order-0 mb-12 lg:mb-0 relative group">
               <div className="text-center w-full max-w-87.5">
-                {/* Product Image Link */}
+                {/* Product Image */}
                 <Link to={`/product/${product.id}`} className="block">
                   <div className="relative bg-white rounded-full w-70 h-70 sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500 cursor-pointer">
                     <img 
@@ -145,13 +144,13 @@ const Faciliti = () => {
                   <p className="text-[#80B500] font-nuni font-bold text-sm tracking-widest uppercase mb-2">
                     {product.brand ? `${product.brand} - ` : ''}{product.category.replace('-', ' ')}
                   </p>
-                  {/* Product Title Link */}
+                  {/* Product */}
                   <h4 className="text-[24px] font-int font-bold text-[#232323] line-clamp-1">
                     <Link to={`/product/${product.id}`} className="hover:text-[#80B500] transition-colors">
                       {product.title}
                     </Link>
                   </h4>
-                  {/* View Details Button Link */}
+                  {/* View Details */}
                   <Link to={`/product/${product.id}`} className="inline-block mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300 cursor-pointer">
                     View Details
                   </Link>
