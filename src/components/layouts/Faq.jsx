@@ -35,7 +35,6 @@ const Faq = () => {
     return (
         <div className="py-20 lg:py-28 bg-[#F9FBF5]">
             <Container className="px-4 lg:px-0">
-                {/* header */}
                 <div className="text-center mb-16">
                     <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-2 block">
                         Get Your Answers
