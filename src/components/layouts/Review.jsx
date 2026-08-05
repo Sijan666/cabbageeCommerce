@@ -89,7 +89,6 @@ const Review = () => {
     };
 
     addToCart(productData);
-    alert(`${productData.title} added to cart!`); 
   };
 
   const isOutOfStock = product?.stock === 0;
