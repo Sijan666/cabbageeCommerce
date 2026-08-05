@@ -24,7 +24,6 @@ const Quote = () => {
     return (
         <div className="bg-[#F7F9F2] min-h-screen py-16 md:py-24">
             <Container className="px-4 lg:px-0">
-                {/* Page Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-4xl md:text-5xl font-black font-int text-[#232323] mb-4">
                         Request a <span className="text-[#80B500]">Quote</span>
