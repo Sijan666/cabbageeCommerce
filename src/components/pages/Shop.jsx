@@ -136,7 +136,6 @@ const Shop = () => {
 
     return (
         <main className="w-full font-sans" role="main">
-            {/* banner */}
             <section className="relative bg-[#f4f6f8] py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
                 <Container className="px-4 sm:px-8 lg:px-20">
                     <Flex className="flex-col justify-center">
@@ -250,7 +249,7 @@ const Shop = () => {
                     </Flex>
                 </Container>
             </section>
-            {/* products & pagination section */}
+            {/* products & pagination */}
             <section className="py-10 mb-20 bg-white">
                 <Container className="px-4 sm:px-8 lg:px-0">
                     {isLoading ? (
