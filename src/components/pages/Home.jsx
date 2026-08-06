@@ -1,4 +1,7 @@
+import React from "react";
 import { Helmet } from "react-helmet-async";
+
+// Layouts
 import Ads from "../layouts/Ads";
 import Banner from "../layouts/Banner";
 import Contact from "../layouts/Contact";
@@ -16,28 +19,28 @@ import CompLogo from "../layouts/CompLogo";
 
 const Home = () => {
     return (
-        <>
+        <div className="relative overflow-hidden">
             <Helmet>
                 <title>Home | Cabbage eCommerce</title>
                 <meta name="description" content="Welcome to our website. Discover our best deals, featured products, and top categories." />
                 <meta name="keywords" content="ecommerce, shop, best products, deals" />
             </Helmet>
-            <Banner/>
-            <Ads/>
-            <Featuredproduct/>
-            <Deals/>
-            <Ourproduct/>
-            <Topcategories/>
+            <Banner />
+            <Ads />
+            <Featuredproduct />
+            <Deals />
+            <Ourproduct />
+            <Topcategories />
             <Faciliti />
             <Review />
             <Member />
             <Contact />
-            <Faq/>
-            <Counter/>
-            <Blog/>
-            <CompLogo/>
-        </>
-    )
+            <Faq />
+            <Counter />
+            <Blog />
+            <CompLogo />
+        </div>
+    );
 }
 
 export default Home;
