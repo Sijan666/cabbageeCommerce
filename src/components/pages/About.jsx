@@ -6,6 +6,7 @@ import Wood from '/src/assets/wood.png';
 import { Link } from 'react-router-dom';
 import { FaPlay } from 'react-icons/fa';
 import Member from '../layouts/Member';
+import Blog from '../layouts/Blog';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 
 // Swiper Imports
@@ -15,7 +16,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-cards';
 import { Pagination, Navigation, EffectCards } from 'swiper/modules';
-import Blog from '../layouts/Blog';
 
 // Testimonial Data
 const testimonials = [
@@ -41,14 +41,15 @@ const testimonials = [
 
 const About = () => {
     return (
-        <main className="w-full font-sans" role="main">
-            <section className="relative bg-[#f4f6f8] py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
+        <main className="w-full font-sans overflow-x-hidden" role="main">
+            {/* About Us Banner */}
+            <section className="relative bg-[#f4f6f8] py-12 sm:py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
                 <Container className="px-4 sm:px-8 lg:px-20">
-                    <Flex className="flex-col justify-center">
+                    <Flex className="flex-col justify-center relative z-10">
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 font-int">
                             About us
                         </h1>
-                        <Flex className="items-center text-sm text-gray-500 space-x-2 font-nuni" aria-label="Breadcrumb">
+                        <Flex className="items-center text-sm text-gray-500 space-x-2 font-nuni flex-wrap" aria-label="Breadcrumb">
                             <Link to={'/'} aria-label="Go to homepage">
                                 <span className="hover:text-[#80B500] cursor-pointer transition-colors">Home</span>
                             </Link>
@@ -56,8 +57,8 @@ const About = () => {
                             <span className="text-gray-800" aria-current="page">About us</span>
                         </Flex>
                     </Flex>
-                    {/* Image */}
-                    <div className="absolute left-0 bottom-4 w-16 md:w-20 lg:w-28 ml-4 lg:ml-12" aria-hidden="true">
+                    {/* Decorative Image */}
+                    <div className="absolute left-0 bottom-4 w-12 sm:w-16 md:w-20 lg:w-28 ml-2 sm:ml-4 lg:ml-12 opacity-40 sm:opacity-100" aria-hidden="true">
                         <Images 
                             imgSrc={Wood} 
                             alt="Decorative wood element"
@@ -68,20 +69,20 @@ const About = () => {
                 </Container>
             </section>
             {/* Main Content */}
-            <section className="py-16 md:py-20" aria-labelledby="about-details-heading">
+            <section className="py-12 sm:py-16 md:py-20" aria-labelledby="about-details-heading">
                 <Container className="px-4 sm:px-8 lg:px-20">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                         {/* Left Side: Text */}
                         <div>
-                            <span className="text-[#84b544] font-medium text-sm md:text-base mb-4 block font-nuni">
+                            <span className="text-[#84b544] font-medium text-sm md:text-base mb-3 sm:mb-4 block font-nuni">
                                 Know More About Shop
                             </span>
-                            <h2 id="about-details-heading" className="text-2xl sm:text-3xl md:text-[2.75rem] font-bold text-[#232323] leading-tight md:leading-[1.2] mb-6 font-int">
-                                Trusted Organic Food <br className="hidden lg:block" /> Store For People
+                            <h2 id="about-details-heading" className="text-2xl sm:text-3xl md:text-[2.75rem] font-bold text-[#232323] leading-snug md:leading-[1.2] mb-5 sm:mb-6 font-int max-w-lg">
+                                Trusted Organic Food Store For People
                             </h2>
-                            <div className="text-gray-500 space-y-4 md:space-y-6 text-sm md:text-base leading-relaxed mb-8 md:mb-10 pr-0 md:pr-10 font-nuni">
+                            <div className="text-gray-500 space-y-4 md:space-y-6 text-[15px] md:text-base leading-relaxed mb-8 md:mb-10 lg:pr-10 font-nuni">
                                 <p>
-                                    Buy natural, sustainable and chemicalfree products from local the country. We are a strong community of 100,000+
+                                    Buy natural, sustainable and chemical-free products from local the country. We are a strong community of 100,000+
                                 </p>
                                 <p>
                                     sellers who aspire to be good, do good, and spread goodness. We democratic, self-sustaining, two-sided marketplace which thrives on trust and is built on community and quality content.
@@ -93,8 +94,8 @@ const About = () => {
                                 <p className="text-gray-400 text-xs md:text-sm mt-1 font-nuni">/ Shop Director</p>
                             </div>
                         </div>
-                        {/* right side: images */}
-                        <Flex className="gap-4 md:gap-6 h-75 sm:h-100 md:h-125 lg:h-150 w-full" aria-hidden="true">
+                        {/* Right Side: Images */}
+                        <Flex className="gap-3 sm:gap-4 md:gap-6 h-70 sm:h-100 md:h-112.5 lg:h-137.5 w-full" aria-hidden="true">
                             {/* left image placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-0 relative overflow-hidden">
                                 {/* Add Images here */}
@@ -107,7 +108,7 @@ const About = () => {
                     </div>
                 </Container>
             </section>
-            {/* video banner */}
+            {/* Video Banner */}
             <section className="w-full h-62.5 sm:h-75 md:h-100 lg:h-112.5 bg-[#7a7a7a] flex items-center justify-center bg-cover bg-center" aria-label="Promotional Video">
                 <button 
                     type="button"
@@ -117,9 +118,9 @@ const About = () => {
                     <FaPlay className="text-[#80B500] text-xl sm:text-2xl md:text-3xl ml-1 sm:ml-2 group-hover:text-[#6a9600] transition-colors" aria-hidden="true" />
                 </button>
             </section>
-            {/* team member */}
+            {/* Team Member */}
             <Member />
-            {/* client testimonial */}
+            {/* Client Testimonial */}
             <section className="bg-[#f9f8f3] py-16 md:py-24" aria-labelledby="testimonial-heading">
                 <Container className="px-4 sm:px-8 lg:px-20 text-center">
                     <h2 id="testimonial-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#232323] mb-3 font-int">
@@ -128,18 +129,18 @@ const About = () => {
                     <p className="text-gray-500 text-sm font-nuni mb-10 md:mb-16">
                         A highly efficient slip-ring scanner for today's diagnostic requirements.
                     </p>
-                    <Flex className="items-center justify-center gap-x-2 sm:gap-x-4 md:gap-x-12 relative">
-                        {/* left arrow */}
+                    <Flex className="items-center justify-center gap-x-3 sm:gap-x-6 md:gap-x-12 relative">
+                        {/* Left Arrow */}
                         <button 
                             type="button"
                             aria-label="Previous testimonial"
-                            className="custom-prev-btn hidden md:flex w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#80B500] items-center justify-center cursor-pointer text-[#80B500] hover:bg-[#80B500] hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#80B500] [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed"
+                            className="custom-prev-btn group hidden md:flex w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white border border-gray-200 items-center justify-center cursor-pointer text-[#546375] shadow-sm hover:bg-[#80B500] hover:text-white hover:border-[#80B500] hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#80B500] [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed"
                         >
-                            <HiOutlineArrowLeft className="text-lg md:text-xl" aria-hidden="true" />
+                            <HiOutlineArrowLeft className="text-xl lg:text-2xl group-hover:-translate-x-1 transition-transform duration-300" aria-hidden="true" />
                         </button>
-                        {/* testimonial card */}
-                        <div className="relative w-full max-w-[90vw] sm:max-w-112.5 md:max-w-150 mx-auto">
-                            <div className="relative z-10 pt-8 md:pt-12 pb-12 md:pb-16">
+                        {/* Testimonial Card */}
+                        <div className="relative w-full max-w-[95vw] sm:max-w-112.5 md:max-w-150 mx-auto">
+                            <div className="relative z-10 pt-4 sm:pt-8 md:pt-12 pb-12 md:pb-16">
                                 <Swiper
                                     effect={'cards'}
                                     grabCursor={true}
@@ -158,26 +159,23 @@ const About = () => {
                                     className="w-full"
                                 >
                                     {testimonials.map((item) => (
-                                        <SwiperSlide key={item.id} className="bg-white shadow-[0_10px_40px_rgba(0,0,0,0.06)] rounded-xl px-5 sm:px-8 md:px-16 py-8 md:py-12 border border-gray-100 box-border">
+                                        <SwiperSlide key={item.id} className="bg-white shadow-[0_10px_40px_rgba(0,0,0,0.06)] rounded-xl px-4 sm:px-8 md:px-16 py-8 md:py-12 border border-gray-100 box-border">
                                             <Flex className="flex-col items-center">
-                                                {/* avatar */}
                                                 <div className="w-14 h-14 md:w-16 md:h-16 bg-[#e2e2e6] rounded-full mb-3 md:mb-4 shrink-0" aria-hidden="true"></div>
-                                                {/* info */}
-                                                <h4 className="text-[#232323] font-bold text-base md:text-lg font-int mb-1 text-center">
+                                                <h4 className="text-[#232323] font-bold text-[15px] sm:text-base md:text-lg font-int mb-1 text-center">
                                                     {item.name}
                                                 </h4>
                                                 <p className="text-gray-400 text-[11px] md:text-xs font-nuni mb-4 md:mb-6 text-center">
                                                     {item.designation}
                                                 </p>
-                                                {/* text */}
-                                                <p className="text-[#6b7280] text-xs sm:text-sm md:text-[15px] leading-relaxed md:leading-relaxed font-nuni text-center line-clamp-6 md:line-clamp-none">
+                                                <p className="text-[#6b7280] text-[13px] sm:text-sm md:text-[15px] leading-relaxed md:leading-relaxed font-nuni text-center line-clamp-6 md:line-clamp-none">
                                                     {item.text}
                                                 </p>
                                             </Flex>
                                         </SwiperSlide>
                                     ))}
                                 </Swiper>
-                                {/* dots */}
+                                {/* Dots */}
                                 <div 
                                     className="custom-testi-pagination absolute bottom-0 md:bottom-4 left-0 right-0 flex items-center justify-center gap-x-2 z-20
                                     [&_.swiper-pagination-bullet]:w-2
@@ -188,9 +186,6 @@ const About = () => {
                                     [&_.swiper-pagination-bullet]:m-0
                                     [&_.swiper-pagination-bullet]:transition-all
                                     [&_.swiper-pagination-bullet]:cursor-pointer
-                                    [&_.swiper-pagination-bullet]:focus:outline-none
-                                    [&_.swiper-pagination-bullet]:focus:ring-2
-                                    [&_.swiper-pagination-bullet]:focus:ring-[#80B500]
                                     [&_.swiper-pagination-bullet-active]:bg-transparent!
                                     [&_.swiper-pagination-bullet-active]:border-[1.5px]
                                     [&_.swiper-pagination-bullet-active]:border-[#80B500]
@@ -204,9 +199,9 @@ const About = () => {
                         <button 
                             type="button"
                             aria-label="Next testimonial"
-                            className="custom-next-btn hidden md:flex w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#80B500] items-center justify-center cursor-pointer text-white shadow-[0_4px_15px_rgba(128,181,0,0.3)] hover:bg-[#6a9600] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#80B500] [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed"
+                            className="custom-next-btn group hidden md:flex w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white border border-gray-200 items-center justify-center cursor-pointer text-[#546375] shadow-sm hover:bg-[#80B500] hover:text-white hover:border-[#80B500] hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#80B500] [&.swiper-button-disabled]:opacity-40 [&.swiper-button-disabled]:cursor-not-allowed"
                         >
-                            <HiOutlineArrowRight className="text-lg md:text-xl" aria-hidden="true" />
+                            <HiOutlineArrowRight className="text-xl lg:text-2xl group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
                         </button>
                     </Flex>
                 </Container>
