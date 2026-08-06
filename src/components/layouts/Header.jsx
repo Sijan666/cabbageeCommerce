@@ -4,14 +4,12 @@ import Container from "../Container";
 import Flex from "../Flex";
 import Images from "../Images";
 import Button from "../Button";
-import uk from "/src/assets/uk.png";
 import Logo from "/src/assets/logo.png";
 import { useStore } from "../../store/useStore";
 
 // Icons
-import { SlLocationPin } from "react-icons/sl";
-import { MdMailOutline, MdFavoriteBorder } from "react-icons/md";
-import { FaRegUser, FaFacebookF, FaBehance, FaPinterestP } from "react-icons/fa";
+import { MdFavoriteBorder } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 
@@ -29,48 +27,10 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // এখানে Pages রিমুভ করা হয়েছে এবং Blog এর নাম Blogs করা হয়েছে
   const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
 
   return (
     <>
-      <div className="bg-[#030a0e] py-2 border-b border-white/5">
-        <Container className="px-5 lg:px-0">
-          <Flex className="flex-col md:flex-row justify-between items-center gap-y-2 md:gap-y-0 text-white/60">
-            {/* Left Side: Contact Info */}
-            <Flex className="items-center justify-center flex-wrap gap-y-1 gap-x-5">
-              <Flex className="items-center gap-x-2 group cursor-pointer">
-                <SlLocationPin className="text-[#80B500] text-sm group-hover:text-[#96d400] transition-colors" />
-                <p className="font-nuni text-xs tracking-wide group-hover:text-white transition-colors duration-300">
-                  254 Lillian, Holbrook
-                </p>
-              </Flex>
-              <div className="hidden md:block w-px h-3 bg-white/10"></div>
-              <Flex className="items-center gap-x-2 group cursor-pointer">
-                <MdMailOutline className="text-[#80B500] text-[15px] group-hover:text-[#96d400] transition-colors" />
-                <p className="font-nuni text-xs tracking-wide group-hover:text-white transition-colors duration-300">
-                  info@santizex-site.com
-                </p>
-              </Flex>
-            </Flex>
-            {/* Right Side: Socials & Language */}
-            <Flex className="items-center justify-center gap-x-6">
-              <Flex className="items-center gap-x-4">
-                <FaFacebookF className="hover:text-[#80B500] text-[12px] cursor-pointer transition-colors duration-300" />
-                <FaBehance className="hover:text-[#80B500] text-[13px] cursor-pointer transition-colors duration-300" />
-                <FaPinterestP className="hover:text-[#80B500] text-[12px] cursor-pointer transition-colors duration-300" />
-              </Flex>
-              <div className="w-px h-3 bg-white/10"></div>
-              <Flex className="items-center gap-x-2 cursor-pointer group">
-                <Images imgSrc={uk} className="w-4 rounded-sm opacity-80 group-hover:opacity-100 transition-opacity" />
-                <p className="group-hover:text-white font-nuni text-[11px] font-bold tracking-widest uppercase transition-colors">
-                  EN
-                </p>
-              </Flex>
-            </Flex>
-          </Flex>
-        </Container>
-      </div>
       {/* Main Navigation */}
       <div
         className={`sticky top-0 z-50 w-full transition-all duration-500 border-b ${
