@@ -19,7 +19,7 @@ import CompLogo from "../layouts/CompLogo";
 
 const Home = () => {
     return (
-        <div className="relative overflow-hidden">
+        <main>
             <Helmet>
                 <title>Home | Cabbage eCommerce</title>
                 <meta name="description" content="Welcome to our website. Discover our best deals, featured products, and top categories." />
@@ -39,7 +39,7 @@ const Home = () => {
             <Counter />
             <Blog />
             <CompLogo />
-        </div>
+        </main>
     );
 }
 
