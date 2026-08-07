@@ -1,44 +1,127 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "../Container";
 import Flex from "../Flex";
-import { FaRegEye } from "react-icons/fa";
+import { FaRegUser, FaArrowRight } from "react-icons/fa";
 import { FaRegCalendarDays } from "react-icons/fa6";
-import { FaArrowRight } from "react-icons/fa";
 
 const Blog = () => {
-
-  const blogData = [
+  const blogPosts = [
     {
       id: 1,
-      category: "Health & Wellness",
-      title: "The Surprising Health Benefits of Eating Fresh Organic Greens",
-      excerpt: "Discover how incorporating fresh, pesticide-free greens into your daily diet can boost your energy levels and improve your overall well-being. From farm directly to your table, our organic approach ensures you get the maximum nutrition.",
-      views: "238 Views",
-      date: "July 25, 2026",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop",
+      title: "10 Reasons to Switch to Organic Vegetables Today",
+      excerpt: "Discover the amazing health benefits of organic farming and why you should make the switch for your family's daily meals.",
+      category: "Health & Nutrition",
+      date: "August 12, 2026",
+      author: "Admin",
+      image: "https://loremflickr.com/800/600/vegetables,organic?lock=1"
     },
     {
       id: 2,
-      category: "Farm to Table",
-      title: "How We Source Our Organic Vegetables",
-      views: "185 Views",
-      date: "July 18, 2026",
-      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop",
+      title: "How to Store Fresh Fruits to Make Them Last Longer",
+      excerpt: "Tired of your fresh produce going bad too quickly? Follow these simple storage hacks to keep your fruits fresh for weeks.",
+      category: "Tips & Tricks",
+      date: "August 05, 2026",
+      author: "Sarah Jane",
+      image: "https://loremflickr.com/800/600/fruits,fresh?lock=2"
     },
     {
       id: 3,
+      title: "The Ultimate Guide to a Healthy Green Salad",
+      excerpt: "Learn how to build the perfect, nutrient-packed green salad using our daily fresh arrivals and homemade dressings.",
       category: "Recipes",
-      title: "5 Delicious Ways to Cook Organic Cabbage",
-      views: "342 Views",
-      date: "July 10, 2026",
-      image: "https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=600&auto=format&fit=crop",
+      date: "July 28, 2026",
+      author: "Chef Mike",
+      image: "https://loremflickr.com/800/600/salad,healthy?lock=3"
     },
+    {
+      id: 4,
+      title: "Why Farm-to-Table is Changing the Food Industry",
+      excerpt: "Explore how sourcing food directly from local farmers is improving food quality and supporting local communities.",
+      category: "Lifestyle",
+      date: "July 20, 2026",
+      author: "Admin",
+      image: "https://loremflickr.com/800/600/farm,food?lock=4"
+    },
+    {
+      id: 5,
+      title: "Top 5 Superfoods You Need in Your Daily Diet",
+      excerpt: "Boost your immunity and energy levels with these top 5 easily accessible superfoods available in our store.",
+      category: "Health & Nutrition",
+      date: "July 15, 2026",
+      author: "Dr. Emily",
+      image: "https://loremflickr.com/800/600/superfood,diet?lock=5"
+    },
+    {
+      id: 6,
+      title: "A Beginner's Guide to Vegan Cooking at Home",
+      excerpt: "Thinking about trying a plant-based diet? Here is everything you need to know to start cooking delicious vegan meals.",
+      category: "Recipes",
+      date: "July 02, 2026",
+      author: "Sarah Jane",
+      image: "https://loremflickr.com/800/600/vegan,cooking?lock=6"
+    },
+    {
+      id: 7,
+      title: "The Benefits of a Gluten-Free Diet Uncovered",
+      excerpt: "Is a gluten-free lifestyle right for you? We break down the science, the myths, and how to transition smoothly.",
+      category: "Health & Nutrition",
+      date: "June 25, 2026",
+      author: "Dr. Emily",
+      image: "https://loremflickr.com/800/600/glutenfree,food?lock=7"
+    },
+    {
+      id: 8,
+      title: "5 Easy Ways to Reduce Food Waste at Home",
+      excerpt: "Learn practical and creative ways to utilize leftovers, compost scraps, and reduce your environmental footprint.",
+      category: "Sustainability",
+      date: "June 18, 2026",
+      author: "Admin",
+      image: "https://loremflickr.com/800/600/kitchen,vegetables?lock=8"
+    },
+    {
+      id: 9,
+      title: "Exploring the World of Exotic Tropical Fruits",
+      excerpt: "From Dragon Fruit to Rambutan, expand your palate by exploring the nutritional powerhouses from the tropics.",
+      category: "Lifestyle",
+      date: "June 10, 2026",
+      author: "Chef Mike",
+      image: "https://loremflickr.com/800/600/tropical,fruits?lock=9"
+    },
+    {
+      id: 10,
+      title: "The Secret to the Perfect Homemade Pasta",
+      excerpt: "Ditch the boxed stuff. We show you how to make authentic, mouth-watering pasta using only 3 organic ingredients.",
+      category: "Recipes",
+      date: "June 03, 2026",
+      author: "Sarah Jane",
+      image: "https://loremflickr.com/800/600/pasta,homemade?lock=10"
+    },
+    {
+      id: 11,
+      title: "Why Hydration is the Key to Glowing Skin",
+      excerpt: "It's not just about creams and serums. Discover how eating water-rich fruits and veggies can transform your skin.",
+      category: "Tips & Tricks",
+      date: "May 28, 2026",
+      author: "Admin",
+      image: "https://loremflickr.com/800/600/water,fresh?lock=11"
+    },
+    {
+      id: 12,
+      title: "Understanding Food Labels: What to Look For",
+      excerpt: "Navigate the grocery aisles like a pro by learning how to decode confusing nutrition labels and ingredient lists.",
+      category: "Health & Nutrition",
+      date: "May 20, 2026",
+      author: "Dr. Emily",
+      image: "https://loremflickr.com/800/600/grocery,healthy?lock=12"
+    }
   ];
+  // eslint-disable-next-line react-hooks/purity
+  const displayedBlogs = [...blogPosts].sort(() => 0.5 - Math.random()).slice(0, 3);
 
   return (
     <div className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#F9FBF5]">
       <Container className={"px-4 lg:px-0"}>
-        {/* header */}
         <div className="flex flex-col md:flex-row items-end justify-between border-b border-gray-200 pb-8 md:pb-10 mb-10 md:mb-14">
           <div className="w-full md:w-2/3">
             <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-3 block">
@@ -54,99 +137,49 @@ const Blog = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* featured */}
-          <div className="lg:col-span-2 lg:row-span-2 bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
-            {/* image */}
-            <div className="w-full h-75 md:h-100">
-              <img 
-                src={blogData[0].image} 
-                alt={blogData[0].title} 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* content */}
-            <div className="p-8 md:p-10 flex flex-col grow">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="bg-[#80B500]/10 text-[#80B500] border border-[#80B500]/20 px-3 py-1 rounded-full text-xs font-bold font-nuni uppercase tracking-wider">
-                  {blogData[0].category}
-                </span>
-                <Flex className="items-center gap-2 text-[#546375]">
-                  <FaRegCalendarDays className="text-[#80B500] text-sm" />
-                  <p className="text-sm font-nuni">{blogData[0].date}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayedBlogs.map((post) => (
+            <div key={post.id} className="bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 flex flex-col group shadow-sm hover:shadow-md">
+              {/* Image Section */}
+              <Link to={`/blogs/${post.id}`} className="w-full h-56 rounded-2xl overflow-hidden mb-6 block bg-gray-100">
+                <img 
+                  src={post.image} 
+                  alt={post.title} 
+                  className="w-full h-full object-cover" 
+                />
+              </Link>
+              {/* Content Section */}
+              <div className="flex flex-col grow">
+                <div className="flex items-center gap-3 mb-4 text-[#546375]">
+                  <span className="bg-[#80B500]/10 text-[#80B500] px-3 py-1 rounded-full text-xs font-bold font-nuni uppercase tracking-wider">
+                    {post.category}
+                  </span>
+                  <Flex className="items-center gap-2">
+                    <FaRegCalendarDays className="text-gray-400 text-xs" />
+                    <p className="text-xs font-nuni">{post.date}</p>
+                  </Flex>
+                </div>
+                <Link to={`/blogs/${post.id}`}>
+                  <h3 className="text-xl md:text-2xl font-bold font-int text-[#232323] leading-snug mb-4 hover:text-[#80B500] transition-colors duration-300 line-clamp-2">
+                    {post.title}
+                  </h3>
+                </Link>
+                <p className="text-[#546375] font-nuni leading-relaxed mb-6 text-sm line-clamp-3">
+                  {post.excerpt}
+                </p>
+                {/* Footer Section */}
+                <Flex className="items-center justify-between text-[#232323] mt-auto pt-5 border-t border-gray-100">
+                  <Flex className="items-center gap-2 text-[#546375]">
+                    <FaRegUser className="text-[#80B500] text-sm" />
+                    <p className="text-sm font-nuni font-semibold">{post.author}</p>
+                  </Flex>
+                  <Link to={`/blogs/${post.id}`} className="flex items-center gap-2 text-sm font-bold font-nuni uppercase tracking-widest text-[#232323] hover:text-[#80B500] transition-colors duration-300">
+                    Read <FaArrowRight />
+                  </Link>
                 </Flex>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold font-int text-[#232323] leading-tight mb-4 group-hover:text-[#80B500] transition-colors duration-300">
-                {blogData[0].title}
-              </h3>
-              <p className="text-[#546375] font-nuni leading-relaxed mb-8 max-w-2xl">
-                {blogData[0].excerpt}
-              </p>
-              <Flex className="items-center justify-between text-[#232323] mt-auto border-t border-gray-200 pt-6">
-                <Flex className="items-center gap-2 text-[#546375]">
-                  <FaRegEye className="text-[#80B500] text-lg" />
-                  <p className="text-sm font-nuni">{blogData[0].views}</p>
-                </Flex>
-                <Flex className="items-center gap-2 font-bold font-nuni text-sm uppercase tracking-widest group-hover:text-[#80B500] transition-colors duration-300">
-                  Read Article <FaArrowRight />
-                </Flex>
-              </Flex>
             </div>
-          </div>
-          {/* card 1 */}
-          <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
-            <div className="w-full h-45 rounded-xl overflow-hidden mb-6">
-              <img 
-                src={blogData[1].image} 
-                alt={blogData[1].title} 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex items-center gap-3 mb-4 text-[#546375]">
-              <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
-                {blogData[1].category}
-              </span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-              <p className="text-xs font-nuni">{blogData[1].date}</p>
-            </div>
-            <h3 className="text-xl font-bold font-int text-[#232323] leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
-              {blogData[1].title}
-            </h3>
-            <Flex className="items-center justify-between text-[#232323] mt-auto pt-4 border-t border-gray-200">
-              <Flex className="items-center gap-2 text-[#546375]">
-                <FaRegEye className="text-[#80B500] text-sm" />
-                <p className="text-xs font-nuni">{blogData[1].views}</p>
-              </Flex>
-              <FaArrowRight className="group-hover:text-[#80B500] transition-colors duration-300" />
-            </Flex>
-          </div>
-          {/* Card 2 */}
-          <div className="lg:col-span-1 bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 cursor-pointer flex flex-col group">
-            <div className="w-full h-45 rounded-xl overflow-hidden mb-6">
-              <img 
-                src={blogData[2].image} 
-                alt={blogData[2].title} 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex items-center gap-3 mb-4 text-[#546375]">
-              <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">
-                {blogData[2].category}
-              </span>
-              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-              <p className="text-xs font-nuni">{blogData[2].date}</p>
-            </div>
-            <h3 className="text-xl font-bold font-int text-[#232323] leading-snug mb-6 group-hover:text-[#80B500] transition-colors duration-300">
-              {blogData[2].title}
-            </h3>
-            <Flex className="items-center justify-between text-[#232323] mt-auto pt-4 border-t border-gray-200">
-              <Flex className="items-center gap-2 text-[#546375]">
-                <FaRegEye className="text-[#80B500] text-sm" />
-                <p className="text-xs font-nuni">{blogData[2].views}</p>
-              </Flex>
-              <FaArrowRight className="group-hover:text-[#80B500] transition-colors duration-300" />
-            </Flex>
-          </div>
+          ))}
         </div>
       </Container>
     </div>
