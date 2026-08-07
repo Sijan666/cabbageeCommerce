@@ -13,6 +13,7 @@ import Login from './components/pages/Login';
 import Blogs from './components/pages/Blogs';
 import BlogDetails from './components/pages/BlogDetails';
 import Contact from './components/pages/Contact';
+import BackToTop from './components/BackToTop'; 
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -49,6 +50,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
       </Suspense>
+      <BackToTop />
     </ReactLenis>
   );
 }
