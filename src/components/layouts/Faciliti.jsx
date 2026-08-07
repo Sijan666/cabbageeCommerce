@@ -44,7 +44,7 @@ const Faciliti = () => {
         setIsFading(false);
       }, 500);
       
-    }, 100000);
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, [productsList]);
