@@ -91,7 +91,7 @@ const About = () => {
                             {/* Signature */}
                             <div>
                                 <h4 className="text-[#232323] font-bold text-base md:text-lg font-int">Jerry Henson</h4>
-                                <p className="text-gray-400 text-xs md:text-sm mt-1 font-nuni">/ Shop Director</p>
+                                <p className="text-gray-400 text-xs md:text-sm mt-1 font-nuni">Shop Director</p>
                             </div>
                         </div>
                         {/* Right Side: Images */}
