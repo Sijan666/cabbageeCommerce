@@ -94,7 +94,7 @@ const About = () => {
                                 <p className="text-gray-400 text-xs md:text-sm mt-1 font-nuni">Shop Director</p>
                             </div>
                         </div>
-                        {/* Right Side: Images */}
+                        {/* Right Side */}
                         <Flex className="gap-3 sm:gap-4 md:gap-6 h-70 sm:h-100 md:h-112.5 lg:h-137.5 w-full" aria-hidden="true">
                             {/* left image placeholder */}
                             <div className="w-1/2 h-[80%] bg-[#e5e7eb] rounded-sm mt-0 relative overflow-hidden">
