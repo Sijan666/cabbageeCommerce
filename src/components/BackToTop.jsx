@@ -22,7 +22,6 @@ const BackToTop = () => {
             circleRef.current.style.strokeDashoffset = offset;
         }
         }
-
         setIsVisible(scrollTop > 300);
     };
 
