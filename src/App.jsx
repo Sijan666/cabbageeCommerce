@@ -47,7 +47,7 @@ function App() {
             <Route path="/blogs/:id" element={<BlogDetails />} />
             <Route path="contact" element={<Contact />} />
           </Route>
-          {/* <Route path="*" element={<Error />} /> */}
+          <Route path="*" element={<Error />} />
         </Routes>
       </Suspense>
       <BackToTop />
