@@ -1,65 +1,94 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import {
-    IoAdd,
-    IoCartOutline,
-    IoCart,
-    IoChevronForward,
-    IoRemove,
-    IoStar,
-    IoShieldCheckmarkOutline,
-    IoSyncOutline,
-    IoCarOutline,
-} from 'react-icons/io5';
+import gsap from 'gsap';
+// Icons
+import { IoAdd, IoRemove, IoStar, IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
 import { FaHeart } from 'react-icons/fa';
+import { BsArrowRight } from 'react-icons/bs';
 
 import Container from '../Container';
-import Images from '../Images';
 import { useStore } from '../../store/useStore';
 
 const ProductDetails = () => {
     const { id } = useParams();
-    // eslint-disable-next-line no-unused-vars
-    const { addToCart, addToWishlist, removeFromWishlist, wishlist, cart } = useStore();
+    const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useStore();
     const [product, setProduct] = useState(null);
-    const [selectedImage, setSelectedImage] = useState('');
+    const [activeImage, setActiveImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('description');
+    const mainRef = useRef(null);
+    const imageRef = useRef(null);
     const currentId = product ? product.id : null;
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
 
+    // Fetch Product
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 setIsLoading(true);
-                const { data } = await axios.get(
-                    `https://dummyjson.com/products/${id}`
-                );
+                const { data } = await axios.get(`https://dummyjson.com/products/${id}`);
                 setProduct(data);
-                setSelectedImage(data.images?.[0] || data.thumbnail);
+                setActiveImage(data.images?.[0] || data.thumbnail);
             } catch (error) {
-                console.error('product not found:', error.message);
+                console.error('Product not found:', error.message);
                 setProduct(null);
             } finally {
                 setIsLoading(false);
             }
         };
         fetchProduct();
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [id]);
+
+    // Initial Page Load Animation
+    useEffect(() => {
+        if (!isLoading && product && mainRef.current) {
+            gsap.fromTo(
+                mainRef.current.querySelectorAll('.reveal-el'),
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.1 }
+            );
+        }
+    }, [isLoading, product]);
+
+    // Smooth Image Transition
+    const handleImageChange = (newImage) => {
+        if (newImage === activeImage) return;
+        
+        gsap.to(imageRef.current, {
+            opacity: 0,
+            y: 10,
+            duration: 0.2,
+            onComplete: () => {
+                setActiveImage(newImage);
+                gsap.to(imageRef.current, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+            }
+        });
+    };
 
     const images = useMemo(() => {
         if (!product) return [];
-        return [
-            ...new Set([
-                ...(product.images || []),
-                product.thumbnail,
-            ]),
-        ].filter(Boolean);
+        return [...new Set([...(product.images || []), product.thumbnail])].filter(Boolean);
     }, [product]);
+
+    // Next & Previous Arrow Handlers
+    const handleNextImage = () => {
+        const currentIndex = images.indexOf(activeImage);
+        const nextIndex = (currentIndex + 1) % images.length;
+        handleImageChange(images[nextIndex]);
+    };
+
+    const handlePrevImage = () => {
+        const currentIndex = images.indexOf(activeImage);
+        const prevIndex = (currentIndex - 1 + images.length) % images.length;
+        handleImageChange(images[prevIndex]);
+    };
+
+    const filteredThumbnails = useMemo(() => {
+        return images.filter(img => img !== activeImage);
+    }, [images, activeImage]);
 
     const categoryName = product?.category?.replaceAll('-', ' ') || '';
     const originalPrice = product?.discountPercentage
@@ -67,307 +96,196 @@ const ProductDetails = () => {
         : product?.price || 0;
 
     const handleQuantity = (type) => {
-        setQuantity((previousQuantity) => {
-            if (type === 'increase') {
-                return Math.min(previousQuantity + 1, product.stock);
-            }
-            return Math.max(previousQuantity - 1, 1);
+        setQuantity((prev) => {
+            if (type === 'increase') return Math.min(prev + 1, product.stock);
+            return Math.max(prev - 1, 1);
         });
     };
 
     const getProductData = () => ({
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        image: product.thumbnail,
-        thumbnail: product.thumbnail,
-        quantity,
-        stock: product.stock,
-        category: product.category,
+        id: product.id, title: product.title, price: product.price,
+        image: product.thumbnail, thumbnail: product.thumbnail,
+        quantity, stock: product.stock, category: product.category,
     });
 
     const handleWishlistToggle = () => {
-        if (isAlreadyInWishlist) {
-            removeFromWishlist(product.id);
-        } else {
-            addToWishlist(getProductData());
-        }
+        isAlreadyInWishlist ? removeFromWishlist(product.id) : addToWishlist(getProductData());
     };
 
     if (isLoading) {
         return (
-            <div className="flex min-h-[70vh] items-center justify-center bg-[#F7F9F2]">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#80B500] border-t-transparent" />
+            <div className="flex min-h-screen items-center justify-center bg-[#FDFCF8]">
+                <div className="flex gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                </div>
             </div>
         );
     }
 
-    if (!product) {
-        return (
-            <div className="min-h-[70vh] bg-[#F7F9F2] px-4 py-32 text-center font-nuni">
-                <h2 className="mb-4 text-3xl font-bold text-[#232323]">
-                    Product not found
-                </h2>
-                <Link
-                    to="/shop"
-                    className="inline-block rounded-full bg-[#80B500] px-8 py-3.5 font-bold text-white transition-all hover:bg-[#6F9F00]"
-                >
-                    Back to shop
-                </Link>
-            </div>
-        );
-    }
+    if (!product) return (
+        <div className="min-h-screen flex items-center justify-center bg-[#FDFCF8] font-nuni">
+            <h2 className="text-xl font-medium tracking-widest text-[#2C3A29]/50 uppercase">Product Not Found</h2>
+        </div>
+    );
 
     const isInStock = product.stock > 0;
 
     return (
-        <main className="min-h-screen bg-[#F7F9F2] py-8 font-nuni lg:py-12">
-            <Container className="px-4 lg:px-0">
-                {/* breadcrumbs */}
-                <nav className="mb-8">
-                    <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
-                        <BreadcrumbLink to="/" title="Home" />
-                        <IoChevronForward className="text-xs" />
-                        <BreadcrumbLink to="/shop" title="Shop" />
-                        <IoChevronForward className="text-xs" />
-                        <BreadcrumbLink
-                            to={`/category/${product.category}`}
-                            title={categoryName}
-                            capitalize
-                        />
-                        <IoChevronForward className="hidden text-xs sm:block" />
-                        <li className="hidden max-w-62.5 truncate font-bold text-[#232323] sm:block">
-                            {product.title}
-                        </li>
+        <main ref={mainRef} className="min-h-screen bg-[#FDFCF8] py-10 lg:py-16 font-nuni text-[#2C3A29] selection:bg-[#80B500] selection:text-white">
+            <Container className="max-w-337.5 px-4 sm:px-6 lg:px-8 mx-auto">
+                {/* Header / Breadcrumb */}
+                <div className="reveal-el opacity-0 mb-10 flex flex-col md:flex-row justify-between md:items-end border-b border-[#2C3A29]/10 pb-6 gap-4">
+                    <ol className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-[#2C3A29]/40">
+                        <li><Link to="/" className="hover:text-[#80B500] transition-colors">Home</Link></li>
+                        <li className="w-1 h-1 rounded-full bg-[#2C3A29]/20"></li>
+                        <li><Link to="/shop" className="hover:text-[#80B500] transition-colors">Collection</Link></li>
+                        <li className="w-1 h-1 rounded-full bg-[#2C3A29]/20"></li>
+                        <li className="text-[#2C3A29]">{categoryName}</li>
                     </ol>
-                </nav>
-                <section className="grid overflow-hidden rounded-4xl border border-[#E4E8DF] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] lg:grid-cols-2">
-                    {/* left */}
-                    <div className="border-b border-[#E4E8DF] p-6 lg:border-b-0 lg:border-r lg:p-10">
-                        <div className="flex flex-col-reverse gap-4 sm:flex-row">
-                            {images.length > 1 && (
-                                <div className="flex gap-3 overflow-x-auto sm:w-24 sm:flex-col sm:overflow-y-auto">
-                                    {images.map((image) => (
-                                        <button
-                                            key={image}
-                                            type="button"
-                                            onClick={() => setSelectedImage(image)}
-                                            className={`h-20 min-w-20 cursor-pointer overflow-hidden rounded-2xl border bg-[#F7F9F5] p-2 transition-all duration-300 ${
-                                                selectedImage === image
-                                                    ? 'border-[#80B500] ring-2 ring-[#80B500]/20'
-                                                    : 'border-[#E4E8DF] hover:border-[#80B500]'
-                                            }`}
-                                        >
-                                            <Images
-                                                imgSrc={image}
-                                                className="h-full w-full object-contain mix-blend-multiply"
-                                            />
-                                        </button>
-                                    ))}
+                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#80B500]">
+                        SKU: PRD-{product.id}
+                    </span>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                    {/* LEFT GALLERY SECTION */}
+                    <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4 lg:sticky lg:top-10">
+                        {/* Thumbnails Column (Left Side) */}
+                        {filteredThumbnails.length > 0 && (
+                            <div className="reveal-el opacity-0 flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:max-h-125 custom-scrollbar shrink-0">
+                                {filteredThumbnails.map((img, idx) => (
+                                    <button
+                                        key={idx}
+                                        type="button"
+                                        onClick={() => handleImageChange(img)}
+                                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#F4F4F0] p-2 transition-all duration-300 cursor-pointer overflow-hidden shrink-0 flex items-center justify-center border border-transparent opacity-60 hover:opacity-100 hover:bg-[#EAEAE6]"
+                                    >
+                                        <img src={img} alt={`thumb-${idx}`} className="max-h-full max-w-full object-contain mix-blend-multiply" />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                        {/* Main Image Box with Custom Arrows */}
+                        <div className="reveal-el opacity-0 flex-1 bg-[#F4F4F0] rounded-4xl min-h-87.5 sm:min-h-120 flex items-center justify-center relative p-6 sm:p-10 overflow-hidden group">
+                            {product.discountPercentage > 0 && (
+                                <div className="absolute top-6 left-6 bg-white text-[#2C3A29] text-[10px] uppercase tracking-[0.15em] font-bold px-3.5 py-1.5 rounded-full shadow-sm z-10">
+                                    -{Math.round(product.discountPercentage)}% OFF
                                 </div>
                             )}
-                            <div className="relative flex min-h-95 flex-1 items-center justify-center rounded-3xl bg-[#F4F7F0] p-8 sm:min-h-125">
+                            {/* Left Arrow */}
+                            {images.length > 1 && (
+                                <button 
+                                    onClick={handlePrevImage}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#2C3A29] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer z-20"
+                                    title="Previous Image"
+                                >
+                                    <IoChevronBack size={18} />
+                                </button>
+                            )}
+                            {/* Main Image */}
+                            <img 
+                                ref={imageRef}
+                                src={activeImage} 
+                                alt={product.title} 
+                                className="max-h-100 w-full object-contain mix-blend-multiply" 
+                            />
+                            {/* Right Arrow */}
+                            {images.length > 1 && (
+                                <button 
+                                    onClick={handleNextImage}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#2C3A29] flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer z-20"
+                                    title="Next Image"
+                                >
+                                    <IoChevronForward size={18} />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    {/* RIGHT PRODUCT INFO SECTION */}
+                    <div className="lg:col-span-5 flex flex-col pt-2 lg:pt-0">
+                        <div className="reveal-el opacity-0 mb-6">
+                            <h3 className="text-[11px] font-bold text-[#80B500] uppercase tracking-[0.2em] mb-3">
+                                {product.brand || 'Premium Harvest'}
+                            </h3>
+                            <h1 className="font-int text-3xl sm:text-4xl lg:text-[42px] font-light text-[#2C3A29] leading-[1.1] tracking-tight mb-4">
+                                {product.title}
+                            </h1>
+                            <div className="flex items-end gap-4">
+                                <span className="font-int text-3xl font-medium text-[#2C3A29]">
+                                    ${product.price.toFixed(2)}
+                                </span>
                                 {product.discountPercentage > 0 && (
-                                    <span className="absolute left-6 top-6 rounded-full bg-[#80B500] px-4 py-1.5 text-xs font-bold text-white shadow-md">
-                                        -{Math.round(product.discountPercentage)}% OFF
+                                    <span className="text-lg text-[#2C3A29]/30 line-through mb-1">
+                                        ${originalPrice.toFixed(2)}
                                     </span>
                                 )}
-                                <Images
-                                    imgSrc={selectedImage || product.thumbnail}
-                                    className="max-h-105 w-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
-                                />
                             </div>
                         </div>
-                    </div>
-                    {/* right */}
-                    <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-12">
-                        <Link
-                            to={`/category/${product.category}`}
-                            className="mb-4 w-max rounded-full bg-[#F0F8E7] px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#80B500] transition-colors hover:bg-[#80B500] hover:text-white"
-                        >
-                            {categoryName}
-                        </Link>
-                        <h1 className="mb-4 font-int text-3xl font-black text-[#232323] sm:text-4xl leading-tight">
-                            {product.title}
-                        </h1>
-                        <div className="mb-5 flex items-center gap-3">
-                            <div className="flex items-center gap-1 bg-[#FFF9E6] px-2.5 py-1 rounded-lg">
-                                <IoStar className="text-[#FFB800]" />
-                                <span className="font-bold text-[#232323]">
-                                    {product.rating?.toFixed(1)}
-                                </span>
+                        <div className="reveal-el opacity-0 flex items-center gap-4 mb-6 pb-6 border-b border-[#2C3A29]/10">
+                            <div className="flex items-center gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                    <IoStar key={i} className={`text-base ${i < Math.round(product.rating) ? 'text-[#FFB800]' : 'text-[#2C3A29]/10'}`} />
+                                ))}
                             </div>
-                            <span className="text-sm text-gray-400">
-                                ({product.reviews?.length || 12} verified reviews)
-                            </span>
+                            <span className="text-xs text-[#2C3A29]/50">({product.reviews?.length || 12} Customer Reviews)</span>
                         </div>
-                        <p className="mb-6 leading-relaxed text-[#70766B]">
+                        <p className="reveal-el opacity-0 text-[14px] text-[#2C3A29]/70 leading-relaxed mb-8">
                             {product.description}
                         </p>
-                        <div className="mb-8 flex flex-wrap items-baseline gap-4 border-y border-[#E4E8DF] py-5">
-                            <span className="text-4xl font-black text-[#80B500]">
-                                ${product.price.toFixed(2)}
-                            </span>
-                            {product.discountPercentage > 0 && (
-                                <span className="text-lg text-gray-400 line-through">
-                                    ${originalPrice.toFixed(2)}
+                        {/* Action Buttons */}
+                        <div className="reveal-el opacity-0 flex flex-col gap-4">
+                            
+                            <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.15em] text-[#2C3A29]/50 mb-1">
+                                <span>Quantity</span>
+                                <span className={isInStock ? 'text-[#80B500]' : 'text-red-500'}>
+                                    {isInStock ? `${product.stock} Available` : 'Out of Stock'}
                                 </span>
-                            )}
-                        </div>
-                        {/* stock & quantity Box */}
-                        <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#E4E8DF] bg-[#FAFBF9] p-5">
-                            <div>
-                                <p className="text-xs uppercase tracking-wider text-gray-400 font-bold mb-1">
-                                    Availability
-                                </p>
-                                <p className={`font-bold ${isInStock ? 'text-[#80B500]' : 'text-red-500'}`}>
-                                    {isInStock ? `In Stock (${product.stock} items available)` : 'Out of stock'}
-                                </p>
                             </div>
-                            <div className="flex h-12 items-center rounded-xl border border-[#E4E8DF] bg-white px-2 shadow-sm">
-                                <QuantityButton
-                                    icon={<IoRemove />}
-                                    onClick={() => handleQuantity('decrease')}
-                                    disabled={quantity <= 1}
-                                />
-                                <span className="w-12 text-center font-bold text-lg text-[#232323]">
-                                    {quantity}
-                                </span>
-                                <QuantityButton
-                                    icon={<IoAdd />}
-                                    onClick={() => handleQuantity('increase')}
-                                    disabled={quantity >= product.stock}
-                                />
-                            </div>
-                        </div>
-                        {/* action buttons */}
-                        <div className="flex flex-col gap-3.5 sm:flex-row">
-                            <button
-                                type="button"
-                                disabled={!isInStock}
-                                onClick={() => addToCart(getProductData())}
-                                className="flex min-h-14 flex-1 cursor-pointer items-center justify-center gap-3 rounded-2xl bg-[#80B500] px-6 font-bold text-white shadow-lg shadow-[#80B500]/20 transition-all hover:bg-[#6F9F00] hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300"
-                            >
-                                <IoCartOutline className="text-2xl" />
-                                Add to Cart · ${(product.price * quantity).toFixed(2)}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleWishlistToggle}
-                                className={`flex min-h-14 min-w-14 cursor-pointer items-center justify-center rounded-2xl border transition-all ${
-                                    isAlreadyInWishlist
-                                        ? 'border-[#80B500] bg-[#80B500]/10 text-[#80B500]'
-                                        : 'border-[#E4E8DF] bg-white text-[#232323] hover:border-[#80B500] hover:text-[#80B500]'
-                                }`}
-                                title={isAlreadyInWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                            >
-                                {isAlreadyInWishlist ? (
-                                    <FaHeart className="text-xl text-[#80B500]" />
-                                ) : (
-                                    <GrFavorite className="text-xl" />
-                                )}
-                            </button>
-                        </div>
-                        {/* badges */}
-                        <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#E4E8DF] pt-6">
-                            <div className="flex items-center gap-3">
-                                <IoCarOutline className="text-2xl text-[#80B500]" />
-                                <span className="text-xs font-bold text-[#546375]">Free Shipping</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <IoSyncOutline className="text-2xl text-[#80B500]" />
-                                <span className="text-xs font-bold text-[#546375]">30-Day Return</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <IoShieldCheckmarkOutline className="text-2xl text-[#80B500]" />
-                                <span className="text-xs font-bold text-[#546375]">Secure Checkout</span>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                {/* Quantity Pill */}
+                                <div className="flex items-center justify-between bg-white border border-[#2C3A29]/10 rounded-full px-2 h-14 w-full sm:w-32 shadow-sm">
+                                    <button onClick={() => handleQuantity('decrease')} disabled={quantity <= 1} className="w-9 h-9 flex items-center justify-center rounded-full text-[#2C3A29]/50 hover:bg-[#F4F4F0] hover:text-[#2C3A29] transition-colors disabled:opacity-30 cursor-pointer">
+                                        <IoRemove size={16} />
+                                    </button>
+                                    <span className="font-medium text-base">{quantity}</span>
+                                    <button onClick={() => handleQuantity('increase')} disabled={quantity >= product.stock} className="w-9 h-9 flex items-center justify-center rounded-full text-[#2C3A29]/50 hover:bg-[#F4F4F0] hover:text-[#2C3A29] transition-colors disabled:opacity-30 cursor-pointer">
+                                        <IoAdd size={16} />
+                                    </button>
+                                </div>
+                                {/* Add to Cart Button */}
+                                <button
+                                    type="button"
+                                    disabled={!isInStock}
+                                    onClick={() => addToCart(getProductData())}
+                                    className="flex-1 bg-[#80B500] text-white h-14 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-400 hover:bg-[#6c9a00] hover:shadow-lg hover:shadow-[#80B500]/20 disabled:bg-[#2C3A29]/10 disabled:text-[#2C3A29]/30 cursor-pointer flex items-center justify-center gap-2.5"
+                                >
+                                    Add to Cart <BsArrowRight size={16} />
+                                </button>
+                                {/* Wishlist Button */}
+                                <button
+                                    type="button"
+                                    onClick={handleWishlistToggle}
+                                    className={`w-14 h-14 shrink-0 rounded-full flex items-center justify-center border transition-all duration-300 cursor-pointer ${
+                                        isAlreadyInWishlist 
+                                        ? 'bg-[#80B500]/10 border-[#80B500] text-[#80B500]' 
+                                        : 'bg-white border-[#2C3A29]/10 text-[#2C3A29]/40 hover:border-[#2C3A29] hover:text-[#2C3A29] shadow-sm'
+                                    }`}
+                                >
+                                    {isAlreadyInWishlist ? <FaHeart size={18} /> : <GrFavorite size={18} />}
+                                </button>
                             </div>
                         </div>
                     </div>
-                </section>
-                {/* additional details */}
-                <section className="mt-12 rounded-[28px] border border-[#E4E8DF] bg-white p-6 sm:p-10 shadow-sm">
-                    <div className="flex border-b border-[#E4E8DF] gap-8">
-                        <button
-                            onClick={() => setActiveTab('description')}
-                            className={`pb-4 font-bold text-lg cursor-pointer transition-colors relative ${
-                                activeTab === 'description' ? 'text-[#80B500]' : 'text-gray-400 hover:text-[#232323]'
-                            }`}
-                        >
-                            Description
-                            {activeTab === 'description' && (
-                                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#80B500]" />
-                            )}
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('info')}
-                            className={`pb-4 font-bold text-lg cursor-pointer transition-colors relative ${
-                                activeTab === 'info' ? 'text-[#80B500]' : 'text-gray-400 hover:text-[#232323]'
-                            }`}
-                        >
-                            Additional Information
-                            {activeTab === 'info' && (
-                                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#80B500]" />
-                            )}
-                        </button>
-                    </div>
-                    <div className="py-6 text-[#70766B] leading-relaxed">
-                        {activeTab === 'description' ? (
-                            <div>
-                                <p className="mb-4">
-                                    Experience absolute top-tier quality with {product.title}. Designed carefully to meet your everyday needs while ensuring premium durability and performance.
-                                </p>
-                                <p>
-                                    Part of our exclusive <span className="font-bold text-[#232323] capitalize">{categoryName}</span> collection, this item guarantees maximum satisfaction with rigorous quality standards.
-                                </p>
-                            </div>
-                        ) : (
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                <li className="flex justify-between border-b border-gray-100 pb-2">
-                                    <span className="font-bold text-[#232323]">Brand:</span>
-                                    <span>{product.brand || 'Generic'}</span>
-                                </li>
-                                <li className="flex justify-between border-b border-gray-100 pb-2">
-                                    <span className="font-bold text-[#232323]">Category:</span>
-                                    <span className="capitalize">{categoryName}</span>
-                                </li>
-                                <li className="flex justify-between border-b border-gray-100 pb-2">
-                                    <span className="font-bold text-[#232323]">Stock:</span>
-                                    <span>{product.stock} Units Available</span>
-                                </li>
-                                <li className="flex justify-between border-b border-gray-100 pb-2">
-                                    <span className="font-bold text-[#232323]">Rating:</span>
-                                    <span>{product.rating} / 5.0</span>
-                                </li>
-                            </ul>
-                        )}
-                    </div>
-                </section>
+                </div>
             </Container>
+            <style>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 3px; height: 3px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+            `}</style>
         </main>
     );
 };
-const BreadcrumbLink = ({ to, title, capitalize = false }) => (
-    <li>
-        <Link
-            to={to}
-            className={`cursor-pointer transition-colors hover:text-[#80B500] ${
-                capitalize ? 'capitalize' : ''
-            }`}
-        >
-            {title}
-        </Link>
-    </li>
-);
-const QuantityButton = ({ icon, onClick, disabled }) => (
-    <button
-        type="button"
-        onClick={onClick}
-        disabled={disabled}
-        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-gray-600 transition-colors hover:bg-[#F0F8E7] hover:text-[#80B500] disabled:cursor-not-allowed disabled:opacity-30"
-    >
-        {icon}
-    </button>
-);
 
 export default ProductDetails;
