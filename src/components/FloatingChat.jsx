@@ -67,15 +67,27 @@ const FloatingChat = () => {
         };
     }, []);
 
-    // MESSAGE SEND
-    const handleSendMessage = (e) => {
-        e.preventDefault();
-        if (!inputMessage.trim()) return;
-        const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setMessages((prev) => [...prev, { text: inputMessage, sender: "user", time: timeString }]);
-        window.$crisp.push(["do", "message:send", ["text", inputMessage]]);
-        setInputMessage("");
-    };
+    // // MESSAGE SEND
+    // const handleSendMessage = (e) => {
+    //     e.preventDefault();
+    //     if (!inputMessage.trim()) return;
+    //     const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    //     setMessages((prev) => [...prev, { text: inputMessage, sender: "user", time: timeString }]);
+    //     window.$crisp.push(["do", "message:send", ["text", inputMessage]]);
+    //     setInputMessage("");
+    // };
+
+// MESSAGE SEND
+const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!inputMessage.trim()) return;
+    const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setMessages((prev) => [...prev, { text: inputMessage, sender: "user", time: timeString }]);
+    window.$crisp.push(["set", "user:nickname", ["Cabbage Customer"]]);
+    window.$crisp.push(["do", "message:send", ["text", inputMessage]]);
+    setInputMessage("");
+};
+
 
     return (
         <>
