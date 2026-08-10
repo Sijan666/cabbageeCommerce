@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Layouts
 import Ads from "../layouts/Ads";
 import Banner from "../layouts/Banner";
 import Contact from "../layouts/Contact";
@@ -17,9 +18,46 @@ import Counter from "../layouts/Counter";
 import Blog from "../layouts/Blog";
 import CompLogo from "../layouts/CompLogo";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
+    const mainRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const sections = gsap.utils.toArray(mainRef.current.children).slice(2);
+            sections.forEach((section, index) => {
+                gsap.set(section, { 
+                    zIndex: sections.length - index,
+                    position: "relative"
+                });
+                gsap.fromTo(
+                    section,
+                    { 
+                        opacity: 0, 
+                        y: 60 
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 85%",
+                            toggleActions: "play none none none" 
+                        },
+                        clearProps: "all" 
+                    }
+                );
+            });
+        }, mainRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <main>
+        <main ref={mainRef}>
             <Helmet>
                 <title>Home | Cabbage eCommerce</title>
                 <meta name="description" content="Welcome to our website. Discover our best deals, featured products, and top categories." />
