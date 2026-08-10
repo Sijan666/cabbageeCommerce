@@ -61,7 +61,7 @@ const FloatingChat = () => {
         };
 
         window.addEventListener("openLiveChat", handleOpenChatEvent);
-        
+
         return () => {
             window.removeEventListener("openLiveChat", handleOpenChatEvent);
         };
@@ -71,10 +71,8 @@ const FloatingChat = () => {
     const handleSendMessage = (e) => {
         e.preventDefault();
         if (!inputMessage.trim()) return;
-
         const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         setMessages((prev) => [...prev, { text: inputMessage, sender: "user", time: timeString }]);
-        
         window.$crisp.push(["do", "message:send", ["text", inputMessage]]);
         setInputMessage("");
     };
@@ -95,13 +93,12 @@ const FloatingChat = () => {
         `}</style>
 
         <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-8 z-9999 flex flex-col items-end">
-            {/* CHAT BOX */}
+            {/* chat box */}
             <div 
             className={`absolute bottom-17.5 right-0 w-[92vw] sm:w-95 bg-white rounded-[28px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 origin-bottom-right flex flex-col ${
                 isChatBoxOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-4 pointer-events-none"
             }`}
             >
-            {/* HEADER */}
             <div className="px-5 sm:px-6 py-5 sm:py-6 bg-white relative z-10 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
                 <div className="flex justify-between items-start">
                     <div className="flex gap-3.5 sm:gap-4 items-center">
@@ -124,7 +121,7 @@ const FloatingChat = () => {
                     </button>
                 </div>
             </div>
-            {/* CHAT AREA */}
+            {/* chat area */}
             <div className="h-80 sm:h-87.5 px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll">
                 <div className="flex justify-center mb-2">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-100/80 px-3 py-1 rounded-full">
@@ -152,7 +149,7 @@ const FloatingChat = () => {
                     ))}
                 <div ref={messagesEndRef} />
             </div>
-            {/* INPUT AREA */}
+            {/* input area */}
             <div className="p-3.5 sm:p-4 bg-white relative z-10">
                 <form onSubmit={handleSendMessage} className="flex items-center bg-[#f1f5f9] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#80B500] focus-within:shadow-[0_0_15px_rgba(128,181,0,0.1)] rounded-full p-1.5 transition-all duration-300">
                     <input 
@@ -172,7 +169,7 @@ const FloatingChat = () => {
                 </form>
             </div>
             </div>
-            {/* SINGLE MAIN BUTTON */}
+            {/* button */}
             <button
             onClick={() => setIsChatBoxOpen(!isChatBoxOpen)}
             className={`flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 text-white rounded-full transition-all duration-300 cursor-pointer relative z-10 overflow-hidden ${
