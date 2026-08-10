@@ -33,7 +33,7 @@ const FloatingChat = () => {
         scrollToBottom();
     }, [messages]);
 
-    // CRISP API INTEGRATION
+    // CRISP API INTEGRATION & FAQ EVENT LISTENER
     useEffect(() => {
         window.$crisp = [];
         window.CRISP_WEBSITE_ID = "cd24f333-e004-47f2-8049-bfa54ee02495"; 
@@ -55,6 +55,16 @@ const FloatingChat = () => {
             setIsChatBoxOpen(true);
         }
         }]);
+
+        const handleOpenChatEvent = () => {
+            setIsChatBoxOpen(true);
+        };
+
+        window.addEventListener("openLiveChat", handleOpenChatEvent);
+        
+        return () => {
+            window.removeEventListener("openLiveChat", handleOpenChatEvent);
+        };
     }, []);
 
     // MESSAGE SEND
