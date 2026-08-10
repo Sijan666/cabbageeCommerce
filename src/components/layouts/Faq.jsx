@@ -52,7 +52,7 @@ const Faq = () => {
                         Find answers to the most common questions about our organic products, shipping, and returns.
                     </p>
                 </div>
-                {/* main content */}
+                {/* content */}
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
                     {/* left side */}
                     <div className="w-full lg:w-1/2 flex flex-col">
