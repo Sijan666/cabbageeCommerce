@@ -32,6 +32,12 @@ const Faq = () => {
         }
     ];
 
+    // live chat
+    const handleOpenChat = () => {
+        const event = new CustomEvent("openLiveChat");
+        window.dispatchEvent(event);
+    };
+
     return (
         <div className="py-20 lg:py-28 bg-[#F9FBF5]">
             <Container className="px-4 lg:px-0">
@@ -70,7 +76,10 @@ const Faq = () => {
                     {/* right side */}
                     <div className="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
                         {/* live chat */}
-                        <div className="md:col-span-2 relative bg-[#0B1120] rounded-3xl p-8 md:p-10 overflow-hidden group cursor-pointer border border-white/10 shadow-lg hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] transition-shadow duration-300 flex flex-col justify-center">
+                        <div 
+                            onClick={handleOpenChat}
+                            className="md:col-span-2 relative bg-[#0B1120] rounded-3xl p-8 md:p-10 overflow-hidden group cursor-pointer border border-white/10 shadow-lg hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] transition-shadow duration-300 flex flex-col justify-center"
+                        >
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#80B500]/30 rounded-full blur-[70px] group-hover:bg-[#80B500]/40 transition-colors duration-500 pointer-events-none"></div>
                             {/* header */}
                             <div className="flex justify-between items-start mb-8 relative z-10">
