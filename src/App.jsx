@@ -14,6 +14,7 @@ import Blogs from './components/pages/Blogs';
 import BlogDetails from './components/pages/BlogDetails';
 import Contact from './components/pages/Contact';
 import BackToTop from './components/BackToTop'; 
+import FloatingChat from './components/FloatingChat';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -51,6 +52,7 @@ function App() {
         </Routes>
       </Suspense>
       <BackToTop />
+      <FloatingChat />
     </ReactLenis>
   );
 }
