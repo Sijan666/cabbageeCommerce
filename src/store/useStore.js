@@ -6,7 +6,11 @@ export const useStore = create(
         (set) => ({
             cart: [],
             wishlist: [],
-            
+            user: null,
+
+            loginUser: (userData) => set({ user: userData }),
+            logoutUser: () => set({ user: null }),
+
             addToCart: (product) =>
                 set((state) => {
                     const exists = state.cart.find(
@@ -19,8 +23,7 @@ export const useStore = create(
                                     ? {
                                         ...item,
                                         ...product,
-                                        quantity:
-                                        product.quantity || 1,
+                                        quantity: product.quantity || 1,
                                     }
                                 : item
                             ),
@@ -31,8 +34,7 @@ export const useStore = create(
                             ...state.cart,
                             {
                                 ...product,
-                                quantity:
-                                    product.quantity || 1,
+                                quantity: product.quantity || 1,
                             },
                         ],
                     };
