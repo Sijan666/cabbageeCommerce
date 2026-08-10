@@ -12,22 +12,31 @@ const welcomeMessages = [
 
 const FloatingChat = () => {
     const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
-    
-    // ইউজারের নাম ও ইমেইল সেভ করার স্টেট
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [visitorName, setVisitorName] = useState("");
-    const [visitorEmail, setVisitorEmail] = useState("");
 
+    const [isRegistered, setIsRegistered] = useState(() => {
+        return localStorage.getItem("cabbage_chat_registered") === "true";
+    });
+    const [visitorName, setVisitorName] = useState(() => {
+        return localStorage.getItem("cabbage_visitor_name") || "";
+    });
+    const [visitorEmail, setVisitorEmail] = useState(() => {
+        return localStorage.getItem("cabbage_visitor_email") || "";
+    });
     const [inputMessage, setInputMessage] = useState("");
-    
-    const [messages, setMessages] = useState([
-        { 
-        // eslint-disable-next-line react-hooks/purity
-        text: welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)], 
-        sender: "admin", 
-        time: "Just now" 
+
+    const [messages, setMessages] = useState(() => {
+        const savedMessages = localStorage.getItem("cabbage_chat_messages");
+        if (savedMessages) {
+            return JSON.parse(savedMessages);
         }
-    ]);
+        return [
+            { 
+            text: welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)], 
+            sender: "admin", 
+            time: "Just now" 
+            }
+        ];
+    });
 
     const messagesEndRef = useRef(null);
 
@@ -36,6 +45,7 @@ const FloatingChat = () => {
     };
 
     useEffect(() => {
+        localStorage.setItem("cabbage_chat_messages", JSON.stringify(messages));
         if (isRegistered) {
             scrollToBottom();
         }
@@ -56,6 +66,11 @@ const FloatingChat = () => {
 
         window.$crisp.push(["do", "chat:hide"]);
 
+        if (isRegistered && visitorName && visitorEmail) {
+            window.$crisp.push(["set", "user:nickname", [visitorName]]);
+            window.$crisp.push(["set", "user:email", [visitorEmail]]);
+        }
+
         window.$crisp.push(["on", "message:received", (message) => {
             if (message.type === "text") {
                 const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -69,32 +84,29 @@ const FloatingChat = () => {
         };
 
         window.addEventListener("openLiveChat", handleOpenChatEvent);
-        
         return () => {
             window.removeEventListener("openLiveChat", handleOpenChatEvent);
         };
-    }, []);
+    }, [isRegistered, visitorEmail, visitorName]);
 
     // REGISTER USER (PRE-CHAT FORM SUBMIT)
     const handleRegister = (e) => {
         e.preventDefault();
         if (!visitorName.trim() || !visitorEmail.trim()) return;
-
-        // ক্রিসপে ইউজারের নাম ও ইমেইল সেট করে দেওয়া হচ্ছে
         window.$crisp.push(["set", "user:nickname", [visitorName]]);
         window.$crisp.push(["set", "user:email", [visitorEmail]]);
-        
         setIsRegistered(true);
+        localStorage.setItem("cabbage_chat_registered", "true");
+        localStorage.setItem("cabbage_visitor_name", visitorName);
+        localStorage.setItem("cabbage_visitor_email", visitorEmail);
     };
 
     // MESSAGE SEND
     const handleSendMessage = (e) => {
         e.preventDefault();
         if (!inputMessage.trim()) return;
-
         const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         setMessages((prev) => [...prev, { text: inputMessage, sender: "user", time: timeString }]);
-        
         window.$crisp.push(["do", "message:send", ["text", inputMessage]]);
         setInputMessage("");
     };
@@ -113,20 +125,18 @@ const FloatingChat = () => {
             background: transparent;
             }
         `}</style>
-
-        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-8 z-[9999] flex flex-col items-end">
+        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-8 z-9999 flex flex-col items-end">
             {/* CHAT BOX CONTAINER */}
             <div 
-            className={`absolute bottom-[70px] right-0 w-[92vw] sm:w-[380px] bg-white rounded-[28px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 origin-bottom-right flex flex-col ${
+            className={`absolute bottom-17.5 right-0 w-[92vw] sm:w-95 bg-white rounded-[28px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 origin-bottom-right flex flex-col ${
                 isChatBoxOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-4 pointer-events-none"
             }`}
             >
-                {/* HEADER */}
                 <div className="px-5 sm:px-6 py-5 sm:py-6 bg-white relative z-10 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
                     <div className="flex justify-between items-start">
                         <div className="flex gap-3.5 sm:gap-4 items-center">
                             <div className="relative">
-                                <div className="w-10 sm:w-11 h-10 sm:h-11 bg-gradient-to-tr from-[#80B500] to-[#99d600] rounded-[14px] flex justify-center items-center text-white shadow-md transform rotate-3">
+                                <div className="w-10 sm:w-11 h-10 sm:h-11 bg-linear-to-tr from-[#80B500] to-[#99d600] rounded-[14px] flex justify-center items-center text-white shadow-md transform rotate-3">
                                     <FaLeaf className="text-lg sm:text-xl -rotate-3" />
                                 </div>
                                 <span className="absolute -bottom-1 -right-1 w-3 sm:w-3.5 h-3 sm:h-3.5 bg-green-500 border-2 border-white rounded-full"></span>
@@ -144,17 +154,15 @@ const FloatingChat = () => {
                         </button>
                     </div>
                 </div>
-
-                {/* CONDITIONAL RENDERING: PRE-CHAT FORM OR CHAT AREA */}
+                {/* CHAT AREA */}
                 {!isRegistered ? (
                     // PRE-CHAT FORM
-                    <div className="h-[385px] sm:h-[415px] px-6 py-8 bg-[#f8fafc] flex flex-col justify-center items-center font-nuni">
+                    <div className="h-96.25 sm:h-103.75 px-6 py-8 bg-[#f8fafc] flex flex-col justify-center items-center font-nuni">
                         <div className="w-14 h-14 bg-[#80B500]/10 text-[#80B500] rounded-full flex justify-center items-center mb-4">
                             <FiMessageSquare className="text-2xl" />
                         </div>
                         <h4 className="text-lg font-bold text-[#1e293b] mb-1 font-int">Let's get started</h4>
                         <p className="text-[13px] text-[#64748b] text-center mb-6">Please enter your details to connect with our support team.</p>
-                        
                         <form onSubmit={handleRegister} className="w-full flex flex-col gap-3">
                             <input 
                                 type="text" 
@@ -178,9 +186,9 @@ const FloatingChat = () => {
                         </form>
                     </div>
                 ) : (
-                    // ACTUAL CHAT AREA
+                    // CHAT AREA
                     <>
-                        <div className="h-[320px] sm:h-[350px] px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll">
+                        <div className="h-80 sm:h-87.5 px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll">
                             <div className="flex justify-center mb-2">
                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-100/80 px-3 py-1 rounded-full">
                                     Today
@@ -229,11 +237,10 @@ const FloatingChat = () => {
                     </>
                 )}
             </div>
-            
-            {/* SINGLE MAIN BUTTON */}
+            {/* MAIN BUTTON */}
             <button
             onClick={() => setIsChatBoxOpen(!isChatBoxOpen)}
-            className={`flex items-center justify-center w-[52px] h-[52px] sm:w-[56px] sm:h-[56px] text-white rounded-full transition-all duration-300 cursor-pointer relative z-10 overflow-hidden ${
+            className={`flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 text-white rounded-full transition-all duration-300 cursor-pointer relative z-10 overflow-hidden ${
                 isChatBoxOpen 
                 ? "bg-[#1e293b] shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:bg-[#334155]" 
                 : "bg-[#80B500] shadow-[0_12px_30px_rgba(128,181,0,0.4)] hover:shadow-[0_15px_35px_rgba(128,181,0,0.5)]"
