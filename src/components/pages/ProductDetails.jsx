@@ -3,17 +3,19 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import gsap from 'gsap';
 // Icons
-import { IoAdd, IoRemove, IoStar, IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { IoAdd, IoRemove, IoStar, IoChevronBack, IoChevronForward, IoCart, IoCartOutline } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
 import { FaHeart } from 'react-icons/fa';
 import { BsArrowRight } from 'react-icons/bs';
 
 import Container from '../Container';
+import Loader from '../Loader';
 import { useStore } from '../../store/useStore';
+import { showToast } from '../Toast';
 
 const ProductDetails = () => {
     const { id } = useParams();
-    const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useStore();
+    const { addToCart, addToWishlist, removeFromWishlist, removeFromCart, wishlist, cart } = useStore();
     const [product, setProduct] = useState(null);
     const [activeImage, setActiveImage] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -22,6 +24,7 @@ const ProductDetails = () => {
     const imageRef = useRef(null);
     const currentId = product ? product.id : null;
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
+    const isAlreadyInCart = cart.some(item => item.id === currentId);
 
     // Fetch Product
     useEffect(() => {
@@ -47,8 +50,8 @@ const ProductDetails = () => {
         if (!isLoading && product && mainRef.current) {
             gsap.fromTo(
                 mainRef.current.querySelectorAll('.reveal-el'),
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.1 }
+                { y: 16, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out', delay: 0.05 }
             );
         }
     }, [isLoading, product]);
@@ -59,11 +62,11 @@ const ProductDetails = () => {
         
         gsap.to(imageRef.current, {
             opacity: 0,
-            y: 10,
-            duration: 0.2,
+            y: 6,
+            duration: 0.12,
             onComplete: () => {
                 setActiveImage(newImage);
-                gsap.to(imageRef.current, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+                gsap.to(imageRef.current, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
             }
         });
     };
@@ -109,19 +112,43 @@ const ProductDetails = () => {
     });
 
     const handleWishlistToggle = () => {
-        isAlreadyInWishlist ? removeFromWishlist(product.id) : addToWishlist(getProductData());
+        if (isAlreadyInWishlist) {
+            removeFromWishlist(product.id);
+            showToast({
+                message: 'Removed from wishlist',
+                subMessage: product.title,
+                type: 'danger',
+            });
+        } else {
+            addToWishlist(getProductData());
+            showToast({
+                message: 'Added to wishlist',
+                subMessage: product.title,
+                type: 'success',
+            });
+        }
+    };
+
+    const handleCartToggle = () => {
+        if (isAlreadyInCart) {
+            removeFromCart(product.id);
+            showToast({
+                message: 'Removed from cart',
+                subMessage: product.title,
+                type: 'danger',
+            });
+        } else {
+            addToCart(getProductData());
+            showToast({
+                message: 'Added to cart',
+                subMessage: product.title,
+                type: 'success',
+            });
+        }
     };
 
     if (isLoading) {
-        return (
-            <div className="flex min-h-screen items-center justify-center bg-[#FDFCF8]">
-                <div className="flex gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce"></div>
-                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 rounded-full bg-[#80B500] animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                </div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!product) return (
@@ -235,7 +262,6 @@ const ProductDetails = () => {
                         </p>
                         {/* Action Buttons */}
                         <div className="reveal-el opacity-0 flex flex-col gap-4">
-                            
                             <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.15em] text-[#2C3A29]/50 mb-1">
                                 <span>Quantity</span>
                                 <span className={isInStock ? 'text-[#80B500]' : 'text-red-500'}>
@@ -257,10 +283,18 @@ const ProductDetails = () => {
                                 <button
                                     type="button"
                                     disabled={!isInStock}
-                                    onClick={() => addToCart(getProductData())}
-                                    className="flex-1 bg-[#80B500] text-white h-14 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-400 hover:bg-[#6c9a00] hover:shadow-lg hover:shadow-[#80B500]/20 disabled:bg-[#2C3A29]/10 disabled:text-[#2C3A29]/30 cursor-pointer flex items-center justify-center gap-2.5"
+                                    onClick={handleCartToggle}
+                                    className={`flex-1 h-14 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-400 cursor-pointer flex items-center justify-center gap-2.5 ${
+                                        isAlreadyInCart
+                                        ? 'bg-[#2C3A29] text-white hover:bg-[#1e2a1c]'
+                                        : 'bg-[#80B500] text-white hover:bg-[#6c9a00] hover:shadow-lg hover:shadow-[#80B500]/20'
+                                    } disabled:bg-[#2C3A29]/10 disabled:text-[#2C3A29]/30 disabled:shadow-none`}
                                 >
-                                    Add to Cart <BsArrowRight size={16} />
+                                    {isAlreadyInCart ? (
+                                        <>Remove from Cart <IoCart size={16} /></>
+                                    ) : (
+                                        <>Add to Cart <BsArrowRight size={16} /></>
+                                    )}
                                 </button>
                                 {/* Wishlist Button */}
                                 <button
