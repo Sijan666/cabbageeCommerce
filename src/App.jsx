@@ -23,6 +23,7 @@ const About = lazy(() => import('./components/pages/About'));
 const Error = lazy(() => import('./components/pages/Error'));
 const Cart = lazy(() => import('./components/pages/Cart'));
 const Wishlist = lazy(() => import('./components/pages/Wishlist'));
+const Checkout = lazy(() => import('./components/pages/Checkout'));
 
 function App() {
   const lenisOptions = {
@@ -50,6 +51,7 @@ function App() {
             <Route path="blogs" element={<Blogs />} />
             <Route path="/blogs/:id" element={<BlogDetails />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="checkout" element={<Checkout />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
