@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
 import Flex from "../Flex";
 import Images from "../Images";
@@ -9,6 +9,7 @@ import { useStore } from "../../store/useStore";
 
 const Cart = () => {
     const { cart, removeFromCart, updateQuantity } = useStore();
+    const navigate = useNavigate();
 
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
@@ -115,9 +116,14 @@ const Cart = () => {
                             <span className="text-[#232323] font-bold text-lg font-int">Total</span>
                             <span className="text-[#80B500] font-black text-2xl font-nuni">${subtotal.toFixed(2)}</span>
                         </Flex>
-                        <button className="cursor-pointer w-full bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold font-nuni uppercase tracking-widest py-4 rounded-md transition-all duration-300">
+                        {/* Checkout */}
+                        <button 
+                            onClick={() => navigate('/checkout')} 
+                            className="cursor-pointer w-full bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold font-nuni uppercase tracking-widest py-4 rounded-md transition-all duration-300"
+                        >
                             Proceed to Checkout
                         </button>
+                        
                     </div>
                 </Flex>
             </Container>
