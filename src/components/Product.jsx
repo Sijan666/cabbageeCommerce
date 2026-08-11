@@ -6,6 +6,7 @@ import { FaHeart } from 'react-icons/fa';
 import { GoZoomIn } from 'react-icons/go';
 import { useStore } from '../store/useStore';
 import { Link } from 'react-router-dom';
+import { showToast } from './Toast';
 
 const Product = ({ 
     productId,
@@ -38,8 +39,18 @@ const Product = ({
         e.preventDefault();
         if (isAlreadyInWishlist) {
             removeFromWishlist(currentId);
+            showToast({
+                message: 'Removed from wishlist',
+                subMessage: productTitle,
+                type: 'danger',
+            });
         } else {
             addToWishlist(productData);
+            showToast({
+                message: 'Added to wishlist',
+                subMessage: productTitle,
+                type: 'success',
+            });
         }
     };
 
@@ -47,8 +58,18 @@ const Product = ({
         e.preventDefault();
         if (isAlreadyInCart) {
             removeFromCart(currentId);
+            showToast({
+                message: 'Removed from cart',
+                subMessage: productTitle,
+                type: 'danger',
+            });
         } else {
             addToCart(productData);
+            showToast({
+                message: 'Added to cart',
+                subMessage: productTitle,
+                type: 'success',
+            });
         }
     };
 
