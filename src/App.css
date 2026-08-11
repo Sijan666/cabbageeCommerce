@@ -9,3 +9,52 @@
   --shadow-newMade: 0 28px 30px rgba(99, 122, 166, 0.05);
   --shadow-blog: 0px 3px 27px 0px rgba(48, 63, 142, 0.161);
 }
+
+
+@keyframes toastIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px) scale(0.92);
+        filter: blur(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes toastOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        max-height: 100px;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(30px) scale(0.95);
+        max-height: 0;
+        margin-top: -12px;
+    }
+}
+
+@keyframes toastProgress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+.animate-toastIn {
+    animation: toastIn 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animate-toastOut {
+    animation: toastOut 0.35s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.animate-toastProgress {
+    animation: toastProgress 3.2s linear forwards;
+}
