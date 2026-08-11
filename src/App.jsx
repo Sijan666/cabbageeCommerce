@@ -16,6 +16,7 @@ import BlogDetails from './components/pages/BlogDetails';
 import Contact from './components/pages/Contact';
 import BackToTop from './components/BackToTop'; 
 import FloatingChat from './components/FloatingChat';
+import ToastContainer from './components/Toast';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -55,6 +56,7 @@ function App() {
       </Suspense>
       <BackToTop />
       <FloatingChat />
+      <ToastContainer />
     </ReactLenis>
   );
 }
