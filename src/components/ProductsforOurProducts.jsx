@@ -7,6 +7,7 @@ import { GrFavorite } from 'react-icons/gr';
 import { FaHeart } from 'react-icons/fa';
 import { GoZoomIn } from 'react-icons/go';
 import { useStore } from '../store/useStore';
+import { showToast } from './Toast';
 
 const ProductforOurProducts = ({ 
     productId,
@@ -37,8 +38,18 @@ const ProductforOurProducts = ({
         e.stopPropagation(); 
         if (isAlreadyInWishlist) {
             removeFromWishlist(currentId);
+            showToast({
+                message: 'Removed from wishlist',
+                subMessage: productsTitle,
+                type: 'danger',
+            });
         } else {
             addToWishlist(productData);
+            showToast({
+                message: 'Added to wishlist',
+                subMessage: productsTitle,
+                type: 'success',
+            });
         }
     };
 
@@ -48,8 +59,18 @@ const ProductforOurProducts = ({
         e.stopPropagation();
         if (isAlreadyInCart) {
             removeFromCart(currentId);
+            showToast({
+                message: 'Removed from cart',
+                subMessage: productsTitle,
+                type: 'danger',
+            });
         } else {
             addToCart(productData);
+            showToast({
+                message: 'Added to cart',
+                subMessage: productsTitle,
+                type: 'success',
+            });
         }
     };
 
