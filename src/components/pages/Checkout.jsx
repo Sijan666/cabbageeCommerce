@@ -5,7 +5,6 @@ import {
     FiCheck, FiChevronRight, FiShield, FiTruck, 
     FiCreditCard, FiPackage, FiZap, FiLock 
 } from 'react-icons/fi';
-// তোমার কাস্টম টোস্ট ইমপোর্ট করা হলো
 import { showToast } from '../Toast'; 
 
 // data constants
@@ -84,10 +83,7 @@ const Checkout = () => {
         
         setTimeout(() => {
             setIsPlacing(false);
-            
-            // তোমার কাস্টম টোস্ট কল করা হলো
             showToast({ message: 'Order Placed Successfully!' });
-            
             setTimeout(() => {
                 navigate('/success');
                 if (clearCart) clearCart();
@@ -101,7 +97,6 @@ const Checkout = () => {
     return (
         <div className="bg-[#FDFCF8] min-h-screen py-10 lg:py-16">
             <div className="max-w-287.5 mx-auto px-5 lg:px-8">
-                
                 {/* header section */}
                 <div className="flex flex-col items-center mb-12 text-center">
                     <h1 className="text-3xl lg:text-4xl font-black font-int text-[#232323] tracking-tight mb-4">Secure Checkout</h1>
@@ -113,13 +108,10 @@ const Checkout = () => {
                         <span>Payment</span>
                     </div>
                 </div>
-                
-                {/* entire layout wrapped in form */}
                 <form onSubmit={handlePlaceOrder} className="flex flex-col lg:flex-row gap-8 lg:gap-10">
-                    
                     {/* left column: main inputs */}
                     <div className="w-full lg:w-[60%] space-y-7">
-                        {/* step 1: contact & address */}
+                        {/* contact & address */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">1</span>
@@ -135,8 +127,7 @@ const Checkout = () => {
                                 <ModernInput label="Zip Code" half />
                             </div>
                         </div>
-
-                        {/* step 2: delivery & courier */}
+                        {/* delivery & courier */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">2</span>
@@ -163,8 +154,7 @@ const Checkout = () => {
                                 ))}
                             </div>
                         </div>
-
-                        {/* step 3: payment */}
+                        {/* payment */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">3</span>
@@ -191,12 +181,10 @@ const Checkout = () => {
                             </div>
                         </div>
                     </div>
-                    
                     {/* right column: order summary */}
                     <div className="w-full lg:w-[40%]">
                         <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#ececec] p-6 lg:p-8 sticky top-24">
                             <h2 className="text-[19px] font-black font-int text-[#232323] mb-7">Order Summary</h2>
-                            
                             {/* product list */}
                             <div className="space-y-5 mb-7 max-h-87.5 overflow-y-auto pr-4 pt-3 -mt-3 custom-scrollbar">
                                 {cartItems.map(item => (
@@ -217,10 +205,8 @@ const Checkout = () => {
                                     </div>
                                 ))}
                             </div>
-
                             {/* divider */}
                             <div className="h-px w-full bg-[#ececec] my-6"></div>
-
                             {/* calculation */}
                             <div className="space-y-4 mb-7">
                                 <div className="flex justify-between items-center text-[14.5px]">
@@ -234,7 +220,6 @@ const Checkout = () => {
                                     </span>
                                 </div>
                             </div>
-
                             {/* total container */}
                             <div className="bg-[#80B500]/6 border border-[#80B500]/15 rounded-2xl p-5 flex justify-between items-center">
                                 <div>
@@ -243,7 +228,6 @@ const Checkout = () => {
                                 </div>
                                 <span className="text-3xl font-black font-int text-[#80B500]">${total.toFixed(2)}</span>
                             </div>
-                            
                             {/* cta button */}
                             <button type="submit" disabled={isPlacing} className="w-full mt-7 bg-[#80B500] hover:bg-[#73a300] text-white font-bold font-int uppercase tracking-widest text-[13px] py-4 rounded-xl transition-all flex justify-center items-center gap-2 shadow-lg shadow-[#80B500]/25 cursor-pointer disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                                 {isPlacing ? (
@@ -255,7 +239,6 @@ const Checkout = () => {
                                     </>
                                 )}
                             </button>
-
                             <div className="flex items-center justify-center gap-2 text-[12px] text-[#546375] font-nuni mt-6">
                                 <FiShield className="text-[#80B500] text-[15px]" /> 
                                 <span>Secured by 256-bit AES Encryption</span>
