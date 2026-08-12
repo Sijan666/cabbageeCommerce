@@ -17,6 +17,9 @@ import Contact from './components/pages/Contact';
 import BackToTop from './components/BackToTop'; 
 import FloatingChat from './components/FloatingChat';
 import ToastContainer from './components/Toast';
+import Success from './components/pages/Success';
+import Receipt from './components/pages/Receipt';
+
 
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
@@ -52,6 +55,8 @@ function App() {
             <Route path="/blogs/:id" element={<BlogDetails />} />
             <Route path="contact" element={<Contact />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="success" element={<Success />} />
+            <Route path="receipt" element={<Receipt />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
