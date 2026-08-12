@@ -56,7 +56,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="success" element={<Success />} />
-            {/* <Route path="receipt" element={<Receipt />} /> */}
+            <Route path="receipt" element={<Receipt />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
