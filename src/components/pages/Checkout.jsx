@@ -5,9 +5,10 @@ import {
     FiCheck, FiChevronRight, FiShield, FiTruck, 
     FiCreditCard, FiPackage, FiZap, FiLock 
 } from 'react-icons/fi';
-import toast from 'react-hot-toast';
+// তোমার কাস্টম টোস্ট ইমপোর্ট করা হলো
+import { showToast } from '../Toast'; 
 
-// DATA CONSTANTS
+// data constants
 const DELIVERY_OPTIONS = [
     { id: 'standard', title: 'Standard Delivery', eta: '3-4 Business Days', price: 0, icon: <FiPackage size={22} /> },
     { id: 'express', title: 'Express Priority', eta: '1-2 Business Days', price: 9.99, icon: <FiZap size={22} /> },
@@ -19,7 +20,7 @@ const COURIERS = [
     { id: 'steadfast', title: 'Steadfast', desc: 'Fastest Rural', color: '#F5A623' },
 ];
 
-// REUSABLE COMPONENTS
+// reusable components
 const ModernInput = ({ label, type = "text", half }) => (
     <div className={half ? 'col-span-1' : 'col-span-2'}>
         <label className="block text-[13px] font-bold font-nuni text-[#546375] mb-1.5 ml-1">{label}</label>
@@ -53,7 +54,7 @@ const ToggleCard = ({ checked, onChange, icon, title, subtitle, rightElement }) 
     </label>
 );
 
-// MAIN CHECKOUT COMPONENT
+// main checkout component
 const Checkout = () => {
     const { cart, clearCart } = useStore();
     const navigate = useNavigate();
@@ -70,18 +71,28 @@ const Checkout = () => {
     const total = subtotal + shippingPrice;
 
     useEffect(() => {
-        if (!cartItems.length) navigate('/shop');
+        if (cartItems.length === 0) {
+            navigate('/shop');
+        }
         window.scrollTo(0, 0);
-    }, [cartItems.length, navigate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); 
 
     const handlePlaceOrder = (e) => {
         e.preventDefault(); 
         setIsPlacing(true);
+        
         setTimeout(() => {
             setIsPlacing(false);
-            toast.success(`Order Placed Successfully!`);
-            if (clearCart) clearCart();
-            navigate('/');
+            
+            // তোমার কাস্টম টোস্ট কল করা হলো
+            showToast({ message: 'Order Placed Successfully!' });
+            
+            setTimeout(() => {
+                navigate('/success');
+                if (clearCart) clearCart();
+            }, 1000);
+            
         }, 1500);
     };
 
@@ -90,7 +101,8 @@ const Checkout = () => {
     return (
         <div className="bg-[#FDFCF8] min-h-screen py-10 lg:py-16">
             <div className="max-w-287.5 mx-auto px-5 lg:px-8">
-                {/* Header Section */}
+                
+                {/* header section */}
                 <div className="flex flex-col items-center mb-12 text-center">
                     <h1 className="text-3xl lg:text-4xl font-black font-int text-[#232323] tracking-tight mb-4">Secure Checkout</h1>
                     <div className="flex items-center gap-2 text-[12px] font-bold font-nuni text-[#546375] uppercase tracking-widest">
@@ -101,10 +113,13 @@ const Checkout = () => {
                         <span>Payment</span>
                     </div>
                 </div>
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
-                    {/* LEFT COLUMN: Main Form */}
-                    <form id="checkout-form" onSubmit={handlePlaceOrder} className="w-full lg:w-[60%] space-y-7">
-                        {/* STEP 1: Contact & Address */}
+                
+                {/* entire layout wrapped in form */}
+                <form onSubmit={handlePlaceOrder} className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+                    
+                    {/* left column: main inputs */}
+                    <div className="w-full lg:w-[60%] space-y-7">
+                        {/* step 1: contact & address */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">1</span>
@@ -120,7 +135,8 @@ const Checkout = () => {
                                 <ModernInput label="Zip Code" half />
                             </div>
                         </div>
-                        {/* STEP 2: Delivery & Courier */}
+
+                        {/* step 2: delivery & courier */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">2</span>
@@ -147,7 +163,8 @@ const Checkout = () => {
                                 ))}
                             </div>
                         </div>
-                        {/* STEP 3: Payment */}
+
+                        {/* step 3: payment */}
                         <div className="bg-white p-6 lg:p-8 rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
                             <div className="flex items-center gap-3.5 mb-7">
                                 <span className="w-8 h-8 bg-[#80B500]/15 text-[#80B500] text-[14px] font-black font-int rounded-full flex items-center justify-center">3</span>
@@ -173,18 +190,19 @@ const Checkout = () => {
                                 />
                             </div>
                         </div>
-                    </form>
-                    {/* RIGHT COLUMN: Order Summary */}
+                    </div>
+                    
+                    {/* right column: order summary */}
                     <div className="w-full lg:w-[40%]">
                         <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#ececec] p-6 lg:p-8 sticky top-24">
                             <h2 className="text-[19px] font-black font-int text-[#232323] mb-7">Order Summary</h2>
-                            {/* Product List with safe padding to prevent badge clipping */}
+                            
+                            {/* product list */}
                             <div className="space-y-5 mb-7 max-h-87.5 overflow-y-auto pr-4 pt-3 -mt-3 custom-scrollbar">
                                 {cartItems.map(item => (
                                     <div key={item.id} className="flex gap-4 items-center group">
                                         <div className="w-18 h-18 bg-[#f4f6f8] border border-gray-100 rounded-2xl relative shrink-0 flex items-center justify-center p-2.5 transition-all">
                                             <img src={item.image || item.thumbnail} alt={item.title} className="w-full h-full object-contain mix-blend-multiply" />
-                                            {/* Fixed Quantity Badge */}
                                             <span className="absolute -top-2.5 -right-2.5 bg-[#80B500] text-white text-[11px] font-black font-nuni w-6.5 h-6.5 flex items-center justify-center rounded-full border-[2.5px] border-white shadow-sm z-10">
                                                 {item.quantity}
                                             </span>
@@ -199,9 +217,11 @@ const Checkout = () => {
                                     </div>
                                 ))}
                             </div>
-                            {/* Divider */}
+
+                            {/* divider */}
                             <div className="h-px w-full bg-[#ececec] my-6"></div>
-                            {/* Calculation */}
+
+                            {/* calculation */}
                             <div className="space-y-4 mb-7">
                                 <div className="flex justify-between items-center text-[14.5px]">
                                     <span className="text-[#546375] font-nuni font-bold">Subtotal</span> 
@@ -214,7 +234,8 @@ const Checkout = () => {
                                     </span>
                                 </div>
                             </div>
-                            {/* Total Container */}
+
+                            {/* total container */}
                             <div className="bg-[#80B500]/6 border border-[#80B500]/15 rounded-2xl p-5 flex justify-between items-center">
                                 <div>
                                     <span className="text-[13px] font-bold font-nuni text-[#80B500] uppercase tracking-widest block mb-0.5">Total Amount</span>
@@ -222,8 +243,9 @@ const Checkout = () => {
                                 </div>
                                 <span className="text-3xl font-black font-int text-[#80B500]">${total.toFixed(2)}</span>
                             </div>
-                            {/* CTA Button */}
-                            <button form="checkout-form" type="submit" disabled={isPlacing} className="w-full mt-7 bg-[#80B500] hover:bg-[#73a300] text-white font-bold font-int uppercase tracking-widest text-[13px] py-4 rounded-xl transition-all flex justify-center items-center gap-2 shadow-lg shadow-[#80B500]/25 cursor-pointer disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
+                            
+                            {/* cta button */}
+                            <button type="submit" disabled={isPlacing} className="w-full mt-7 bg-[#80B500] hover:bg-[#73a300] text-white font-bold font-int uppercase tracking-widest text-[13px] py-4 rounded-xl transition-all flex justify-center items-center gap-2 shadow-lg shadow-[#80B500]/25 cursor-pointer disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                                 {isPlacing ? (
                                     <div className="w-4.5 h-4.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
@@ -233,13 +255,14 @@ const Checkout = () => {
                                     </>
                                 )}
                             </button>
+
                             <div className="flex items-center justify-center gap-2 text-[12px] text-[#546375] font-nuni mt-6">
                                 <FiShield className="text-[#80B500] text-[15px]" /> 
                                 <span>Secured by 256-bit AES Encryption</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );
