@@ -78,7 +78,6 @@ const Success = () => {
                             Track Order
                         </Link>
                     </div>
-                    
                 </div>
             </div>
         </>
