@@ -1,122 +1,99 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { createPortal } from 'react-dom';
-import { IoCart, IoHeart, IoClose } from 'react-icons/io5';
+import React, { useState, useEffect } from 'react';
+import { FiCheckCircle, FiAlertCircle, FiInfo, FiX } from 'react-icons/fi';
 
-let listeners = [];
-let toastId = 0;
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const showToast = ({ message, subMessage, icon, type = 'success' }) => {
-    const id = ++toastId;
-    listeners.forEach((listener) => listener.add({ id, message, subMessage, icon, type }));
-    return id;
-};
-
-const typeConfig = {
-    success: {
-        accent: '#9BE15D',
-        accentDim: '#5C8A2E',
-        defaultIcon: <IoCart />,
-    },
-    danger: {
-        accent: '#FF6B9D',
-        accentDim: '#B2436A',
-        defaultIcon: <IoHeart />,
-    },
+export const showToast = ({ message, type = 'success', duration = 3500 }) => {
+    const event = new CustomEvent('custom-toast', { detail: { message, type, duration } });
+    document.dispatchEvent(event);
 };
 
 const ToastContainer = () => {
     const [toasts, setToasts] = useState([]);
 
+    {/* listen for toast events */}
     useEffect(() => {
-        const listener = {
-            add: (toast) => {
-                setToasts((prev) => [...prev, { ...toast, leaving: false }]);
-                setTimeout(() => {
-                    setToasts((prev) =>
-                        prev.map((t) => (t.id === toast.id ? { ...t, leaving: true } : t))
-                    );
-                    setTimeout(() => {
-                        setToasts((prev) => prev.filter((t) => t.id !== toast.id));
-                    }, 350);
-                }, 3200);
-            },
+        const handleShowToast = (e) => {
+            const id = Date.now();
+            const newToast = { id, ...e.detail, isLeaving: false };
+            setToasts((prev) => [...prev, newToast]);
+            {/* auto remove with exit animation */}
+            setTimeout(() => {
+                // eslint-disable-next-line react-hooks/immutability
+                triggerExitAnimation(id);
+            }, newToast.duration);
         };
-        listeners.push(listener);
-        return () => {
-            listeners = listeners.filter((l) => l !== listener);
-        };
+
+        document.addEventListener('custom-toast', handleShowToast);
+        return () => document.removeEventListener('custom-toast', handleShowToast);
     }, []);
 
-    const dismiss = useCallback((id) => {
-        setToasts((prev) => prev.map((t) => (t.id === id ? { ...t, leaving: true } : t)));
+    const triggerExitAnimation = (id) => {
+        setToasts((prev) => prev.map(t => t.id === id ? { ...t, isLeaving: true } : t));
         setTimeout(() => {
-            setToasts((prev) => prev.filter((t) => t.id !== id));
-        }, 350);
-    }, []);
+            setToasts((prev) => prev.filter(t => t.id !== id));
+        }, 300);
+    };
 
-    return createPortal(
-        <div className="fixed top-5 right-5 z-9999 flex flex-col gap-3 items-end pointer-events-none px-4 sm:px-0">
-            {toasts.map((toast) => {
-                const cfg = typeConfig[toast.type] || typeConfig.success;
-                return (
-                    <div
-                        key={toast.id}
-                        className={`pointer-events-auto group relative w-full sm:min-w-[320px] sm:max-w-95 rounded-2xl overflow-hidden ${
-                            toast.leaving ? 'animate-toastOut' : 'animate-toastIn'
-                        }`}
-                        style={{
-                            background: '#111214',
-                            border: '1px solid rgba(255,255,255,0.08)',
-                            boxShadow: `0 20px 45px -14px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.4), 0 0 30px -10px ${cfg.accent}55`,
+    if (toasts.length === 0) return null;
+
+    return (
+        <>
+            {/* responsive toast container */}
+            <div className="fixed top-5 left-4 right-4 sm:top-8 sm:left-auto sm:right-8 z-99999 flex flex-col gap-3 pointer-events-none sm:w-full sm:max-w-95 items-center sm:items-end">
+                {toasts.map((toast) => (
+                    <div 
+                        key={toast.id} 
+                        className="pointer-events-auto flex items-center justify-between w-full max-w-full p-3.5 bg-[#121212]/85 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] transform transition-all"
+                        style={{ 
+                            animation: toast.isLeaving 
+                                ? 'slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards' 
+                                : 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards' 
                         }}
                     >
-                        <div className="relative flex items-center gap-3.5 pl-4 pr-4 py-4">
-                            {/* icon with glowing ring */}
-                            <div className="relative shrink-0 w-10 h-10 flex items-center justify-center">
-                                <div
-                                    className="w-10 h-10 rounded-full flex items-center justify-center text-[16px]"
-                                    style={{
-                                        background: 'rgba(255,255,255,0.05)',
-                                        border: `1px solid ${cfg.accent}70`,
-                                        color: cfg.accent,
-                                        boxShadow: `0 0 14px -2px ${cfg.accent}90`,
-                                    }}
-                                >
-                                    {toast.icon || cfg.defaultIcon}
-                                </div>
+                        <div className="flex items-center gap-3 md:gap-3.5 pl-1 w-[85%]">
+                            {/* icon section */}
+                            <div className={`flex items-center justify-center shrink-0 min-w-8 w-8 h-8 rounded-full ${toast.type === 'danger' ? 'bg-red-500/15 text-red-400' : toast.type === 'info' ? 'bg-blue-500/15 text-blue-400' : 'bg-[#80B500]/15 text-[#80B500]'}`}>
+                                {toast.type === 'danger' && <FiAlertCircle className="text-[16px]" />}
+                                {toast.type === 'info' && <FiInfo className="text-[16px]" />}
+                                {(toast.type === 'success' || !toast.type) && <FiCheckCircle className="text-[16px]" />}
                             </div>
-                            {/* text */}
-                            <div className="flex-1 min-w-0">
-                                <p className="font-int font-bold text-[14.5px] text-white/95 truncate tracking-tight">
-                                    {toast.message}
-                                </p>
-                                {toast.subMessage && (
-                                    <p className="font-nuni text-[12px] text-white/40 truncate mt-0.5">
-                                        {toast.subMessage}
-                                    </p>
-                                )}
-                            </div>
-                            {/* close - shows on hover */}
-                            <button
-                                onClick={() => dismiss(toast.id)}
-                                className="shrink-0 text-white/30 hover:text-white transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100"
-                            >
-                                <IoClose className="text-base" />
-                            </button>
+                            {/* text message */}
+                            <p className="text-[12.5px] sm:text-[13.5px] font-nuni font-bold text-white tracking-wide leading-snug wrap-break-word pr-2">
+                                {toast.message}
+                            </p>
                         </div>
-                        {/* progress track */}
-                        <div className="relative h-0.5 mx-4 mb-3.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                            <div
-                                className="h-full rounded-full animate-toastProgress"
-                                style={{ background: `linear-gradient(90deg, ${cfg.accentDim}, ${cfg.accent})` }}
-                            />
-                        </div>
+                        {/* close button */}
+                        <button onClick={() => triggerExitAnimation(toast.id)} className="text-gray-400 hover:text-white transition-colors cursor-pointer p-2 rounded-full hover:bg-white/5 shrink-0">
+                            <FiX className="text-[15px]" />
+                        </button>
                     </div>
-                );
-            })}
-        </div>,
-        document.body
+                ))}
+            </div>
+            {/* custom entrance and exit animations */}
+            <style>{`
+                @keyframes slideInRight {
+                    from { 
+                        opacity: 0; 
+                        transform: translateX(20px) scale(0.95); 
+                    }
+                    to { 
+                        opacity: 1; 
+                        transform: translateX(0) scale(1); 
+                    }
+                }
+                @keyframes slideOutRight {
+                    from { 
+                        opacity: 1; 
+                        transform: translateX(0) scale(1); 
+                    }
+                    to { 
+                        opacity: 0; 
+                        transform: translateX(20px) scale(0.95); 
+                    }
+                }
+            `}</style>
+        </>
     );
 };
 
