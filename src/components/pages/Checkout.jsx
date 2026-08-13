@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fi';
 import { showToast } from '../Toast'; 
 
-// data constants
+{/* data constants */}
 const DELIVERY_OPTIONS = [
     { id: 'standard', title: 'Standard Delivery', eta: '3-4 Business Days', price: 0, icon: <FiPackage size={22} /> },
     { id: 'express', title: 'Express Priority', eta: '1-2 Business Days', price: 9.99, icon: <FiZap size={22} /> },
@@ -19,13 +19,14 @@ const COURIERS = [
     { id: 'steadfast', title: 'Steadfast', desc: 'Fastest Rural', color: '#F5A623' },
 ];
 
-// reusable components
-const ModernInput = ({ label, type = "text", half }) => (
+{/* reusable components */}
+const ModernInput = ({ label, type = "text", name, half }) => (
     <div className={half ? 'col-span-1' : 'col-span-2'}>
         <label className="block text-[13px] font-bold font-nuni text-[#546375] mb-1.5 ml-1">{label}</label>
         <input 
             required 
             type={type} 
+            name={name}
             className="w-full px-4 py-3.5 bg-white border border-[#ececec] rounded-xl outline-none focus:border-[#80B500] focus:ring-4 focus:ring-[#80B500]/15 transition-all text-[14px] font-nuni text-[#232323] placeholder-gray-300"
             placeholder={`Enter your ${label.toLowerCase()}`}
         />
@@ -53,7 +54,7 @@ const ToggleCard = ({ checked, onChange, icon, title, subtitle, rightElement }) 
     </label>
 );
 
-// main checkout component
+{/* main checkout component */}
 const Checkout = () => {
     const { cart, clearCart } = useStore();
     const navigate = useNavigate();
@@ -81,14 +82,38 @@ const Checkout = () => {
         e.preventDefault(); 
         setIsPlacing(true);
         
+        {/* capture form data */}
+        const formData = new FormData(e.target);
+        const buyerDetails = {
+            name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            zip: formData.get('zip')
+        };
+        
+        {/* construct premium order payload */}
+        // eslint-disable-next-line react-hooks/purity
+        const newOrderNum = `ORD-${Math.floor(Math.random() * 900000) + 100000}`;
+        const orderData = {
+            orderNum: newOrderNum,
+            items: cartItems,
+            subtotal: subtotal,
+            shipping: shippingPrice,
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+            buyerDetails: buyerDetails,
+            paymentMethod: payment,
+            courier: COURIERS.find(c => c.id === courier)?.title || 'N/A'
+        };
+        
         setTimeout(() => {
             setIsPlacing(false);
             showToast({ message: 'Order Placed Successfully!' });
             setTimeout(() => {
-                navigate('/success');
+                navigate('/success', { state: orderData });
                 if (clearCart) clearCart();
             }, 1000);
-            
         }, 1500);
     };
 
@@ -118,13 +143,13 @@ const Checkout = () => {
                                 <h2 className="text-[19px] font-black font-int text-[#232323]">Shipping Details</h2>
                             </div>
                             <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-                                <ModernInput label="First Name" half />
-                                <ModernInput label="Last Name" half />
-                                <ModernInput label="Email Address" type="email" />
-                                <ModernInput label="Phone Number" type="tel" />
-                                <ModernInput label="Street Address" />
-                                <ModernInput label="City" half />
-                                <ModernInput label="Zip Code" half />
+                                <ModernInput label="First Name" name="firstName" half />
+                                <ModernInput label="Last Name" name="lastName" half />
+                                <ModernInput label="Email Address" name="email" type="email" />
+                                <ModernInput label="Phone Number" name="phone" type="tel" />
+                                <ModernInput label="Street Address" name="address" />
+                                <ModernInput label="City" name="city" half />
+                                <ModernInput label="Zip Code" name="zip" half />
                             </div>
                         </div>
                         {/* delivery & courier */}
@@ -180,6 +205,7 @@ const Checkout = () => {
                                 />
                             </div>
                         </div>
+                        
                     </div>
                     {/* right column: order summary */}
                     <div className="w-full lg:w-[40%]">
@@ -205,7 +231,6 @@ const Checkout = () => {
                                     </div>
                                 ))}
                             </div>
-                            {/* divider */}
                             <div className="h-px w-full bg-[#ececec] my-6"></div>
                             {/* calculation */}
                             <div className="space-y-4 mb-7">
