@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Container from "../Container";
 import { SlLock, SlEnvolope, SlUser } from "react-icons/sl";
 import { useStore } from "../../store/useStore"; 
+import { showToast } from "../Toast";
 
 const Login = () => {
     const [authType, setAuthType] = useState("login");
@@ -36,7 +37,7 @@ const Login = () => {
             const userExists = existingUsers.find(u => u.email === formData.email);
             
             if (userExists) {
-                alert("This email is already registered! Please login.");
+                showToast({ message: "This email is already registered! Please login.", type: "danger" });
                 return;
             }
             
@@ -44,7 +45,7 @@ const Login = () => {
             existingUsers.push(newUser);
             localStorage.setItem("cabbage_users", JSON.stringify(existingUsers));
             
-            alert("Account created successfully! Please log in now.");
+            showToast({ message: "Account created successfully! Please log in now." });
             setAuthType("login");
             setFormData({ ...formData, password: "" }); 
         } 
@@ -56,12 +57,13 @@ const Login = () => {
             
             if (validUser) {
                 loginUser({ name: validUser.name, email: validUser.email });
+                showToast({ message: "Logged in successfully!" });
             } else {
-                alert("Invalid Email or Password! Please try again.");
+                showToast({ message: "Invalid Email or Password! Please try again.", type: "danger" });
             }
         } 
         else if (authType === "forgot") {
-            alert(`A password reset link has been sent to: ${formData.email}`);
+            showToast({ message: `A password reset link has been sent to: ${formData.email}` });
             setAuthType("login");
             setFormData({ ...formData, password: "" });
         }
