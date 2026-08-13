@@ -6,14 +6,26 @@ import Images from "../Images";
 import { BsCartX } from "react-icons/bs"; 
 import { FaTrash } from "react-icons/fa";
 import { useStore } from "../../store/useStore";
+import { showToast } from "../Toast"; 
 
 const Cart = () => {
-    const { cart, removeFromCart, updateQuantity } = useStore();
+    {/* bring user state from store */}
+    const { cart, removeFromCart, updateQuantity, user } = useStore();
     const navigate = useNavigate();
 
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-    // Empty Cart State
+    {/* checkout validation handler */}
+    const handleCheckout = () => {
+        if (user) {
+            navigate('/checkout');
+        } else {
+            showToast({ message: 'Please login to proceed to checkout!', type: 'danger' });
+            navigate('/login');
+        }
+    };
+
+    {/* empty cart state */}
     if (cart.length === 0) {
         return (
             <div className="bg-[#F9FBF5] min-h-[70vh] py-24 flex items-center justify-center">
@@ -51,7 +63,7 @@ const Cart = () => {
                     </p>
                 </div>
                 <Flex className="flex-col lg:flex-row gap-8 items-start">
-                    {/* Cart Items List */}
+                    {/* cart items list */}
                     <div className="w-full lg:w-2/3 bg-white border border-[#e5e5e5] rounded-xl p-6">
                         <div className="hidden md:flex justify-between text-gray-400 font-nuni text-sm font-bold border-b border-gray-100 pb-4 mb-4 uppercase tracking-wider">
                             <div className="w-1/2">Product</div>
@@ -62,7 +74,7 @@ const Cart = () => {
                         <div className="flex flex-col gap-y-6">
                             {cart.map((item) => (
                                 <Flex key={item.id} className="flex-col md:flex-row items-center justify-between border-b border-gray-100 pb-6 last:border-0 last:pb-0 gap-y-4 md:gap-y-0">
-                                    {/* Product Info */}
+                                    {/* product info */}
                                     <Flex className="w-full md:w-1/2 items-center gap-4">
                                         <div className="w-20 h-20 bg-[#f4f6f8] rounded-lg p-2 flex items-center justify-center shrink-0">
                                             <Images imgSrc={item.image} className="max-w-full max-h-full object-contain" />
@@ -79,11 +91,11 @@ const Cart = () => {
                                             </button>
                                         </div>
                                     </Flex>
-                                    {/* Price */}
+                                    {/* price */}
                                     <div className="w-full md:w-1/6 text-left md:text-center text-[#546375] font-nuni">
                                         ${item.price.toFixed(2)}
                                     </div>
-                                    {/* Quantity Control */}
+                                    {/* quantity control */}
                                     <div className="w-full md:w-1/6 flex justify-start md:justify-center">
                                         <div className="flex items-center bg-[#f4f6f8] rounded-md border border-gray-200">
                                             <button onClick={() => updateQuantity(item.id, -1)} className="px-3 py-1 text-gray-500 hover:text-[#232323] cursor-pointer font-bold">-</button>
@@ -91,7 +103,8 @@ const Cart = () => {
                                             <button onClick={() => updateQuantity(item.id, 1)} className="px-3 py-1 text-gray-500 hover:text-[#232323] cursor-pointer font-bold">+</button>
                                         </div>
                                     </div>
-                                    {/* Total */}
+                                    
+                                    {/* total */}
                                     <div className="w-full md:w-1/6 text-left md:text-right text-[#80B500] font-bold font-nuni text-lg">
                                         ${(item.price * item.quantity).toFixed(2)}
                                     </div>
@@ -99,7 +112,7 @@ const Cart = () => {
                             ))}
                         </div>
                     </div>
-                    {/* Order Summary */}
+                    {/* order summary */}
                     <div className="w-full lg:w-1/3 bg-white border border-[#e5e5e5] rounded-xl p-6 lg:p-8 sticky top-32">
                         <h3 className="text-xl font-bold font-int text-[#232323] border-b border-gray-100 pb-4 mb-6">
                             Order Summary
@@ -116,14 +129,13 @@ const Cart = () => {
                             <span className="text-[#232323] font-bold text-lg font-int">Total</span>
                             <span className="text-[#80B500] font-black text-2xl font-nuni">${subtotal.toFixed(2)}</span>
                         </Flex>
-                        {/* Checkout */}
+                        {/* checkout button */}
                         <button 
-                            onClick={() => navigate('/checkout')} 
+                            onClick={handleCheckout} 
                             className="cursor-pointer w-full bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold font-nuni uppercase tracking-widest py-4 rounded-md transition-all duration-300"
                         >
                             Proceed to Checkout
                         </button>
-                        
                     </div>
                 </Flex>
             </Container>
