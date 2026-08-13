@@ -14,7 +14,7 @@ const Blogs = () => {
       category: "Health & Nutrition",
       date: "August 12, 2026",
       author: "Admin",
-      image: "https://loremflickr.com/800/600/vegetables,organic?lock=1"
+      image: "https://loremflickr.com/800/600/vegetables?lock=1"
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ const Blogs = () => {
       category: "Tips & Tricks",
       date: "August 05, 2026",
       author: "Sarah Jane",
-      image: "https://loremflickr.com/800/600/fruits,fresh?lock=2"
+      image: "https://loremflickr.com/800/600/fruits?lock=2"
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ const Blogs = () => {
       category: "Recipes",
       date: "July 28, 2026",
       author: "Chef Mike",
-      image: "https://loremflickr.com/800/600/salad,healthy?lock=3"
+      image: "https://loremflickr.com/800/600/salad?lock=3"
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ const Blogs = () => {
       category: "Lifestyle",
       date: "July 20, 2026",
       author: "Admin",
-      image: "https://loremflickr.com/800/600/farm,food?lock=4"
+      image: "https://loremflickr.com/800/600/farming?lock=4"
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ const Blogs = () => {
       category: "Health & Nutrition",
       date: "July 15, 2026",
       author: "Dr. Emily",
-      image: "https://loremflickr.com/800/600/superfood,diet?lock=5"
+      image: "https://loremflickr.com/800/600/superfood?lock=5"
     },
     {
       id: 6,
@@ -59,7 +59,7 @@ const Blogs = () => {
       category: "Recipes",
       date: "July 02, 2026",
       author: "Sarah Jane",
-      image: "https://loremflickr.com/800/600/vegan,cooking?lock=6"
+      image: "https://loremflickr.com/800/600/vegan?lock=6"
     },
     {
       id: 7,
@@ -68,7 +68,7 @@ const Blogs = () => {
       category: "Health & Nutrition",
       date: "June 25, 2026",
       author: "Dr. Emily",
-      image: "https://loremflickr.com/800/600/glutenfree,food?lock=7"
+      image: "https://loremflickr.com/800/600/glutenfree?lock=7"
     },
     {
       id: 8,
@@ -77,7 +77,7 @@ const Blogs = () => {
       category: "Sustainability",
       date: "June 18, 2026",
       author: "Admin",
-      image: "https://loremflickr.com/800/600/kitchen,vegetables?lock=8"
+      image: "https://loremflickr.com/800/600/kitchen?lock=8"
     },
     {
       id: 9,
@@ -86,7 +86,7 @@ const Blogs = () => {
       category: "Lifestyle",
       date: "June 10, 2026",
       author: "Chef Mike",
-      image: "https://loremflickr.com/800/600/tropical,fruits?lock=9"
+      image: "https://loremflickr.com/800/600/tropical?lock=9"
     },
     {
       id: 10,
@@ -95,7 +95,7 @@ const Blogs = () => {
       category: "Recipes",
       date: "June 03, 2026",
       author: "Sarah Jane",
-      image: "https://loremflickr.com/800/600/pasta,homemade?lock=10"
+      image: "https://loremflickr.com/800/600/pasta?lock=10"
     },
     {
       id: 11,
@@ -104,7 +104,7 @@ const Blogs = () => {
       category: "Tips & Tricks",
       date: "May 28, 2026",
       author: "Admin",
-      image: "https://loremflickr.com/800/600/water,fresh?lock=11"
+      image: "https://loremflickr.com/800/600/water?lock=11"
     },
     {
       id: 12,
@@ -113,7 +113,7 @@ const Blogs = () => {
       category: "Health & Nutrition",
       date: "May 20, 2026",
       author: "Dr. Emily",
-      image: "https://loremflickr.com/800/600/grocery,healthy?lock=12"
+      image: "https://loremflickr.com/800/600/grocery?lock=12"
     }
   ];
 
@@ -134,9 +134,15 @@ const Blogs = () => {
     });
   };
 
+  // Safe Image Fallback System
+  const handleImageError = (e) => {
+    e.target.onerror = null; 
+    e.target.src = "https://placehold.co/800x600/F4F7F0/80B500?text=Cabbage+Blog";
+  };
+
   return (
     <div className="bg-[#F7F9F2] min-h-screen py-16 md:py-24 font-nuni">
-      <Container className="px-4 lg:px-0">
+      <Container className="px-4 lg:px-0 max-w-300 mx-auto">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -159,14 +165,15 @@ const Blogs = () => {
               className="bg-white rounded-4xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.04)] border border-gray-100 group transition-all duration-300 hover:shadow-[0_20px_50px_rgba(128,181,0,0.1)] hover:-translate-y-2 flex flex-col"
             >
               {/* Image Section */}
-              <div className="relative h-64 overflow-hidden shrink-0">
+              <div className="relative h-64 overflow-hidden shrink-0 bg-[#F4F7F0]">
                 <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-[#80B500] uppercase tracking-wider shadow-sm">
                   {post.category}
                 </div>
-                <Link to={`/blogs/${post.id}`}>
+                <Link to={`/blogs/${post.id}`} className="block w-full h-full">
                   <img 
                     src={post.image} 
                     alt={post.title} 
+                    onError={handleImageError} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </Link>
