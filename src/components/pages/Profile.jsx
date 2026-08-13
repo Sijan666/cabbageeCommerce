@@ -93,16 +93,28 @@ const Profile = () => {
                         </h2>
                         <p className="text-[13px] sm:text-[15px] md:text-base text-[#546375] font-medium mb-3 sm:mb-4">{user.email}</p>
                         <div className="inline-block bg-[#80B500]/10 text-[#80B500] font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-widest border border-[#80B500]/20">
-                            Active Member
+                            {user.email === "666majharulislam@gmail.com" ? "Admin" : "Active Member"}
                         </div>
                     </div>
-                    <button 
-                        onClick={handleLogout}
-                        className="flex items-center justify-center gap-2 w-full md:w-auto bg-red-50 hover:bg-red-500 text-red-500 hover:text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 cursor-pointer shrink-0 z-10 mt-2 md:mt-0"
-                    >
-                        <FiLogOut className="text-[15px] sm:text-[16px]" />
-                        Log Out
-                    </button>
+                    {/* Action Buttons (Admin + Logout) */}
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto mt-4 md:mt-0 z-10 shrink-0">
+                        {user.email === "666majharulislam@gmail.com" && (
+                            <button 
+                                onClick={() => navigate("/admin")}
+                                className="flex items-center justify-center gap-2 w-full sm:w-auto bg-[#232323] hover:bg-black text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 cursor-pointer"
+                            >
+                                <FiSettings className="text-[15px] sm:text-[16px]" />
+                                Admin Panel
+                            </button>
+                        )}
+                        <button 
+                            onClick={handleLogout}
+                            className="flex items-center justify-center gap-2 w-full sm:w-auto bg-red-50 hover:bg-red-500 text-red-500 hover:text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 cursor-pointer"
+                        >
+                            <FiLogOut className="text-[15px] sm:text-[16px]" />
+                            Log Out
+                        </button>
+                    </div>
                 </div>
                 {/* dashboard grid */}
                 <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
@@ -293,7 +305,6 @@ const Profile = () => {
                                     <h4 className="font-black font-int text-gray-400 text-[14px] sm:text-[15px]">Delivered</h4>
                                     <p className="text-[12px] sm:text-[13px] font-nuni text-gray-400 font-bold mt-0.5">Pending delivery.</p>
                                 </div>
-                                
                             </div>
                         </div>
                         {/* modal footer */}
