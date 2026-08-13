@@ -107,6 +107,10 @@ const Checkout = () => {
             courier: COURIERS.find(c => c.id === courier)?.title || 'N/A'
         };
         
+        {/* save order to localstorage for profile history */}
+        const existingOrders = JSON.parse(localStorage.getItem("cabbage_orders")) || [];
+        localStorage.setItem("cabbage_orders", JSON.stringify([...existingOrders, orderData]));
+        
         setTimeout(() => {
             setIsPlacing(false);
             showToast({ message: 'Order Placed Successfully!' });
@@ -205,7 +209,6 @@ const Checkout = () => {
                                 />
                             </div>
                         </div>
-                        
                     </div>
                     {/* right column: order summary */}
                     <div className="w-full lg:w-[40%]">
