@@ -20,13 +20,14 @@ import ToastContainer from './components/Toast';
 import Success from './components/pages/Success';
 import Receipt from './components/pages/Receipt';
 
-
+{/* lazy loaded components */}
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
 const Error = lazy(() => import('./components/pages/Error'));
 const Cart = lazy(() => import('./components/pages/Cart'));
 const Wishlist = lazy(() => import('./components/pages/Wishlist'));
 const Checkout = lazy(() => import('./components/pages/Checkout'));
+const AdminDashboard = lazy(() => import('./components/pages/AdminDashboard'));
 
 function App() {
   const lenisOptions = {
@@ -40,6 +41,7 @@ function App() {
     <ReactLenis root options={lenisOptions}>
       <Suspense fallback={<Loader />}>
         <Routes>
+          {/* main website layout with navbar & footer */}
           <Route path="/" element={<RootLayouts />}>
             <Route index element={<Home />} /> 
             <Route path="about" element={<About />} />
@@ -58,6 +60,7 @@ function App() {
             <Route path="success" element={<Success />} />
             <Route path="receipt" element={<Receipt />} />
           </Route>
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </Suspense>
