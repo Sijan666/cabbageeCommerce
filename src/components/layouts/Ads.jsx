@@ -106,7 +106,6 @@ const Ads = () => {
                                             <p className="text-sm md:text-base mb-5 capitalize opacity-95 line-clamp-1">
                                                 {ad?.title}
                                             </p>
-                                            
                                             <span className="inline-flex items-center text-sm font-bold hover:underline cursor-pointer">
                                                 Shop Now 
                                                 <svg className="w-4 h-4 ml-1 bg-white text-black rounded-full p-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -114,7 +113,6 @@ const Ads = () => {
                                                 </svg>
                                             </span>
                                         </div>
-                                        
                                         <div className={`w-[50%] absolute right-[-5%] top-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out transform ${isFading ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}`}>
                                             <Images 
                                                 imgSrc={ad?.thumbnail} 
