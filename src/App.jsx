@@ -41,7 +41,6 @@ function App() {
     <ReactLenis root options={lenisOptions}>
       <Suspense fallback={<Loader />}>
         <Routes>
-          {/* main website layout with navbar & footer */}
           <Route path="/" element={<RootLayouts />}>
             <Route index element={<Home />} /> 
             <Route path="about" element={<About />} />
