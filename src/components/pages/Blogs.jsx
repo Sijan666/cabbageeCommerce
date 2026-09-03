@@ -157,7 +157,7 @@ const Blogs = () => {
             Stay updated with the latest trends in healthy eating, farm-fresh recipes, and tips to maintain a sustainable lifestyle.
           </p>
         </div>
-        {/* Blog Grid (Showing dynamic currentPosts) */}
+        {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentPosts.map((post) => (
             <div 
