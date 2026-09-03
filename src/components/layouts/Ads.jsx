@@ -19,7 +19,6 @@ const Ads = () => {
     useEffect(() => {
         const fetchTopDiscounts = async () => {
             try {
-                // API-তে id যুক্ত করা হয়েছে
                 const response = await axios.get('https://dummyjson.com/products?limit=50&select=id,title,category,discountPercentage,thumbnail');
                 const sortedProducts = response.data.products.sort((a, b) => b.discountPercentage - a.discountPercentage);
                 const topFifteenDeals = sortedProducts.slice(0, 15);
