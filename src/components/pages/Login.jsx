@@ -9,42 +9,36 @@ const Login = () => {
     const [authType, setAuthType] = useState("login");
     const navigate = useNavigate();
     const location = useLocation();
-
     const { user, loginUser } = useStore(); 
     const from = location.state?.from || "/profile"; 
-
     useEffect(() => {
         if (user) {
             navigate(from, { replace: true });
         }
     }, [user, navigate, from]);
-
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
     });
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+        // sanitize inputs to prevent space and case sensitivity bugs
+        const inputEmail = formData.email.trim().toLowerCase();
+        const inputPassword = formData.password.trim();
         if (authType === "register") {
             const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
-            const userExists = existingUsers.find(u => u.email === formData.email);
-            
+            const userExists = existingUsers.find(u => u.email === inputEmail);
             if (userExists) {
                 showToast({ message: "This email is already registered! Please login.", type: "danger" });
                 return;
             }
-            
-            const newUser = { name: formData.name, email: formData.email, password: formData.password };
+            const newUser = { name: formData.name.trim(), email: inputEmail, password: inputPassword };
             existingUsers.push(newUser);
             localStorage.setItem("cabbage_users", JSON.stringify(existingUsers));
-            
             showToast({ message: "Account created successfully! Please log in now." });
             setAuthType("login");
             setFormData({ ...formData, password: "" }); 
@@ -52,9 +46,8 @@ const Login = () => {
         else if (authType === "login") {
             const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
             const validUser = existingUsers.find(
-                u => u.email === formData.email && u.password === formData.password
+                u => u.email === inputEmail && u.password === inputPassword
             );
-            
             if (validUser) {
                 loginUser({ name: validUser.name, email: validUser.email });
                 showToast({ message: "Logged in successfully!" });
@@ -68,12 +61,12 @@ const Login = () => {
             setFormData({ ...formData, password: "" });
         }
     };
-
     return (
-        <div className="bg-[#F7F9F2] min-h-screen py-16 md:py-24 flex items-center justify-center font-nuni">
+        <div className="bg-[#F7F9F2] min-h-screen py-10 md:py-24 flex items-center justify-center font-nuni">
             <Container className="px-4 lg:px-0 w-full max-w-5xl">
-                <div className="bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100 overflow-hidden grid grid-cols-1 lg:grid-cols-2 transition-all duration-500">
-                    <div className="bg-linear-to-br from-[#051117] to-[#122834] p-10 md:p-14 flex flex-col justify-between text-white relative overflow-hidden transition-colors duration-500">
+                <div className="bg-white rounded-4xl md:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100 overflow-hidden grid grid-cols-1 lg:grid-cols-2 transition-all duration-500">
+                    {/* branding section */}
+                    <div className="bg-linear-to-br from-[#051117] to-[#122834] p-8 md:p-14 flex flex-col justify-between text-white relative overflow-hidden transition-colors duration-500 md:flex">
                         <div className="absolute -top-24 -left-24 w-64 h-64 bg-[#80B500]/20 rounded-full blur-[80px] pointer-events-none"></div>
                         <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-[#80B500]/10 rounded-full blur-[80px] pointer-events-none"></div>
                         <div className="relative z-10">
@@ -98,9 +91,16 @@ const Login = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="p-8 md:p-14 flex flex-col justify-center transition-all duration-500">
+                    {/* form section */}
+                    <div className="p-6 md:p-14 flex flex-col justify-center transition-all duration-500">
+                        {/* mobile logo visible only on small screens */}
+                        <div className="md:hidden mb-8 text-center">
+                            <Link to="/" className="text-3xl font-black font-int tracking-tight inline-block">
+                                Cabbage<span className="text-[#80B500]">.</span>
+                            </Link>
+                        </div>
                         {authType !== "forgot" && (
-                            <div className="flex bg-[#F4F7F0] p-1.5 rounded-2xl mb-10">
+                            <div className="flex bg-[#F4F7F0] p-1.5 rounded-2xl mb-8 md:mb-10">
                                 <button
                                     type="button"
                                     onClick={() => setAuthType("login")}
@@ -121,7 +121,7 @@ const Login = () => {
                                 </button>
                             </div>
                         )}
-                        <div className={`mb-8 ${authType === "forgot" ? "mt-4" : ""}`}>
+                        <div className={`mb-6 md:mb-8 ${authType === "forgot" ? "mt-4" : ""}`}>
                             <h3 className="text-2xl md:text-3xl font-black font-int text-[#232323] mb-2">
                                 {authType === "login" && "Sign In to Your Account"}
                                 {authType === "register" && "Get Started Absolutely Free"}
@@ -133,13 +133,13 @@ const Login = () => {
                                 {authType === "forgot" && "Enter your email address and we will send you a link to reset your password."}
                             </p>
                         </div>
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4 md:gap-5">
                             {authType === "register" && (
                                 <div className="flex flex-col gap-2 transition-all duration-300">
                                     <label className="text-xs font-bold uppercase tracking-wider text-[#232323]">Full Name</label>
                                     <div className="relative flex items-center">
                                         <SlUser className="absolute left-4 text-gray-400 text-lg" />
-                                        <input type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="John Doe" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-4 outline-none transition-colors text-sm"/>
+                                        <input type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="John Doe" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-3.5 md:py-4 outline-none transition-colors text-sm"/>
                                     </div>
                                 </div>
                             )}
@@ -147,7 +147,7 @@ const Login = () => {
                                 <label className="text-xs font-bold uppercase tracking-wider text-[#232323]">Email Address</label>
                                 <div className="relative flex items-center">
                                     <SlEnvolope className="absolute left-4 text-gray-400 text-lg" />
-                                    <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="name@example.com" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-4 outline-none transition-colors text-sm"/>
+                                    <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="name@example.com" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-3.5 md:py-4 outline-none transition-colors text-sm"/>
                                 </div>
                             </div>
                             {authType !== "forgot" && (
@@ -155,7 +155,7 @@ const Login = () => {
                                     <label className="text-xs font-bold uppercase tracking-wider text-[#232323]">Password</label>
                                     <div className="relative flex items-center">
                                         <SlLock className="absolute left-4 text-gray-400 text-lg" />
-                                        <input type="password" name="password" value={formData.password} onChange={handleChange} required placeholder="••••••••" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-4 outline-none transition-colors text-sm"/>
+                                        <input type="password" name="password" value={formData.password} onChange={handleChange} required placeholder="••••••••" className="w-full bg-[#F4F7F0] border border-transparent focus:border-[#80B500] focus:bg-white rounded-xl pl-12 pr-5 py-3.5 md:py-4 outline-none transition-colors text-sm"/>
                                     </div>
                                 </div>
                             )}
@@ -168,7 +168,7 @@ const Login = () => {
                                     <button type="button" onClick={() => setAuthType("forgot")} className="text-[#80B500] font-bold hover:underline cursor-pointer">Forgot Password?</button>
                                 </div>
                             )}
-                            <button type="submit" className="mt-4 bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold py-4 rounded-xl shadow-lg shadow-[#80B500]/30 hover:shadow-xl transition-all duration-300 uppercase tracking-widest text-sm w-full cursor-pointer">
+                            <button type="submit" className="mt-2 md:mt-4 bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold py-3.5 md:py-4 rounded-xl shadow-lg shadow-[#80B500]/30 hover:shadow-xl transition-all duration-300 uppercase tracking-widest text-sm w-full cursor-pointer">
                                 {authType === "login" && "Sign In"}
                                 {authType === "register" && "Create Account"}
                                 {authType === "forgot" && "Send Reset Link"}
