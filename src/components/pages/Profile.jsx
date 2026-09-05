@@ -1,75 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
 import { SlUser } from "react-icons/sl";
-import { FiLogOut, FiShoppingBag, FiSettings, FiSearch, FiEdit2, FiCheck, FiX, FiBox, FiPackage, FiTruck, FiMapPin } from "react-icons/fi";
+import { FiLogOut, FiShoppingBag, FiSettings, FiSearch, FiEdit2, FiCheck, FiX, FiBox, FiPackage, FiTruck, FiMapPin, FiCamera, FiMap, FiTrash2, FiPlus } from "react-icons/fi";
 import { useStore } from "../../store/useStore"; 
 import { showToast } from "../Toast";
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { user, loginUser, logoutUser } = useStore();
-
-    {/* states */}
+    // bring user and address states from store
+    const { user, loginUser, logoutUser, addresses, addAddress, removeAddress } = useStore();
+    // states
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState("");
     const [trackToken, setTrackToken] = useState("");
     const [orders, setOrders] = useState([]);
-    
-    {/* new state for high-end tracking modal */}
+    // tracking modal state
     const [trackedOrderData, setTrackedOrderData] = useState(null);
-
-    {/* private route logic & load data */}
+    // address form states
+    const [addrType, setAddrType] = useState("Shipping");
+    const [addrText, setAddrText] = useState("");
+    const [addrPhone, setAddrPhone] = useState("");
+    const fileInputRef = useRef(null);
+    // private route logic and load data
     useEffect(() => {
         if (!user) {
             navigate("/login", { replace: true });
         } else {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setNewName(user.name);
-            {/* fetch orders from localstorage */}
+            // fetch orders from localstorage
             const allOrders = JSON.parse(localStorage.getItem("cabbage_orders")) || [];
             const myOrders = allOrders.filter(o => o.buyerDetails?.email === user.email);
             setOrders(myOrders);
         }
     }, [user, navigate]);
-
     if (!user) return null;
-
-    {/* logout handler */}
+    // logout handler
     const handleLogout = () => {
         logoutUser();
         showToast({ message: "Logged out successfully!" });
         navigate("/login");
     };
-
-    {/* save profile handler */}
+    // save profile handler
     const handleSaveProfile = () => {
         if (!newName.trim()) {
             showToast({ message: "Name cannot be empty!", type: "danger" });
             return;
         }
-
-        {/* update localstorage */}
+        // update localstorage
         const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
         const updatedUsers = existingUsers.map(u => 
             u.email === user.email ? { ...u, name: newName } : u
         );
         localStorage.setItem("cabbage_users", JSON.stringify(updatedUsers));
-
-        {/* update zustand store */}
+        // update zustand store
         loginUser({ ...user, name: newName });
         setIsEditing(false);
         showToast({ message: "Profile updated successfully!" });
     };
-
-    {/* track order handler */}
+    // handle image upload base64
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result;
+                const updatedUser = { ...user, avatar: base64String };
+                loginUser(updatedUser);
+                const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
+                const updatedUsers = existingUsers.map(u => u.email === user.email ? updatedUser : u);
+                localStorage.setItem("cabbage_users", JSON.stringify(updatedUsers));
+                showToast({ message: "Profile picture updated!", type: "success" });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    // track order handler
     const handleTrackOrder = (e) => {
         e.preventDefault();
         if (!trackToken.trim()) return;
-
         const allOrders = JSON.parse(localStorage.getItem("cabbage_orders")) || [];
         const foundOrder = allOrders.find(o => o.orderNum === trackToken.trim().toUpperCase());
-
         if (foundOrder) {
             setTrackedOrderData(foundOrder);
             setTrackToken("");
@@ -77,15 +89,42 @@ const Profile = () => {
             showToast({ message: "Invalid token! Order not found.", type: "danger" });
         }
     };
-
+    // add address handler
+    const handleAddAddress = (e) => {
+        e.preventDefault();
+        if(!addrText.trim() || !addrPhone.trim()) {
+            showToast({ message: "Please fill all address fields!", type: "danger" });
+            return;
+        }
+        addAddress({
+            id: Date.now(),
+            type: addrType,
+            address: addrText,
+            phone: addrPhone
+        });
+        setAddrText("");
+        setAddrPhone("");
+        showToast({ message: "Address added successfully!", type: "success" });
+    };
     return (
         <div className="bg-[#F7F9F2] min-h-screen py-10 sm:py-16 md:py-24 font-nuni relative">
             <Container className="px-4 lg:px-0 w-full max-w-275 mx-auto">
                 {/* header section */}
                 <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100 p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 flex flex-col md:flex-row items-center gap-5 sm:gap-8 relative overflow-hidden">
                     <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#80B500]/5 rounded-full blur-[80px] pointer-events-none"></div>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-linear-to-tr from-[#80B500] to-[#99d600] text-white rounded-full flex items-center justify-center text-4xl sm:text-5xl shadow-lg shrink-0 border-4 border-white">
-                        <SlUser />
+                    {/* profile picture with upload */}
+                    <div className="relative group shrink-0 cursor-pointer" onClick={() => fileInputRef.current.click()}>
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-linear-to-tr from-[#80B500] to-[#99d600] text-white rounded-full flex items-center justify-center text-4xl sm:text-5xl shadow-lg border-4 border-white overflow-hidden relative">
+                            {user.avatar ? (
+                                <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                                <SlUser />
+                            )}
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <FiCamera className="text-white text-2xl" />
+                            </div>
+                        </div>
+                        <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" className="hidden" />
                     </div>
                     <div className="text-center md:text-left flex-1 z-10">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-int text-[#232323] mb-1 sm:mb-1.5 capitalize">
@@ -96,7 +135,7 @@ const Profile = () => {
                             {user.email === "666majharulislam@gmail.com" ? "Admin" : "Active Member"}
                         </div>
                     </div>
-                    {/* Action Buttons (Admin + Logout) */}
+                    {/* action buttons admin logout */}
                     <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto mt-4 md:mt-0 z-10 shrink-0">
                         {user.email === "666majharulislam@gmail.com" && (
                             <button 
@@ -118,7 +157,7 @@ const Profile = () => {
                 </div>
                 {/* dashboard grid */}
                 <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-                    {/* left column: settings & tracker */}
+                    {/* left column */}
                     <div className="w-full lg:w-1/3 flex flex-col gap-6 sm:gap-8">
                         {/* account settings */}
                         <div className="bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100">
@@ -167,6 +206,45 @@ const Profile = () => {
                                 )}
                             </div>
                         </div>
+                        {/* address book dynamic */}
+                        <div className="bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100">
+                            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5 border-b border-gray-100 pb-3 sm:pb-4">
+                                <FiMap className="text-lg sm:text-xl text-[#80B500]" />
+                                <h3 className="text-[15px] sm:text-[17px] font-bold font-int text-[#232323]">Address Book</h3>
+                            </div>
+                            {/* address list */}
+                            <div className="flex flex-col gap-3 mb-5">
+                                {addresses.length > 0 ? (
+                                    addresses.map(addr => (
+                                        <div key={addr.id} className="border border-gray-200 rounded-xl p-3 sm:p-4 relative group">
+                                            <span className="bg-[#80B500]/10 text-[#80B500] text-[10px] font-bold uppercase px-2 py-0.5 rounded mb-2 inline-block">{addr.type}</span>
+                                            <p className="text-sm font-bold text-[#232323] mb-1">{addr.phone}</p>
+                                            <p className="text-xs text-[#546375]">{addr.address}</p>
+                                            <button onClick={() => removeAddress(addr.id)} className="absolute top-3 right-3 text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                                <FiTrash2 />
+                                            </button>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-xs text-[#546375] italic text-center py-2">No addresses saved yet.</p>
+                                )}
+                            </div>
+                            {/* add new address form */}
+                            <form onSubmit={handleAddAddress} className="flex flex-col gap-3 bg-[#F4F7F0] p-4 rounded-xl">
+                                <p className="text-[11px] font-bold uppercase tracking-wider text-[#546375]">Add New Address</p>
+                                <select value={addrType} onChange={(e) => setAddrType(e.target.value)} className="w-full bg-white border border-[#ececec] rounded-lg p-2.5 outline-none font-bold text-[#232323] text-sm">
+                                    <option value="Shipping">Shipping Address</option>
+                                    <option value="Billing">Billing Address</option>
+                                    <option value="Home">Home</option>
+                                    <option value="Office">Office</option>
+                                </select>
+                                <input type="text" placeholder="Phone Number" value={addrPhone} onChange={(e) => setAddrPhone(e.target.value)} className="w-full bg-white border border-[#ececec] rounded-lg p-2.5 outline-none font-bold text-[#232323] text-sm" />
+                                <textarea placeholder="Full Address" value={addrText} onChange={(e) => setAddrText(e.target.value)} className="w-full bg-white border border-[#ececec] rounded-lg p-2.5 outline-none font-bold text-[#232323] text-sm resize-none h-16"></textarea>
+                                <button type="submit" className="bg-[#232323] hover:bg-[#80B500] text-white py-2 rounded-lg font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-1 transition-colors cursor-pointer">
+                                    <FiPlus /> Add
+                                </button>
+                            </form>
+                        </div>
                         {/* order tracker form */}
                         <div className="bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100 bg-linear-to-b from-white to-[#F4F7F0]/50">
                             <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 border-b border-gray-100 pb-3 sm:pb-4">
@@ -189,8 +267,8 @@ const Profile = () => {
                             </form>
                         </div>
                     </div>
-                    {/* right column: order history */}
-                    <div className="w-full lg:w-2/3 bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100">
+                    {/* right column order history */}
+                    <div className="w-full lg:w-2/3 bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100 h-fit">
                         <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-gray-100 pb-3 sm:pb-4">
                             <div className="flex items-center gap-2 sm:gap-3">
                                 <FiShoppingBag className="text-lg sm:text-xl text-[#80B500]" />
@@ -255,14 +333,13 @@ const Profile = () => {
                     </div>
                 </div>
             </Container>
-            {/* high-end tracking modal overlay */}
+            {/* tracking modal overlay */}
             {trackedOrderData && (
                 <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 bg-[#051117]/60 backdrop-blur-md">
                     <div 
                         className="bg-white rounded-4xl shadow-[0_30px_100px_rgba(0,0,0,0.3)] w-full max-w-105 overflow-hidden transform transition-all"
                         style={{ animation: 'slideUpModal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
                     >
-                        {/* modal header */}
                         <div className="bg-[#80B500] p-6 sm:p-7 text-white relative">
                             <button onClick={() => setTrackedOrderData(null)} className="absolute top-4 right-4 sm:top-5 sm:right-5 bg-white/20 p-2 sm:p-2.5 rounded-full hover:bg-white/30 transition-colors cursor-pointer">
                                 <FiX className="text-base sm:text-lg" />
@@ -270,10 +347,8 @@ const Profile = () => {
                             <h3 className="text-[22px] sm:text-[26px] font-black font-int mb-1">Order Status</h3>
                             <p className="text-white/90 font-nuni font-bold tracking-widest uppercase text-[10px] sm:text-xs">{trackedOrderData.orderNum}</p>
                         </div>
-                        {/* modal body: stepper */}
                         <div className="p-6 sm:p-8 pb-8 sm:pb-10">
                             <div className="relative border-l-[3px] border-[#f4f6f8] ml-4 space-y-7 sm:space-y-9">
-                                {/* step 1 */}
                                 <div className="relative pl-6 sm:pl-7">
                                     <div className="absolute -left-3.5 top-0 w-6 h-6 bg-[#80B500] rounded-full flex items-center justify-center text-white text-[12px] ring-[6px] ring-white">
                                         <FiCheck />
@@ -281,7 +356,6 @@ const Profile = () => {
                                     <h4 className="font-black font-int text-[#232323] text-[14px] sm:text-[15px]">Order Placed</h4>
                                     <p className="text-[12px] sm:text-[13px] font-nuni text-[#546375] font-bold mt-0.5">{trackedOrderData.date}</p>
                                 </div>
-                                {/* active */}
                                 <div className="relative pl-6 sm:pl-7">
                                     <div className="absolute -left-3.5 top-0 w-6 h-6 bg-[#80B500] rounded-full flex items-center justify-center text-white text-[12px] ring-[6px] ring-white shadow-[0_0_15px_rgba(128,181,0,0.4)]">
                                         <FiPackage />
@@ -289,7 +363,6 @@ const Profile = () => {
                                     <h4 className="font-black font-int text-[#80B500] text-[14px] sm:text-[15px]">Processing</h4>
                                     <p className="text-[12px] sm:text-[13px] font-nuni text-[#546375] font-bold mt-0.5">We are preparing your items.</p>
                                 </div>
-                                {/* pending */}
                                 <div className="relative pl-6 sm:pl-7">
                                     <div className="absolute -left-3.5 top-0 w-6 h-6 bg-[#f4f6f8] rounded-full flex items-center justify-center text-gray-400 text-[12px] ring-[6px] ring-white">
                                         <FiTruck />
@@ -297,7 +370,6 @@ const Profile = () => {
                                     <h4 className="font-black font-int text-gray-400 text-[14px] sm:text-[15px]">Shipped</h4>
                                     <p className="text-[12px] sm:text-[13px] font-nuni text-gray-400 font-bold mt-0.5">Pending courier pickup.</p>
                                 </div>
-                                {/* pending */}
                                 <div className="relative pl-6 sm:pl-7">
                                     <div className="absolute -left-3.5 top-0 w-6 h-6 bg-[#f4f6f8] rounded-full flex items-center justify-center text-gray-400 text-[12px] ring-[6px] ring-white">
                                         <FiMapPin />
@@ -307,7 +379,6 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* modal footer */}
                         <div className="bg-[#F4F7F0] p-5 sm:p-6 px-6 sm:px-8 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
                             <div className="text-center sm:text-left">
                                 <p className="text-[10px] font-bold text-[#546375] uppercase tracking-widest mb-1">Total Paid</p>
