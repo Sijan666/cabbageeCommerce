@@ -25,6 +25,10 @@ const Product = ({
     const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist, removeFromCart } = useStore();
     const currentId = productId || productTitle;
 
+    const productSlug = productTitle 
+        ? productTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') 
+        : productId;
+
     const productData = {
         id: currentId,
         title: productTitle,
@@ -89,16 +93,16 @@ const Product = ({
                 <div className={`bg-[#f4f6f8] rounded-md group-hover:bg-[#e8ecef] duration-300 relative flex justify-center items-center overflow-hidden shrink-0 
                     ${isList ? 'w-full sm:w-70 h-55' : 'w-full h-50 sm:h-57.75'}
                 `}>
-                    <Link to={`/product/${productId}`} className="w-full h-full flex items-center justify-center">
+                    <Link to={`/product/${productSlug}`} className="w-full h-full flex items-center justify-center">
                         {productImg}
                     </Link>
                     {!isList && (
                         <Flex className="gap-x-2.75 absolute bottom-10 sm:bottom-15 left-1/2 -translate-x-1/2 z-10">
-                            {/* Cart Icon */}
+                            {/* cart icon */}
                             <div onClick={handleCartToggle} className={iconClass}>
                                 {isAlreadyInCart ? <IoCart className="text-[14px]" /> : <IoCartOutline className="text-[14px]" />}
                             </div>
-                            {/* Wishlist Icon */}
+                            {/* wishlist icon */}
                             <div onClick={handleWishlistToggle} className={`${iconClass} delay-100`}>
                                 {isAlreadyInWishlist ? <FaHeart className="text-[14px]" /> : <GrFavorite className="text-[14px]" />}
                             </div>
@@ -126,7 +130,7 @@ const Product = ({
                     <h4 className={`text-[#232323] font-bold font-int pt-1.25 px-1 sm:px-2 
                         ${isList ? 'text-[18px] sm:text-[22px] mt-2 mb-2 whitespace-normal' : 'text-[14px] sm:text-base truncate'}
                     `}>
-                        <Link to={`/product/${productId}`} className="hover:text-[#80B500] transition-colors">
+                        <Link to={`/product/${productSlug}`} className="hover:text-[#80B500] transition-colors">
                             {productTitle}
                         </Link>
                     </h4>
@@ -166,7 +170,7 @@ const Product = ({
                     )}
                 </div>
             </div>
-            {/* Image Zoom Modal */}
+            {/* image zoom modal */}
             {isZoomOpen && (
                 <div 
                     className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-all duration-300"
@@ -176,20 +180,20 @@ const Product = ({
                         className="relative bg-white rounded-lg p-5 max-w-2xl w-full flex flex-col items-center shadow-2xl animate-scaleIn"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Close Button */}
+                        {/* close button */}
                         <button 
                             onClick={() => setIsZoomOpen(false)}
                             className="absolute top-3 right-3 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-full transition-colors duration-300 cursor-pointer"
                         >
                             <IoClose className="text-xl" />
                         </button>
-                        {/* Product Image */}
+                        {/* product image */}
                         <img 
                             src={imgString} 
                             alt={productTitle} 
                             className="w-full h-auto max-h-[70vh] object-contain rounded-md" 
                         />
-                        {/* Product Info inside Modal */}
+                        {/* product info inside modal */}
                         <h3 className="text-2xl font-bold text-[#232323] font-int mt-4 text-center">
                             {productTitle}
                         </h3>
