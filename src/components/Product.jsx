@@ -21,24 +21,29 @@ const Product = ({
     productOffer 
 }) => {
     const [isZoomOpen, setIsZoomOpen] = useState(false);
-
-    const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist, removeFromCart } = useStore();
+    const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist, removeFromCart, currency, exchangeRates } = useStore();
     const currentId = productId || productTitle;
-
     const productSlug = productTitle 
         ? productTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') 
         : productId;
-
+    // price formatter function
+    const formatPrice = (priceStr) => {
+        if (!priceStr) return "";
+        const numericPrice = parseFloat(priceStr.toString().replace(/[^0-9.]/g, ''));
+        const converted = numericPrice * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
     const productData = {
         id: currentId,
         title: productTitle,
-        price: parseFloat(productPrice?.replace('$', '') || 0), 
+        price: parseFloat(productPrice?.toString().replace(/[^0-9.]/g, '') || 0), 
         image: imgString || "", 
     };
-
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
     const isAlreadyInCart = cart.some(item => item.id === currentId);
-
     const handleWishlistToggle = (e) => {
         e.preventDefault();
         if (isAlreadyInWishlist) {
@@ -57,7 +62,6 @@ const Product = ({
             });
         }
     };
-
     const handleCartToggle = (e) => {
         e.preventDefault();
         if (isAlreadyInCart) {
@@ -76,14 +80,11 @@ const Product = ({
             });
         }
     };
-
     const handleZoomClick = (e) => {
         e.preventDefault();
         setIsZoomOpen(true);
     };
-
     const iconClass = "bg-white text-[#80B500] rounded-full p-2.5 hover:bg-[#80B500] hover:text-white duration-300 cursor-pointer opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 flex items-center justify-center";
-
     return (
         <>
             <div className={`w-full group duration-300 overflow-hidden bg-white shadow-customMade border border-[#e5e5e5] hover:border-[#80B500] rounded-md 
@@ -135,12 +136,14 @@ const Product = ({
                         </Link>
                     </h4>
                     <div className="flex pt-2 sm:pt-3.25 items-baseline gap-x-2 px-1 sm:px-2 flex-wrap">
+                        {/* dynamic price */}
                         <p className={`font-bold text-[#283C54] font-nuni ${isList ? 'text-[18px] sm:text-[20px]' : 'text-[13px] sm:text-[15px]'}`}>
-                            {productPrice}
+                            {formatPrice(productPrice)}
                         </p>
+                        {/* dynamic offer price */}
                         {productOffer && (
                             <p className={`font-bold text-[#80B500] font-nuni line-through ${isList ? 'text-[14px] sm:text-[15px]' : 'text-[11px] sm:text-[12px]'}`}>
-                                {productOffer}
+                                {formatPrice(productOffer)}
                             </p>
                         )}
                     </div>
@@ -198,7 +201,7 @@ const Product = ({
                             {productTitle}
                         </h3>
                         <p className="text-[#80B500] font-bold text-xl font-nuni mt-1">
-                            {productPrice}
+                            {formatPrice(productPrice)}
                         </p>
                     </div>
                 </div>
