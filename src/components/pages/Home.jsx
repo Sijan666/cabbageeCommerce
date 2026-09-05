@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import Ads from "../layouts/Ads";
 import Banner from "../layouts/Banner";
 import Contact from "../layouts/Contact";
@@ -18,50 +15,19 @@ import Counter from "../layouts/Counter";
 import Blog from "../layouts/Blog";
 import CompLogo from "../layouts/CompLogo";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Home = () => {
-    const mainRef = useRef(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            const sections = gsap.utils.toArray(mainRef.current.children).slice(2);
-            sections.forEach((section, index) => {
-                gsap.set(section, { 
-                    zIndex: sections.length - index,
-                    position: "relative"
-                });
-                gsap.fromTo(
-                    section,
-                    { 
-                        opacity: 0, 
-                        y: 60 
-                    },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top 85%",
-                            toggleActions: "play none none none" 
-                        },
-                        clearProps: "all" 
-                    }
-                );
-            });
-        }, mainRef);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <main ref={mainRef}>
+        <main>
             <Helmet>
                 <title>Home | Cabbage eCommerce</title>
-                <meta name="description" content="Welcome to our website. Discover our best deals, featured products, and top categories." />
-                <meta name="keywords" content="ecommerce, shop, best products, deals" />
+                <meta 
+                    name="description" 
+                    content="Welcome to our website. Discover our best deals, featured products, and top categories." 
+                />
+                <meta 
+                    name="keywords" 
+                    content="ecommerce, shop, best products, deals" 
+                />
             </Helmet>
             <Banner />
             <Ads />
@@ -79,6 +45,6 @@ const Home = () => {
             <CompLogo />
         </main>
     );
-}
+};
 
 export default Home;
