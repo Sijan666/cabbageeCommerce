@@ -19,20 +19,30 @@ const ProductforOurProducts = ({
     productsBrand 
 }) => {
     const [isZoomOpen, setIsZoomOpen] = useState(false);
-    const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist, removeFromCart } = useStore();
+    const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist, removeFromCart, currency, exchangeRates } = useStore();
     const currentId = productId || productsTitle;
-
+    const productSlug = productsTitle 
+        ? productsTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') 
+        : productId;
+    // price formatter function
+    const formatPrice = (priceStr) => {
+        if (!priceStr) return "";
+        const numericPrice = parseFloat(priceStr.toString().replace(/[^0-9.]/g, ''));
+        const converted = numericPrice * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
     const productData = {
         id: currentId,
         title: productsTitle,
-        price: parseFloat(productsPrice?.replace('$', '') || 0), 
+        price: parseFloat(productsPrice?.toString().replace(/[^0-9.]/g, '') || 0), 
         image: imgString || "", 
     };
-
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
     const isAlreadyInCart = cart.some(item => item.id === currentId);
-
-    // Wishlist
+    // wishlist toggle
     const handleWishlistToggle = (e) => {
         e.preventDefault();
         e.stopPropagation(); 
@@ -52,8 +62,7 @@ const ProductforOurProducts = ({
             });
         }
     };
-
-    // Cart
+    // cart toggle
     const handleCartToggle = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -73,24 +82,21 @@ const ProductforOurProducts = ({
             });
         }
     };
-
     const handleZoomClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         setIsZoomOpen(true);
     };
-
     const baseIconClass = "rounded-full p-2.5 duration-300 cursor-pointer flex items-center justify-center opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100";
-
     return (
         <>
             <div className={`w-full pb-5 sm:pb-7 ${className} shadow-customMade border border-[#FFFFFF] hover:border hover:border-[#80B500] group duration-300 overflow-hidden`}>
                 <div className="bg-[#C8CACF] h-50 sm:h-57.75 w-full group-hover:bg-[#E0E2EB] duration-300 relative flex justify-center items-center overflow-hidden">
-                    <Link to={`/product/${productId}`} className="w-full h-full flex items-center justify-center">
+                    <Link to={`/product/${productSlug}`} className="w-full h-full flex items-center justify-center">
                         {productsImg}
                     </Link>
                     <Flex className={'gap-x-2.75 absolute bottom-10 sm:bottom-15 left-1/2 -translate-x-1/2 z-10'}>
-                        {/* Cart Icon */}
+                        {/* cart icon */}
                         <div 
                             onClick={handleCartToggle} 
                             className={`
@@ -100,7 +106,7 @@ const ProductforOurProducts = ({
                         >
                             {isAlreadyInCart ? <IoCart className="text-[14px]" /> : <IoCartOutline className="text-[14px]" />}
                         </div>
-                        {/* Wishlist Icon */}
+                        {/* wishlist icon */}
                         <div 
                             onClick={handleWishlistToggle} 
                             className={`
@@ -110,7 +116,7 @@ const ProductforOurProducts = ({
                         >
                             {isAlreadyInWishlist ? <FaHeart className="text-[14px]" /> : <GrFavorite className="text-[14px]" />}
                         </div>
-                        {/* Zoom Icon */}
+                        {/* zoom icon */}
                         <div 
                             onClick={handleZoomClick} 
                             className={`bg-white text-[#80B500] hover:bg-[#80B500] hover:text-white ${baseIconClass} delay-200`}
@@ -121,15 +127,16 @@ const ProductforOurProducts = ({
                 </div>
                 <div className="text-center pt-3 px-2 sm:px-3">
                     <h4 className='text-[#232323] text-[14px] sm:text-base font-bold font-int pt-1.25 truncate'>
-                        <Link to={`/product/${productId}`} className="hover:text-[#80B500] transition-colors">
+                        <Link to={`/product/${productSlug}`} className="hover:text-[#80B500] transition-colors">
                             {productsTitle}
                         </Link>
                     </h4>
                     <p className='pt-2 sm:pt-4 pb-1 sm:pb-2 text-[#546375] font-nuni text-[11px] sm:text-[12px] truncate'>{productsBrand}</p>
-                    <p className='text-[13px] sm:text-[14px] text-[#80B500] font-nuni'>{productsPrice}</p>
+                    {/* dynamic price */}
+                    <p className='text-[13px] sm:text-[14px] text-[#80B500] font-nuni'>{formatPrice(productsPrice)}</p>
                 </div>
             </div>
-            {/* Image Zoom Modal */}
+            {/* image zoom modal */}
             {isZoomOpen && (
                 <div 
                     className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-all duration-300"
@@ -139,19 +146,19 @@ const ProductforOurProducts = ({
                         className="relative bg-white rounded-lg p-5 max-w-2xl w-full flex flex-col items-center shadow-2xl animate-scaleIn"
                         onClick={(e) => e.stopPropagation()} 
                     >
-                        {/* Close Button */}
+                        {/* close button */}
                         <button 
                             onClick={() => setIsZoomOpen(false)}
                             className="absolute top-3 right-3 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-full transition-colors duration-300 cursor-pointer"
                         >
                             <IoClose className="text-xl" />
                         </button>
-                        {/* Product Image */}
+                        {/* product image */}
                         <Images 
                             imgSrc={imgString} 
                             className="w-full h-auto max-h-[70vh] object-contain rounded-md" 
                         />
-                        {/* Product Info inside Modal */}
+                        {/* product info inside modal */}
                         <h3 className="text-2xl font-bold text-[#232323] font-int mt-4 text-center">
                             {productsTitle}
                         </h3>
@@ -159,7 +166,7 @@ const ProductforOurProducts = ({
                             {productsBrand}
                         </p>
                         <p className="text-[#80B500] font-bold text-xl font-nuni mt-2">
-                            {productsPrice}
+                            {formatPrice(productsPrice)}
                         </p>
                     </div>
                 </div>
