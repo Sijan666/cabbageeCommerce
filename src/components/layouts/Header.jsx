@@ -6,8 +6,7 @@ import Images from "../Images";
 import Button from "../Button";
 import Logo from "/src/assets/logo.png";
 import { useStore } from "../../store/useStore";
-
-// Icons
+// icons
 import { MdFavoriteBorder } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
@@ -16,9 +15,7 @@ import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const { cart, wishlist } = useStore();
-
+  const { cart, wishlist, currency, setCurrency } = useStore();
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -26,12 +23,10 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
-
   return (
     <>
-      {/* Main Navigation */}
+      {/* main navigation */}
       <div
         className={`sticky top-0 z-50 w-full transition-all duration-500 border-b ${
           scrolled
@@ -54,7 +49,7 @@ const Header = () => {
                 </h3>
               </Flex>
             </Link>
-            {/* Desktop Nav Links */}
+            {/* desktop nav links */}
             <div className="hidden lg:block">
               <ul className="flex gap-x-10 items-center font-nuni text-[14px] font-bold text-white/80 uppercase tracking-widest">
                 {navLinks.map((item, index) => (
@@ -67,11 +62,24 @@ const Header = () => {
                 ))}
               </ul>
             </div>
-            {/* Icons & Action Button */}
+            {/* icons and action button */}
             <Flex className="items-center gap-x-5 md:gap-x-7">
-              {/* Desktop Action Icons */}
+              {/* desktop action icons */}
               <Flex className="hidden sm:flex gap-x-3 items-center">
-                {/* Wishlist Icon */}
+                {/* multi currency dropdown desktop */}
+                <div className="flex items-center border-r border-white/20 pr-4 mr-1">
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="bg-transparent text-white/80 font-nuni text-[14px] font-bold uppercase tracking-widest outline-none cursor-pointer hover:text-[#80B500] transition-colors"
+                  >
+                    <option value="USD" className="bg-[#051117] text-white">USD</option>
+                    <option value="BDT" className="bg-[#051117] text-white">BDT</option>
+                    <option value="EUR" className="bg-[#051117] text-white">EUR</option>
+                    <option value="INR" className="bg-[#051117] text-white">INR</option>
+                  </select>
+                </div>
+                {/* wishlist icon */}
                 <Link to="/wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <MdFavoriteBorder className="text-[19px]" />
                   {wishlist.length > 0 && (
@@ -80,11 +88,11 @@ const Header = () => {
                     </span>
                   )}
                 </Link>
-                {/* User Icon */}
+                {/* user icon */}
                 <Link to="/login" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <FaRegUser className="text-[16px]" />
                 </Link>
-                {/* Cart Icon */}
+                {/* cart icon */}
                 <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
                   <BsCart3 className="text-[18px]" />
                   {cart.length > 0 && (
@@ -94,7 +102,7 @@ const Header = () => {
                   )}
                 </Link>
               </Flex>
-              {/* Get Quote Button (Desktop) */}
+              {/* get quote button desktop */}
               <div className="hidden md:block">
                 <Link to="/quote">
                   <Button
@@ -103,7 +111,7 @@ const Header = () => {
                   />
                 </Link>
               </div>
-              {/* Hamburger (Mobile) */}
+              {/* hamburger mobile */}
               <div
                 className="lg:hidden text-2xl text-white cursor-pointer hover:text-[#80B500] transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -112,10 +120,10 @@ const Header = () => {
               </div>
             </Flex>
           </Flex>
-          {/* Mobile Dropdown Menu */}
+          {/* mobile dropdown menu */}
           <div
             className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-              isMenuOpen ? "max-h-100 opacity-100 mt-5" : "max-h-0 opacity-0"
+              isMenuOpen ? "max-h-125 opacity-100 mt-5" : "max-h-0 opacity-0"
             }`}
           >
             <div className="pb-5 border-t border-white/10">
@@ -131,8 +139,21 @@ const Header = () => {
                     </Link>
                   </li>
                 ))}
+                {/* multi currency dropdown mobile */}
+                <li className="pt-4 mt-2 border-t border-white/10">
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="bg-transparent text-white font-nuni text-[15px] font-bold uppercase tracking-wider outline-none w-full cursor-pointer hover:text-[#80B500] transition-colors"
+                  >
+                    <option value="USD" className="bg-[#051117] text-white">USD ($)</option>
+                    <option value="BDT" className="bg-[#051117] text-white">BDT (৳)</option>
+                    <option value="EUR" className="bg-[#051117] text-white">EUR (€)</option>
+                    <option value="INR" className="bg-[#051117] text-white">INR (₹)</option>
+                  </select>
+                </li>
               </ul>
-              {/* Mobile Action Icons */}
+              {/* mobile action icons */}
               <Flex className="mt-6 pt-6 border-t border-white/10 gap-x-5 justify-center sm:hidden">
                 <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="relative">
                   <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
@@ -142,10 +163,11 @@ const Header = () => {
                     </span>
                   )}
                 </Link>
-                {/* User Icon (Mobile) */}
+                {/* user icon mobile */}
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                   <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" />
                 </Link>
+                {/* cart icon mobile */}
                 <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
                   <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
                   {cart.length > 0 && (
@@ -155,7 +177,7 @@ const Header = () => {
                   )}
                 </Link>
               </Flex>
-              {/* Mobile Quote Button */}
+              {/* mobile quote button */}
               <div className="mt-6 md:hidden">
                 <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
                   <Button
@@ -171,5 +193,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;
