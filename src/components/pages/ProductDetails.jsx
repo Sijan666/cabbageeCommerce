@@ -2,40 +2,42 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import gsap from 'gsap';
-// Icons
 import { IoAdd, IoRemove, IoStar, IoChevronBack, IoChevronForward, IoCart } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
 import { FaHeart } from 'react-icons/fa';
 import { BsArrowRight } from 'react-icons/bs';
-
 import Container from '../Container';
 import Loader from '../Loader';
 import { useStore } from '../../store/useStore';
 import { showToast } from '../Toast';
 
 const ProductDetails = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
     const { addToCart, addToWishlist, removeFromWishlist, removeFromCart, wishlist, cart } = useStore();
     const [product, setProduct] = useState(null);
     const [activeImage, setActiveImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-    
     const mainRef = useRef(null);
     const imageRef = useRef(null);
-    
     const currentId = product ? product.id : null;
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
     const isAlreadyInCart = cart.some(item => item.id === currentId);
 
-    // Fetch Product
+    // fetch product
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 setIsLoading(true);
-                const { data } = await axios.get(`https://dummyjson.com/products/${id}`);
-                setProduct(data);
-                setActiveImage(data.images?.[0] || data.thumbnail);
+                const searchQuery = slug.replace(/-/g, ' ');
+                const { data } = await axios.get(`https://dummyjson.com/products/search?q=${searchQuery}`);
+                if (data.products && data.products.length > 0) {
+                    const fetchedProduct = data.products[0];
+                    setProduct(fetchedProduct);
+                    setActiveImage(fetchedProduct.images?.[0] || fetchedProduct.thumbnail);
+                } else {
+                    setProduct(null);
+                }
             } catch (error) {
                 console.error('Product not found:', error.message);
                 setProduct(null);
@@ -43,11 +45,13 @@ const ProductDetails = () => {
                 setIsLoading(false);
             }
         };
-        fetchProduct();
+        if (slug) {
+            fetchProduct();
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [id]);
+    }, [slug]);
 
-    // Initial Page Load Animation
+    // load animation
     useEffect(() => {
         if (!isLoading && product && mainRef.current) {
             gsap.fromTo(
@@ -58,7 +62,7 @@ const ProductDetails = () => {
         }
     }, [isLoading, product]);
 
-    // Smooth Image Transition
+    // smooth image transition
     const handleImageChange = (newImage) => {
         if (newImage === activeImage) return;
         
@@ -78,7 +82,7 @@ const ProductDetails = () => {
         return [...new Set([...(product.images || []), product.thumbnail])].filter(Boolean);
     }, [product]);
 
-    // Next & Previous Arrow Handlers
+    // next & previous arrow
     const handleNextImage = () => {
         const currentIndex = images.indexOf(activeImage);
         const nextIndex = (currentIndex + 1) % images.length;
@@ -160,7 +164,7 @@ const ProductDetails = () => {
     return (
         <main ref={mainRef} className="min-h-screen bg-[#FDFCF8] py-10 lg:py-16 font-nuni text-[#2C3A29] selection:bg-[#80B500] selection:text-white">
             <Container className="max-w-337.5 px-4 sm:px-6 lg:px-8 mx-auto">
-                {/* Header / Breadcrumb */}
+                {/* breadcrumb */}
                 <div className="reveal-el opacity-0 mb-8 md:mb-10 flex flex-col md:flex-row justify-between md:items-end border-b border-[#2C3A29]/10 pb-5 md:pb-6 gap-3 md:gap-4">
                     <ol className="flex flex-wrap items-center gap-2 md:gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-[#2C3A29]/40">
                         <li><Link to="/" className="hover:text-[#80B500] transition-colors">Home</Link></li>
@@ -174,9 +178,9 @@ const ProductDetails = () => {
                     </span>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                    {/* LEFT GALLERY SECTION */}
+                    {/* left : gallery */}
                     <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4 lg:sticky lg:top-10">
-                        {/* Thumbnails Column/Row */}
+                        {/* thumbnails */}
                         {images.length > 1 && (
                             <div className="reveal-el opacity-0 flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:max-h-125 custom-scrollbar shrink-0 pb-2 sm:pb-0">
                                 {images.map((img, idx) => (
@@ -193,14 +197,14 @@ const ProductDetails = () => {
                                 ))}
                             </div>
                         )}
-                        {/* Main Image Box */}
+                        {/* image box */}
                         <div className="reveal-el opacity-0 flex-1 bg-[#F4F4F0] rounded-4xl min-h-75 sm:min-h-120 flex items-center justify-center relative p-6 sm:p-10 overflow-hidden group">
                             {product.discountPercentage > 0 && (
                                 <div className="absolute top-4 left-4 sm:top-6 sm:left-6 bg-white text-[#2C3A29] text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-bold px-3 sm:px-3.5 py-1.5 rounded-full shadow-sm z-10">
                                     -{Math.round(product.discountPercentage)}% OFF
                                 </div>
                             )}
-                            {/* Left Arrow */}
+                            {/* left arrow */}
                             {images.length > 1 && (
                                 <button 
                                     onClick={handlePrevImage}
@@ -210,15 +214,14 @@ const ProductDetails = () => {
                                     <IoChevronBack className="text-sm sm:text-lg" />
                                 </button>
                             )}
-                            {/* Main Image */}
+                            {/* main image */}
                             <img 
                                 ref={imageRef}
                                 src={activeImage} 
                                 alt={product.title} 
                                 className="max-h-62.5 sm:max-h-100 w-full object-contain mix-blend-multiply" 
                             />
-                            
-                            {/* Right Arrow */}
+                            {/* right arrow */}
                             {images.length > 1 && (
                                 <button 
                                     onClick={handleNextImage}
@@ -230,7 +233,7 @@ const ProductDetails = () => {
                             )}
                         </div>
                     </div>
-                    {/* RIGHT PRODUCT INFO SECTION */}
+                    {/* right : product info */}
                     <div className="lg:col-span-5 flex flex-col pt-2 lg:pt-0">
                         <div className="reveal-el opacity-0 mb-5 md:mb-6">
                             <h3 className="text-[10px] md:text-[11px] font-bold text-[#80B500] uppercase tracking-[0.2em] mb-2 md:mb-3">
@@ -261,7 +264,7 @@ const ProductDetails = () => {
                         <p className="reveal-el opacity-0 text-[13px] md:text-[14px] text-[#2C3A29]/70 leading-relaxed mb-6 md:mb-8">
                             {product.description}
                         </p>
-                        {/* Action Buttons */}
+                        {/* buttons */}
                         <div className="reveal-el opacity-0 flex flex-col gap-3 md:gap-4">
                             <div className="flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] text-[#2C3A29]/50 mb-1">
                                 <span>Quantity</span>
@@ -270,7 +273,7 @@ const ProductDetails = () => {
                                 </span>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-3">
-                                {/* Quantity Pill */}
+                                {/* quantity */}
                                 <div className="flex items-center justify-between bg-white border border-[#2C3A29]/10 rounded-full px-2 h-12 md:h-14 w-full sm:w-32 shadow-sm shrink-0">
                                     <button onClick={() => handleQuantity('decrease')} disabled={quantity <= 1} className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-full text-[#2C3A29]/50 hover:bg-[#F4F4F0] hover:text-[#2C3A29] transition-colors disabled:opacity-30 cursor-pointer">
                                         <IoRemove size={16} />
@@ -281,7 +284,7 @@ const ProductDetails = () => {
                                     </button>
                                 </div>
                                 <div className="flex flex-row gap-3 w-full">
-                                    {/* Add to Cart Button */}
+                                    {/* add to cart button */}
                                     <button
                                         type="button"
                                         disabled={!isInStock}
@@ -298,7 +301,7 @@ const ProductDetails = () => {
                                             <>Add to Cart <BsArrowRight className="text-sm md:text-base" /></>
                                         )}
                                     </button>
-                                    {/* Wishlist Button */}
+                                    {/* wishlist button */}
                                     <button
                                         type="button"
                                         onClick={handleWishlistToggle}
