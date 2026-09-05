@@ -20,7 +20,6 @@ import ToastContainer from './components/Toast';
 import Success from './components/pages/Success';
 import Receipt from './components/pages/Receipt';
 
-{/* lazy loaded components */}
 const Home = lazy(() => import('./components/pages/Home'));
 const About = lazy(() => import('./components/pages/About'));
 const Error = lazy(() => import('./components/pages/Error'));
@@ -48,7 +47,7 @@ function App() {
             <Route path="category/:categoryName" element={<CategoryProducts />} />
             <Route path="cart" element={<Cart />} />
             <Route path="wishlist" element={<Wishlist />} />
-            <Route path="product/:id" element={<ProductDetails />} />
+            <Route path="product/:slug" element={<ProductDetails />} />
             <Route path="quote" element={<Quote />} />
             <Route path="login" element={<Login />} />
             <Route path="profile" element={<Profile />} />
