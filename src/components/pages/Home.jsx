@@ -9,10 +9,10 @@ import PromoBanners from "../layouts/PromoBanners";
 import FeaturedProducts from "../layouts/FeaturedProducts";
 import DailyDeals from "../layouts/DailyDeals";
 import ProductCollection from "../layouts/ProductCollection";
-import TopCategories from '@/layouts/TopCategories'
 import ProductSpotlight from "../layouts/ProductSpotlight";
 import NewArrivals from "../layouts/NewArrivals";
 import BestSellers from "../layouts/BestSellers";
+import TopCategories from "../layouts/Topcategories";
 
 const Home = () => {
     return (
