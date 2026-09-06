@@ -12,11 +12,22 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import gsap from "gsap";
+import { useStore } from "../../store/useStore";
 
 const Banner = () => {
   const [bannerData, setBannerData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const { currency, exchangeRates } = useStore();
+
+  // dynamic price formatter
+  const formatPrice = (price) => {
+    const converted = price * exchangeRates[currency];
+    if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+    if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+    if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+    return `$${converted.toFixed(2)}`;
+  };
 
   useEffect(() => {
     const fetchPremiumBanners = async () => {
@@ -114,7 +125,7 @@ const Banner = () => {
                           <span className="text-[#80B500]">{secondPart}</span>
                         </h2>
                         <p className="hero-elem opacity-0 text-[#546375] font-nuni text-sm sm:text-base lg:text-lg xl:text-xl max-w-md lg:max-w-lg mb-6 sm:mb-8 font-medium leading-relaxed px-4 lg:px-0">
-                          Upgrade your lifestyle with our premium <span className="font-bold text-[#223645]">{data.productName}</span>. Starting from <span className="font-bold text-[#80B500] text-lg sm:text-xl lg:text-2xl">${data.price}</span>
+                          Upgrade your lifestyle with our premium <span className="font-bold text-[#223645]">{data.productName}</span>. Starting from <span className="font-bold text-[#80B500] text-lg sm:text-xl lg:text-2xl">{formatPrice(data.price)}</span>
                         </p>
                         <div className="hero-elem opacity-0">
                           <button onClick={() => handleRoute(data.slug)} className="cursor-pointer group flex items-center justify-center gap-2 sm:gap-3 bg-[#80B500] hover:bg-[#223645] text-white px-7 py-3 sm:px-8 sm:py-3.5 lg:px-10 lg:py-4 rounded-full font-nuni text-xs sm:text-sm lg:text-base font-bold tracking-widest uppercase transition-all duration-300 hover:shadow-[0_10px_30px_rgba(128,181,0,0.3)] hover:-translate-y-1">
