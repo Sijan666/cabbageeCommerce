@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiArrowLeft, FiDownload } from 'react-icons/fi';
+import { useStore } from '../../store/useStore';
 
 const Receipt = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { currency, exchangeRates } = useStore();
     const orderData = location.state || {};
     
     {/* parsing dynamic values */}
@@ -19,6 +21,15 @@ const Receipt = () => {
     const buyer = orderData.buyerDetails || {};
     const paymentMethod = orderData.paymentMethod || 'card';
     const courier = orderData.courier || 'Standard';
+
+    // dynamic price formatter
+    const formatPrice = (price) => {
+        const converted = price * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -155,13 +166,13 @@ const Receipt = () => {
                                         <div key={index} className="flex justify-between items-start pb-4 border-b border-[#ececec] border-dashed">
                                             <div className="w-[60%] pr-4">
                                                 <p className="text-[13.5px] font-bold font-int text-[#232323]">{item.title}</p>
-                                                <p className="text-[10.5px] font-nuni text-[#546375] mt-1 uppercase tracking-widest">Rate: ${item.price.toFixed(2)}</p>
+                                                <p className="text-[10.5px] font-nuni text-[#546375] mt-1 uppercase tracking-widest">Rate: {formatPrice(item.price)}</p>
                                             </div>
                                             <div className="w-[20%] text-center">
                                                 <p className="text-[13.5px] font-int font-medium text-[#232323]">{item.quantity}</p>
                                             </div>
                                             <div className="w-[20%] text-right">
-                                                <p className="text-[13.5px] font-bold font-int text-[#232323]">${(item.price * item.quantity).toFixed(2)}</p>
+                                                <p className="text-[13.5px] font-bold font-int text-[#232323]">{formatPrice(item.price * item.quantity)}</p>
                                             </div>
                                         </div>
                                     ))
@@ -175,15 +186,15 @@ const Receipt = () => {
                             <div className="w-full sm:w-1/2">
                                 <div className="flex justify-between items-center mb-3">
                                     <p className="text-[11.5px] font-nuni text-[#546375] font-bold uppercase tracking-widest">Subtotal</p>
-                                    <p className="text-[14px] font-bold font-int text-[#232323]">${subtotal.toFixed(2)}</p>
+                                    <p className="text-[14px] font-bold font-int text-[#232323]">{formatPrice(subtotal)}</p>
                                 </div>
                                 <div className="flex justify-between items-center mb-5">
                                     <p className="text-[11.5px] font-nuni text-[#546375] font-bold uppercase tracking-widest">Shipping & Handling</p>
-                                    <p className="text-[14px] font-bold font-int text-[#232323]">{shipping > 0 ? `$${shipping.toFixed(2)}` : 'Free'}</p>
+                                    <p className="text-[14px] font-bold font-int text-[#232323]">{shipping > 0 ? formatPrice(shipping) : 'Free'}</p>
                                 </div>
                                 <div className="flex justify-between items-center border-t-2 border-[#232323] pt-4">
                                     <p className="text-[14px] font-int text-[#232323] font-black uppercase tracking-widest">Total Paid</p>
-                                    <p className="text-3xl font-black font-int text-[#80B500]">${total.toFixed(2)}</p>
+                                    <p className="text-3xl font-black font-int text-[#80B500]">{formatPrice(total)}</p>
                                 </div>
                             </div>
                         </div>
