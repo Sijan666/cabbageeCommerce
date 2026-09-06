@@ -9,29 +9,27 @@ import { BsGrid, BsListUl } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import Product from '../Product';
+import { useStore } from '../../store/useStore';
 
 const Shop = () => {
+    const { customProducts } = useStore();
     const [viewType, setViewType] = useState(() => {
         const savedView = localStorage.getItem('shopViewType');
         return savedView ? savedView : 'grid'; 
     });
-
     const handleViewChange = (type) => {
         setViewType(type);
         localStorage.setItem('shopViewType', type);
     };
-    
-    // API states
+    // api states
     const [allData, setAllData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    
-    // filter & pagination states
+    // filter and pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
     const [sortBy, setSortBy] = useState('best-match');
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
-
     // fetch products
     useEffect(() => {
         async function fetchAllDatas() {
@@ -47,71 +45,77 @@ const Shop = () => {
         }
         fetchAllDatas();
     }, []);
-
-    // filter and sort
+    // merge custom products with api data and apply filters
     const processedData = useMemo(() => {
-        let data = [...allData];
-
+        // format active custom products to match api structure
+        const activeCustoms = customProducts
+            .filter(p => !p.isDeleted)
+            .map(p => ({
+                id: `custom-${p.id}`, 
+                title: p.title,
+                description: p.desc || "No description available.",
+                thumbnail: p.image,
+                price: parseFloat(p.price) || 0,
+                discountPercentage: parseFloat(p.discountPercentage) || 0,
+                rating: parseFloat(p.rating) || 0,
+                reviewCount: parseInt(p.reviewCount) || 0,
+                brand: p.brand || 'Cabbage Original',
+                category: p.category || 'general',
+                stock: parseInt(p.stock) || 0,
+            }));
+        let data = [...activeCustoms, ...allData];
         if (searchQuery) {
             data = data.filter(product => 
                 product.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
-
         if (sortBy === 'price-low') {
             data.sort((a, b) => a.price - b.price);
         } else if (sortBy === 'price-high') {
             data.sort((a, b) => b.price - a.price);
         } else if (sortBy === 'newest') {
-            data.sort((a, b) => b.id - a.id);
+            data.sort((a, b) => {
+                const getVal = (item) => String(item.id).includes('custom') ? parseInt(String(item.id).split('-')[1]) : item.id;
+                return getVal(b) - getVal(a);
+            });
         } else if (sortBy === 'best-match') {
             data.sort((a, b) => b.rating - a.rating);
         }
-
         return data;
-    }, [allData, searchQuery, sortBy]);
-
+    }, [allData, customProducts, searchQuery, sortBy]);
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentPage(1);
     }, [searchQuery, sortBy, perPage]);
-
     // pagination
     const indexOfLastProduct = currentPage * perPage;
     const indexOfFirstProduct = indexOfLastProduct - perPage;
     const currentProducts = processedData.slice(indexOfFirstProduct, indexOfLastProduct);
     const totalPages = Math.ceil(processedData.length / perPage);
-
     // handlers
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         setSearchQuery(searchInput);
     };
-
     const nextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
         window.scrollTo({ top: 400, behavior: 'smooth' });
     };
-
     const prevPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
         window.scrollTo({ top: 400, behavior: 'smooth' });
     };
-
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         window.scrollTo({ top: 400, behavior: 'smooth' });
     };
-
     const getOriginalPrice = (price, discount) => {
         return `$${(price / (1 - discount / 100)).toFixed(2)}`;
     };
-
     const renderStars = (rating, reviewCount) => {
         const stars = [];
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating - fullStars >= 0.5;
-
         for (let i = 1; i <= 5; i++) {
             if (i <= fullStars) {
                 stars.push(<FaStar key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" />);
@@ -121,7 +125,6 @@ const Shop = () => {
                 stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" />);
             }
         }
-
         return (
             <Flex className="items-center gap-x-2">
                 <Flex className="items-center gap-x-0.5">
@@ -133,7 +136,6 @@ const Shop = () => {
             </Flex>
         );
     };
-
     return (
         <main className="w-full font-sans" role="main">
             <section className="relative bg-[#f4f6f8] py-16 md:py-24 overflow-hidden" aria-label="About Us Banner">
@@ -249,7 +251,7 @@ const Shop = () => {
                     </Flex>
                 </Container>
             </section>
-            {/* products & pagination */}
+            {/* products and pagination */}
             <section className="py-10 mb-20 bg-white">
                 <Container className="px-4 sm:px-8 lg:px-0">
                     {isLoading ? (
@@ -266,7 +268,8 @@ const Shop = () => {
                             {/* product grid and list */}
                             <div className={`grid gap-6 ${viewType === 'grid' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'}`}>
                                 {currentProducts.map((product) => {
-                                    const dynamicReviewCount = (product.id * 17) % 150 + 15;
+                                    const numericId = String(product.id).includes('custom') ? parseInt(String(product.id).split('-')[1]) : product.id;
+                                    const finalReviewCount = product.reviewCount || ((numericId * 17) % 150 + 15);
                                     return (
                                         <Product 
                                             key={product.id}
@@ -279,7 +282,7 @@ const Shop = () => {
                                             productPrice={`$${product.price.toFixed(2)}`}
                                             productOffer={product.discountPercentage ? getOriginalPrice(product.price, product.discountPercentage) : null}
                                             badge={product.discountPercentage > 0 ? `-${Math.round(product.discountPercentage)}%` : null}
-                                            productRatings={renderStars(product.rating, dynamicReviewCount)}
+                                            productRatings={renderStars(product.rating, finalReviewCount)}
                                         />
                                     );
                                 })}
