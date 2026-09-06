@@ -8,8 +8,7 @@ import { showToast } from "../Toast";
 
 const Profile = () => {
     const navigate = useNavigate();
-    // bring user and address states from store
-    const { user, loginUser, logoutUser, addresses, addAddress, removeAddress } = useStore();
+    const { user, loginUser, logoutUser, addresses, addAddress, removeAddress, currency, exchangeRates } = useStore();
     // states
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState("");
@@ -22,6 +21,16 @@ const Profile = () => {
     const [addrText, setAddrText] = useState("");
     const [addrPhone, setAddrPhone] = useState("");
     const fileInputRef = useRef(null);
+    
+    // dynamic price formatter
+    const formatPrice = (price) => {
+        const converted = price * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
+
     // private route logic and load data
     useEffect(() => {
         if (!user) {
@@ -35,20 +44,23 @@ const Profile = () => {
             setOrders(myOrders);
         }
     }, [user, navigate]);
+    
     if (!user) return null;
+    
     // logout handler
     const handleLogout = () => {
         logoutUser();
         showToast({ message: "Logged out successfully!" });
         navigate("/login");
     };
+    
     // save profile handler
     const handleSaveProfile = () => {
         if (!newName.trim()) {
             showToast({ message: "Name cannot be empty!", type: "danger" });
             return;
         }
-        // update localstorage
+        // update localstorage safely preserving password
         const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
         const updatedUsers = existingUsers.map(u => 
             u.email === user.email ? { ...u, name: newName } : u
@@ -59,23 +71,55 @@ const Profile = () => {
         setIsEditing(false);
         showToast({ message: "Profile updated successfully!" });
     };
-    // handle image upload base64
+    
+    // handle image upload with canvas compression for localstorage
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result;
-                const updatedUser = { ...user, avatar: base64String };
-                loginUser(updatedUser);
-                const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
-                const updatedUsers = existingUsers.map(u => u.email === user.email ? updatedUser : u);
-                localStorage.setItem("cabbage_users", JSON.stringify(updatedUsers));
-                showToast({ message: "Profile picture updated!", type: "success" });
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    const MAX_WIDTH = 300;
+                    const MAX_HEIGHT = 300;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height = Math.round((height *= MAX_WIDTH / width));
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width = Math.round((width *= MAX_HEIGHT / height));
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // compress image to jpeg with 70% quality
+                    const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+                    try {
+                        const updatedUser = { ...user, avatar: compressedBase64 };
+                        loginUser(updatedUser);
+                        const existingUsers = JSON.parse(localStorage.getItem("cabbage_users")) || [];
+                        const updatedUsers = existingUsers.map(u => u.email === user.email ? { ...u, avatar: compressedBase64 } : u);
+                        localStorage.setItem("cabbage_users", JSON.stringify(updatedUsers));
+                        showToast({ message: "Profile picture updated successfully!", type: "success" });
+                    // eslint-disable-next-line no-unused-vars
+                    } catch (error) {
+                        showToast({ message: "Image is still too large! Try a smaller one.", type: "danger" });
+                    }
+                };
+                img.src = event.target.result;
             };
             reader.readAsDataURL(file);
         }
     };
+    
     // track order handler
     const handleTrackOrder = (e) => {
         e.preventDefault();
@@ -89,6 +133,7 @@ const Profile = () => {
             showToast({ message: "Invalid token! Order not found.", type: "danger" });
         }
     };
+    
     // add address handler
     const handleAddAddress = (e) => {
         e.preventDefault();
@@ -106,10 +151,10 @@ const Profile = () => {
         setAddrPhone("");
         showToast({ message: "Address added successfully!", type: "success" });
     };
+    
     return (
         <div className="bg-[#F7F9F2] min-h-screen py-10 sm:py-16 md:py-24 font-nuni relative">
             <Container className="px-4 lg:px-0 w-full max-w-275 mx-auto">
-                {/* header section */}
                 <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100 p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 flex flex-col md:flex-row items-center gap-5 sm:gap-8 relative overflow-hidden">
                     <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#80B500]/5 rounded-full blur-[80px] pointer-events-none"></div>
                     {/* profile picture with upload */}
@@ -157,7 +202,7 @@ const Profile = () => {
                 </div>
                 {/* dashboard grid */}
                 <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-                    {/* left column */}
+                    {/* left */}
                     <div className="w-full lg:w-1/3 flex flex-col gap-6 sm:gap-8">
                         {/* account settings */}
                         <div className="bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100">
@@ -229,7 +274,6 @@ const Profile = () => {
                                     <p className="text-xs text-[#546375] italic text-center py-2">No addresses saved yet.</p>
                                 )}
                             </div>
-                            {/* add new address form */}
                             <form onSubmit={handleAddAddress} className="flex flex-col gap-3 bg-[#F4F7F0] p-4 rounded-xl">
                                 <p className="text-[11px] font-bold uppercase tracking-wider text-[#546375]">Add New Address</p>
                                 <select value={addrType} onChange={(e) => setAddrType(e.target.value)} className="w-full bg-white border border-[#ececec] rounded-lg p-2.5 outline-none font-bold text-[#232323] text-sm">
@@ -267,7 +311,7 @@ const Profile = () => {
                             </form>
                         </div>
                     </div>
-                    {/* right column order history */}
+                    {/* right : order history */}
                     <div className="w-full lg:w-2/3 bg-white p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-gray-100 h-fit">
                         <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-gray-100 pb-3 sm:pb-4">
                             <div className="flex items-center gap-2 sm:gap-3">
@@ -309,7 +353,7 @@ const Profile = () => {
                                                 <p className="text-xs sm:text-sm font-bold text-[#546375] ml-1">{order.items.length} Items</p>
                                             </div>
                                             <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 sm:gap-5 border-t sm:border-t-0 border-[#ececec] pt-3 sm:pt-0">
-                                                <p className="text-[16px] sm:text-[18px] font-black font-int text-[#80B500]">${(order.subtotal + order.shipping).toFixed(2)}</p>
+                                                <p className="text-[16px] sm:text-[18px] font-black font-int text-[#80B500]">{formatPrice(order.subtotal + order.shipping)}</p>
                                                 <Link to="/receipt" state={order} className="text-[#232323] hover:text-[#80B500] bg-white border border-[#ececec] hover:border-[#80B500] px-3 sm:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer shadow-sm">
                                                     Receipt
                                                 </Link>
@@ -382,7 +426,7 @@ const Profile = () => {
                         <div className="bg-[#F4F7F0] p-5 sm:p-6 px-6 sm:px-8 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
                             <div className="text-center sm:text-left">
                                 <p className="text-[10px] font-bold text-[#546375] uppercase tracking-widest mb-1">Total Paid</p>
-                                <p className="text-[20px] sm:text-[22px] font-black font-int text-[#232323]">${(trackedOrderData.subtotal + trackedOrderData.shipping).toFixed(2)}</p>
+                                <p className="text-[20px] sm:text-[22px] font-black font-int text-[#232323]">{formatPrice(trackedOrderData.subtotal + trackedOrderData.shipping)}</p>
                             </div>
                             <Link to="/receipt" state={trackedOrderData} className="w-full sm:w-auto flex justify-center items-center bg-[#232323] hover:bg-[#80B500] text-white px-6 sm:px-7 py-3 rounded-xl text-xs font-bold font-int uppercase tracking-widest transition-colors shadow-lg cursor-pointer">
                                 View Receipt
