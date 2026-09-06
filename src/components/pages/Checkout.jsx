@@ -20,13 +20,15 @@ const COURIERS = [
 ];
 
 {/* reusable components */}
-const ModernInput = ({ label, type = "text", name, half }) => (
+const ModernInput = ({ label, type = "text", name, half, value, onChange }) => (
     <div className={half ? 'col-span-1' : 'col-span-1 sm:col-span-2'}>
         <label className="block text-[12px] sm:text-[13px] font-bold font-nuni text-[#546375] mb-1.5 ml-1">{label}</label>
         <input 
             required 
             type={type} 
             name={name}
+            value={value}
+            onChange={onChange}
             className="w-full px-4 py-3.5 bg-white border border-[#ececec] rounded-xl outline-none focus:border-[#80B500] focus:ring-4 focus:ring-[#80B500]/15 transition-all text-[13px] sm:text-[14px] font-nuni text-[#232323] placeholder-gray-300"
             placeholder={`Enter your ${label.toLowerCase()}`}
         />
@@ -56,19 +58,42 @@ const ToggleCard = ({ checked, onChange, icon, title, subtitle, rightElement }) 
 
 {/* main checkout component */}
 const Checkout = () => {
-    const { cart, clearCart } = useStore();
+    // bring all necessary states from store
+    const { cart, clearCart, user, addresses, appliedCoupon, currency, exchangeRates } = useStore();
     const navigate = useNavigate();
     
     const [isPlacing, setIsPlacing] = useState(false);
     const [delivery, setDelivery] = useState('standard');
     const [courier, setCourier] = useState('pathao');
     const [payment, setPayment] = useState('card');
+    const [selectedAddressId, setSelectedAddressId] = useState('new');
+
+    // form state for controlled inputs
+    const [formValues, setFormValues] = useState({
+        firstName: user?.name?.split(' ')[0] || '',
+        lastName: user?.name?.split(' ').slice(1).join(' ') || '',
+        email: user?.email || '',
+        phone: '',
+        address: '',
+        city: '',
+        zip: ''
+    });
 
     const cartItems = Array.isArray(cart) ? cart : [];
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    const discountAmount = appliedCoupon ? (subtotal * appliedCoupon.discountPercentage) / 100 : 0;
     const selectedDelivery = DELIVERY_OPTIONS.find(d => d.id === delivery);
     const shippingPrice = selectedDelivery ? selectedDelivery.price : 0;
-    const total = subtotal + shippingPrice;
+    const total = subtotal - discountAmount + shippingPrice;
+
+    // dynamic price formatter
+    const formatPrice = (price) => {
+        const converted = price * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
 
     useEffect(() => {
         if (cartItems.length === 0) {
@@ -78,42 +103,67 @@ const Checkout = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); 
 
+    // handle input changes
+    const handleInputChange = (e) => {
+        setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    };
+
+    // handle address selection from profile book
+    const handleAddressChange = (e) => {
+        const val = e.target.value;
+        setSelectedAddressId(val);
+        if (val === 'new') {
+            setFormValues({
+                firstName: user?.name?.split(' ')[0] || '',
+                lastName: user?.name?.split(' ').slice(1).join(' ') || '',
+                email: user?.email || '',
+                phone: '',
+                address: '',
+                city: '',
+                zip: ''
+            });
+        } else {
+            const addr = addresses.find(a => a.id.toString() === val);
+            if (addr) {
+                setFormValues(prev => ({
+                    ...prev,
+                    phone: addr.phone || '',
+                    address: addr.address || ''
+                }));
+            }
+        }
+    };
+
     const handlePlaceOrder = (e) => {
         e.preventDefault(); 
         setIsPlacing(true);
-        
-        {/* capture form data */}
-        const formData = new FormData(e.target);
-        const buyerDetails = {
-            name: `${formData.get('firstName')} ${formData.get('lastName')}`,
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            address: formData.get('address'),
-            city: formData.get('city'),
-            zip: formData.get('zip')
-        };
-        
         {/* construct premium order payload */}
         // eslint-disable-next-line react-hooks/purity
         const newOrderNum = `ORD-${Math.floor(Math.random() * 900000) + 100000}`;
         const orderData = {
             orderNum: newOrderNum,
             items: cartItems,
-            subtotal: subtotal,
+            subtotal: subtotal - discountAmount, // save discounted subtotal
             shipping: shippingPrice,
             date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-            buyerDetails: buyerDetails,
+            buyerDetails: {
+                name: `${formValues.firstName} ${formValues.lastName}`,
+                email: formValues.email,
+                phone: formValues.phone,
+                address: formValues.address,
+                city: formValues.city,
+                zip: formValues.zip
+            },
             paymentMethod: payment,
             courier: COURIERS.find(c => c.id === courier)?.title || 'N/A'
         };
-        
         {/* save order to localstorage for profile history */}
         const existingOrders = JSON.parse(localStorage.getItem("cabbage_orders")) || [];
         localStorage.setItem("cabbage_orders", JSON.stringify([...existingOrders, orderData]));
         
         setTimeout(() => {
             setIsPlacing(false);
-            showToast({ message: 'Order Placed Successfully!' });
+            showToast({ message: 'Order Placed Successfully!', type: 'success' });
             setTimeout(() => {
                 navigate('/success', { state: orderData });
                 if (clearCart) clearCart();
@@ -126,7 +176,7 @@ const Checkout = () => {
     return (
         <div className="bg-[#FDFCF8] min-h-screen py-8 sm:py-10 lg:py-16">
             <div className="max-w-287.5 mx-auto px-4 sm:px-5 lg:px-8">
-                {/* header section */}
+                {/* header */}
                 <div className="flex flex-col items-center mb-8 sm:mb-12 text-center">
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-int text-[#232323] tracking-tight mb-3 sm:mb-4">Secure Checkout</h1>
                     <div className="flex items-center gap-2 text-[11px] sm:text-[12px] font-bold font-nuni text-[#546375] uppercase tracking-widest">
@@ -138,7 +188,7 @@ const Checkout = () => {
                     </div>
                 </div>
                 <form onSubmit={handlePlaceOrder} className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-                    {/* left column: main inputs */}
+                    {/* left : main inputs */}
                     <div className="w-full lg:w-[60%] space-y-6 sm:space-y-7">
                         {/* contact & address */}
                         <div className="bg-white p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.04)] border border-[#ececec]">
@@ -146,14 +196,30 @@ const Checkout = () => {
                                 <span className="w-7 h-7 sm:w-8 sm:h-8 bg-[#80B500]/15 text-[#80B500] text-[13px] sm:text-[14px] font-black font-int rounded-full flex items-center justify-center shrink-0">1</span>
                                 <h2 className="text-[17px] sm:text-[19px] font-black font-int text-[#232323]">Shipping Details</h2>
                             </div>
+                            {/* address book selection */}
+                            {addresses && addresses.length > 0 && (
+                                <div className="mb-5 sm:mb-6 p-4 bg-[#F4F7F0] border border-[#ececec] rounded-xl">
+                                    <label className="block text-[12px] sm:text-[13px] font-bold font-nuni text-[#80B500] uppercase tracking-widest mb-2">Saved Addresses</label>
+                                    <select 
+                                        value={selectedAddressId} 
+                                        onChange={handleAddressChange}
+                                        className="w-full px-3 py-2.5 bg-white border border-[#ececec] rounded-lg outline-none focus:border-[#80B500] transition-all text-[13px] font-nuni font-bold text-[#232323] cursor-pointer"
+                                    >
+                                        <option value="new">Enter a new address</option>
+                                        {addresses.map(addr => (
+                                            <option key={addr.id} value={addr.id}>{addr.type} - {addr.address.substring(0, 30)}...</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4 sm:gap-y-5">
-                                <ModernInput label="First Name" name="firstName" half />
-                                <ModernInput label="Last Name" name="lastName" half />
-                                <ModernInput label="Email Address" name="email" type="email" />
-                                <ModernInput label="Phone Number" name="phone" type="tel" />
-                                <ModernInput label="Street Address" name="address" />
-                                <ModernInput label="City" name="city" half />
-                                <ModernInput label="Zip Code" name="zip" half />
+                                <ModernInput label="First Name" name="firstName" half value={formValues.firstName} onChange={handleInputChange} />
+                                <ModernInput label="Last Name" name="lastName" half value={formValues.lastName} onChange={handleInputChange} />
+                                <ModernInput label="Email Address" name="email" type="email" value={formValues.email} onChange={handleInputChange} />
+                                <ModernInput label="Phone Number" name="phone" type="tel" value={formValues.phone} onChange={handleInputChange} />
+                                <ModernInput label="Street Address" name="address" value={formValues.address} onChange={handleInputChange} />
+                                <ModernInput label="City" name="city" half value={formValues.city} onChange={handleInputChange} />
+                                <ModernInput label="Zip Code" name="zip" half value={formValues.zip} onChange={handleInputChange} />
                             </div>
                         </div>
                         {/* delivery & courier */}
@@ -167,7 +233,7 @@ const Checkout = () => {
                                     <ToggleCard 
                                         key={opt.id} checked={delivery === opt.id} onChange={() => setDelivery(opt.id)}
                                         icon={opt.icon} title={opt.title} subtitle={opt.eta}
-                                        rightElement={<span className="text-[13px] sm:text-[14px] font-black font-int text-[#232323]">{opt.price ? `$${opt.price}` : 'Free'}</span>}
+                                        rightElement={<span className="text-[13px] sm:text-[14px] font-black font-int text-[#232323]">{opt.price ? formatPrice(opt.price) : 'Free'}</span>}
                                     />
                                 ))}
                             </div>
@@ -211,7 +277,7 @@ const Checkout = () => {
                         </div>
                         
                     </div>
-                    {/* right column: order summary */}
+                    {/* right : order summary */}
                     <div className="w-full lg:w-[40%]">
                         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#ececec] p-5 sm:p-6 lg:p-8 sticky top-24">
                             <h2 className="text-[17px] sm:text-[19px] font-black font-int text-[#232323] mb-5 sm:mb-7">Order Summary</h2>
@@ -230,7 +296,7 @@ const Checkout = () => {
                                                 <h5 className="text-[13px] sm:text-[14px] font-bold font-int text-[#232323] line-clamp-2 leading-snug">{item.title}</h5>
                                                 <p className="text-[11px] sm:text-[12.5px] text-[#546375] font-nuni mt-0.5 sm:mt-1">Qty: {item.quantity}</p>
                                             </div>
-                                            <span className="text-[14px] sm:text-[15px] font-black font-int text-[#232323]">${(item.price * item.quantity).toFixed(2)}</span>
+                                            <span className="text-[14px] sm:text-[15px] font-black font-int text-[#232323]">{formatPrice(item.price * item.quantity)}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -240,12 +306,18 @@ const Checkout = () => {
                             <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-7">
                                 <div className="flex justify-between items-center text-[13px] sm:text-[14.5px]">
                                     <span className="text-[#546375] font-nuni font-bold">Subtotal</span> 
-                                    <span className="font-black font-int text-[#232323]">${subtotal.toFixed(2)}</span>
+                                    <span className="font-black font-int text-[#232323]">{formatPrice(subtotal)}</span>
                                 </div>
+                                {appliedCoupon && (
+                                    <div className="flex justify-between items-center text-[13px] sm:text-[14.5px]">
+                                        <span className="text-[#80B500] font-nuni font-bold">Discount ({appliedCoupon.discountPercentage}%)</span> 
+                                        <span className="font-black font-int text-[#80B500]">- {formatPrice(discountAmount)}</span>
+                                    </div>
+                                )}
                                 <div className="flex justify-between items-center text-[13px] sm:text-[14.5px]">
                                     <span className="text-[#546375] font-nuni font-bold">Shipping ({selectedDelivery?.title})</span> 
                                     <span className="font-black font-int text-[#232323]">
-                                        {shippingPrice > 0 ? `$${shippingPrice.toFixed(2)}` : <span className="text-[#80B500] uppercase tracking-widest text-[11px] sm:text-[12px]">Free</span>}
+                                        {shippingPrice > 0 ? formatPrice(shippingPrice) : <span className="text-[#80B500] uppercase tracking-widest text-[11px] sm:text-[12px]">Free</span>}
                                     </span>
                                 </div>
                             </div>
@@ -255,16 +327,16 @@ const Checkout = () => {
                                     <span className="text-[12px] sm:text-[13px] font-bold font-nuni text-[#80B500] uppercase tracking-widest block mb-0.5">Total Amount</span>
                                     <span className="text-[10px] sm:text-[11px] font-nuni text-[#546375]">VAT & Taxes Included</span>
                                 </div>
-                                <span className="text-2xl sm:text-3xl font-black font-int text-[#80B500]">${total.toFixed(2)}</span>
+                                <span className="text-2xl sm:text-3xl font-black font-int text-[#80B500]">{formatPrice(total)}</span>
                             </div>
-                            {/* cta button */}
+                            {/* button */}
                             <button type="submit" disabled={isPlacing} className="w-full mt-5 sm:mt-7 bg-[#80B500] hover:bg-[#73a300] text-white font-bold font-int uppercase tracking-widest text-[12px] sm:text-[13px] py-3.5 sm:py-4 rounded-xl transition-all flex justify-center items-center gap-2 shadow-lg shadow-[#80B500]/25 cursor-pointer disabled:opacity-70 disabled:shadow-none disabled:cursor-not-allowed">
                                 {isPlacing ? (
                                     <div className="w-4.5 h-4.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
                                         <FiLock size={15} className="text-white/80" />
-                                        Pay ${total.toFixed(2)}
+                                        Pay {formatPrice(total)}
                                     </>
                                 )}
                             </button>
