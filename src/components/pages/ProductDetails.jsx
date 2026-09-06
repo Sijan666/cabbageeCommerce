@@ -4,7 +4,7 @@ import axios from 'axios';
 import gsap from 'gsap';
 import { IoAdd, IoRemove, IoStar, IoChevronBack, IoChevronForward, IoCart } from 'react-icons/io5';
 import { GrFavorite } from 'react-icons/gr';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaUserCircle } from 'react-icons/fa';
 import { BsArrowRight } from 'react-icons/bs';
 import Container from '../Container';
 import Loader from '../Loader';
@@ -13,23 +13,59 @@ import { showToast } from '../Toast';
 
 const ProductDetails = () => {
     const { slug } = useParams();
-    const { addToCart, addToWishlist, removeFromWishlist, removeFromCart, wishlist, cart } = useStore();
+    const { addToCart, addToWishlist, removeFromWishlist, removeFromCart, wishlist, cart, currency, exchangeRates, customProducts, user } = useStore();
     const [product, setProduct] = useState(null);
     const [activeImage, setActiveImage] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+    // review states
+    const [localReviews, setLocalReviews] = useState([]);
+    const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "" });
     const mainRef = useRef(null);
     const imageRef = useRef(null);
     const currentId = product ? product.id : null;
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
     const isAlreadyInCart = cart.some(item => item.id === currentId);
+    // dynamic price formatter
+    const formatPrice = (price) => {
+        const converted = price * exchangeRates[currency];
+        if (currency === 'BDT') return `৳${converted.toFixed(0)}`;
+        if (currency === 'EUR') return `€${converted.toFixed(2)}`;
+        if (currency === 'INR') return `₹${converted.toFixed(0)}`;
+        return `$${converted.toFixed(2)}`;
+    };
 
-    // fetch product
+    // fetch product or load custom product
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 setIsLoading(true);
                 const searchQuery = slug.replace(/-/g, ' ');
+                // checking if the product exists in admin custom products first
+                const customMatch = customProducts.find(
+                    p => !p.isDeleted && p.title.toLowerCase() === searchQuery.toLowerCase()
+                );
+                if (customMatch) {
+                    const formattedCustom = {
+                        id: `custom-${customMatch.id}`,
+                        title: customMatch.title,
+                        description: customMatch.desc || "No description available.",
+                        price: parseFloat(customMatch.price) || 0,
+                        discountPercentage: parseFloat(customMatch.discountPercentage) || 0,
+                        rating: parseFloat(customMatch.rating) || 0,
+                        reviewCount: parseInt(customMatch.reviewCount) || 0,
+                        thumbnail: customMatch.image,
+                        images: [customMatch.image],
+                        stock: parseInt(customMatch.stock) || 50, 
+                        category: customMatch.category || 'uncategorized',
+                        brand: customMatch.brand || 'Cabbage Original'
+                    };
+                    setProduct(formattedCustom);
+                    setActiveImage(formattedCustom.thumbnail);
+                    setIsLoading(false);
+                    return;
+                }
+                // if not a custom product, fetch from dummyjson api
                 const { data } = await axios.get(`https://dummyjson.com/products/search?q=${searchQuery}`);
                 if (data.products && data.products.length > 0) {
                     const fetchedProduct = data.products[0];
@@ -49,7 +85,17 @@ const ProductDetails = () => {
             fetchProduct();
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [slug]);
+    }, [slug, customProducts]);
+
+    // load reviews from localstorage
+    useEffect(() => {
+        if (product) {
+            const allReviews = JSON.parse(localStorage.getItem("cabbage_reviews")) || [];
+            const prodReviews = allReviews.filter(r => r.productId === product.id);
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setLocalReviews(prodReviews.reverse());
+        }
+    }, [product]);
 
     // load animation
     useEffect(() => {
@@ -65,7 +111,6 @@ const ProductDetails = () => {
     // smooth image transition
     const handleImageChange = (newImage) => {
         if (newImage === activeImage) return;
-        
         gsap.to(imageRef.current, {
             opacity: 0,
             y: 6,
@@ -88,7 +133,6 @@ const ProductDetails = () => {
         const nextIndex = (currentIndex + 1) % images.length;
         handleImageChange(images[nextIndex]);
     };
-
     const handlePrevImage = () => {
         const currentIndex = images.indexOf(activeImage);
         const prevIndex = (currentIndex - 1 + images.length) % images.length;
@@ -116,37 +160,44 @@ const ProductDetails = () => {
     const handleWishlistToggle = () => {
         if (isAlreadyInWishlist) {
             removeFromWishlist(product.id);
-            showToast({
-                message: 'Removed from wishlist',
-                subMessage: product.title,
-                type: 'danger',
-            });
+            showToast({ message: 'Removed from wishlist', subMessage: product.title, type: 'danger' });
         } else {
             addToWishlist(getProductData());
-            showToast({
-                message: 'Added to wishlist',
-                subMessage: product.title,
-                type: 'success',
-            });
+            showToast({ message: 'Added to wishlist', subMessage: product.title, type: 'success' });
         }
     };
 
     const handleCartToggle = () => {
         if (isAlreadyInCart) {
             removeFromCart(product.id);
-            showToast({
-                message: 'Removed from cart',
-                subMessage: product.title,
-                type: 'danger',
-            });
+            showToast({ message: 'Removed from cart', subMessage: product.title, type: 'danger' });
         } else {
             addToCart(getProductData());
-            showToast({
-                message: 'Added to cart',
-                subMessage: product.title,
-                type: 'success',
-            });
+            showToast({ message: 'Added to cart', subMessage: product.title, type: 'success' });
         }
+    };
+
+    // submit review
+    const handleReviewSubmit = (e) => {
+        e.preventDefault();
+        if (!reviewForm.comment.trim()) {
+            showToast({ message: "Please write a comment!", type: "danger" });
+            return;
+        }
+        const newReview = {
+            id: Date.now(),
+            productId: product.id,
+            name: user ? user.name : "Guest User",
+            rating: reviewForm.rating,
+            comment: reviewForm.comment,
+            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+        };
+        const allReviews = JSON.parse(localStorage.getItem("cabbage_reviews")) || [];
+        const updatedAllReviews = [...allReviews, newReview];
+        localStorage.setItem("cabbage_reviews", JSON.stringify(updatedAllReviews));
+        setLocalReviews([newReview, ...localReviews]);
+        setReviewForm({ rating: 5, comment: "" });
+        showToast({ message: "Review submitted successfully!", type: "success" });
     };
 
     if (isLoading) {
@@ -160,6 +211,10 @@ const ProductDetails = () => {
     );
 
     const isInStock = product.stock > 0;
+    const totalReviewCount = (product.reviewCount || product.reviews?.length || 12) + localReviews.length;
+    const avgRating = localReviews.length > 0 
+        ? ((product.rating * (totalReviewCount - localReviews.length)) + localReviews.reduce((sum, r) => sum + r.rating, 0)) / totalReviewCount 
+        : product.rating;
 
     return (
         <main ref={mainRef} className="min-h-screen bg-[#FDFCF8] py-10 lg:py-16 font-nuni text-[#2C3A29] selection:bg-[#80B500] selection:text-white">
@@ -174,7 +229,7 @@ const ProductDetails = () => {
                         <li className="text-[#2C3A29] line-clamp-1">{categoryName}</li>
                     </ol>
                     <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#80B500]">
-                        SKU: PRD-{product.id}
+                        SKU: {String(product.id).includes('custom') ? product.id.toUpperCase() : `PRD-${product.id}`}
                     </span>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -209,7 +264,6 @@ const ProductDetails = () => {
                                 <button 
                                     onClick={handlePrevImage}
                                     className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white text-[#2C3A29] flex items-center justify-center shadow-md md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 cursor-pointer z-20"
-                                    title="Previous Image"
                                 >
                                     <IoChevronBack className="text-sm sm:text-lg" />
                                 </button>
@@ -226,7 +280,6 @@ const ProductDetails = () => {
                                 <button 
                                     onClick={handleNextImage}
                                     className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/80 hover:bg-white text-[#2C3A29] flex items-center justify-center shadow-md md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 cursor-pointer z-20"
-                                    title="Next Image"
                                 >
                                     <IoChevronForward className="text-sm sm:text-lg" />
                                 </button>
@@ -237,18 +290,18 @@ const ProductDetails = () => {
                     <div className="lg:col-span-5 flex flex-col pt-2 lg:pt-0">
                         <div className="reveal-el opacity-0 mb-5 md:mb-6">
                             <h3 className="text-[10px] md:text-[11px] font-bold text-[#80B500] uppercase tracking-[0.2em] mb-2 md:mb-3">
-                                {product.brand || 'Premium Harvest'}
+                                {product.brand}
                             </h3>
                             <h1 className="font-int text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-light text-[#2C3A29] leading-[1.1] tracking-tight mb-3 md:mb-4">
                                 {product.title}
                             </h1>
                             <div className="flex items-end gap-3 md:gap-4">
                                 <span className="font-int text-2xl md:text-3xl font-medium text-[#2C3A29]">
-                                    ${product.price.toFixed(2)}
+                                    {formatPrice(product.price)}
                                 </span>
                                 {product.discountPercentage > 0 && (
                                     <span className="text-base md:text-lg text-[#2C3A29]/30 line-through mb-0.5 md:mb-1">
-                                        ${originalPrice.toFixed(2)}
+                                        {formatPrice(originalPrice)}
                                     </span>
                                 )}
                             </div>
@@ -256,10 +309,10 @@ const ProductDetails = () => {
                         <div className="reveal-el opacity-0 flex items-center gap-3 md:gap-4 mb-5 md:mb-6 pb-5 md:pb-6 border-b border-[#2C3A29]/10">
                             <div className="flex items-center gap-1">
                                 {[...Array(5)].map((_, i) => (
-                                    <IoStar key={i} className={`text-sm md:text-base ${i < Math.round(product.rating) ? 'text-[#FFB800]' : 'text-[#2C3A29]/10'}`} />
+                                    <IoStar key={i} className={`text-sm md:text-base ${i < Math.round(avgRating) ? 'text-[#FFB800]' : 'text-[#2C3A29]/10'}`} />
                                 ))}
                             </div>
-                            <span className="text-[11px] md:text-xs text-[#2C3A29]/50">({product.reviews?.length || 12} Customer Reviews)</span>
+                            <span className="text-[11px] md:text-xs text-[#2C3A29]/50">({totalReviewCount} Customer Reviews)</span>
                         </div>
                         <p className="reveal-el opacity-0 text-[13px] md:text-[14px] text-[#2C3A29]/70 leading-relaxed mb-6 md:mb-8">
                             {product.description}
@@ -315,6 +368,75 @@ const ProductDetails = () => {
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                {/* reviews section */}
+                <div className="reveal-el opacity-0 mt-16 lg:mt-24 border-t border-[#2C3A29]/10 pt-12">
+                    <h3 className="text-2xl md:text-3xl font-int font-light text-[#2C3A29] mb-8">Customer Reviews</h3>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                        {/* write a review form */}
+                        <div className="bg-[#F4F4F0] p-6 sm:p-8 rounded-3xl h-fit">
+                            <h4 className="text-lg font-int font-bold text-[#2C3A29] mb-4">Write a Review</h4>
+                            <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4">
+                                <div>
+                                    <label className="text-[11px] font-bold uppercase tracking-widest text-[#2C3A29]/60 mb-2 block">Rating</label>
+                                    <div className="flex gap-1">
+                                        {[1, 2, 3, 4, 5].map(star => (
+                                            <button 
+                                                key={star} type="button" 
+                                                onClick={() => setReviewForm({...reviewForm, rating: star})}
+                                                className="cursor-pointer transition-colors"
+                                            >
+                                                <IoStar className={`text-2xl ${star <= reviewForm.rating ? 'text-[#FFB800]' : 'text-gray-300'}`} />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="text-[11px] font-bold uppercase tracking-widest text-[#2C3A29]/60 mb-2 block">Your Comment</label>
+                                    <textarea 
+                                        required 
+                                        value={reviewForm.comment}
+                                        onChange={(e) => setReviewForm({...reviewForm, comment: e.target.value})}
+                                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-[#80B500] font-nuni text-[14px] resize-none h-28" 
+                                        placeholder="What do you think about this product?"
+                                    ></textarea>
+                                </div>
+                                <button type="submit" className="bg-[#2C3A29] hover:bg-[#80B500] text-white font-bold font-nuni uppercase tracking-[0.15em] text-[11px] py-3.5 rounded-full transition-colors cursor-pointer mt-2 shadow-md">
+                                    Submit Review
+                                </button>
+                            </form>
+                        </div>
+                        {/* reviews list */}
+                        <div className="flex flex-col gap-6">
+                            {localReviews.length > 0 ? (
+                                localReviews.map(review => (
+                                    <div key={review.id} className="border-b border-gray-100 pb-6 last:border-0">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div className="flex items-center gap-3">
+                                                <FaUserCircle className="text-3xl text-gray-300" />
+                                                <div>
+                                                    <h5 className="font-int font-bold text-[#232323] text-sm">{review.name}</h5>
+                                                    <span className="text-[11px] text-[#546375] font-nuni">{review.date}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-0.5">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <IoStar key={i} className={`text-[13px] ${i < review.rating ? 'text-[#FFB800]' : 'text-gray-200'}`} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <p className="text-[13px] text-[#2C3A29]/70 font-nuni leading-relaxed">
+                                            {review.comment}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center py-10 bg-white border border-dashed border-gray-200 rounded-3xl">
+                                    <p className="text-[#546375] font-nuni text-sm">No reviews yet. Be the first to review!</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
