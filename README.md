@@ -1,16 +1,41 @@
-# React + Vite
+# Cabbage eCommerce - Premium Modern Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-Bear-brown?style=for-the-badge)
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
+![DummyJSON](https://img.shields.io/badge/API-DummyJSON-blue?style=for-the-badge)
 
-Currently, two official plugins are available:
+An ultra-premium, highly dynamic, and scalable front-end eCommerce web application. Designed with pixel-perfect minimalism and built using modern web technologies to ensure a seamless, high-performance user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
 
-## React Compiler
+*   **Advanced State Management:** Powered by Zustand with `persist` middleware for seamless local storage synchronization of Cart, Wishlist, and User Sessions.
+*   **Multi-Currency System:** Real-time dynamic price conversion across the entire platform (USD, BDT, EUR, INR) synced with the global store.
+*   **Multi-Language Support (i18n):** Custom lightweight translation hook facilitating instant toggling between English and Bengali without page reloads.
+*   **Hybrid Data Architecture:** Dynamically merges live REST API data (`DummyJSON`) with custom products generated from the Admin Panel.
+*   **SEO-Friendly Routing:** Implementation of strict title-based slug routing (`/product/:slug`) instead of raw IDs for better accessibility and SEO.
+*   **Dynamic Flash Sales:** 'Deal of the Day' component integrated with an automated, persistent 24-hour countdown mechanism.
+*   **Advanced Filtering:** High-end mix-and-match category filtering utilizing `MixItUp` for smooth grid transitions.
+*   **Premium UI/UX Animations:** Integrated `GSAP` (GreenSock) for scroll-triggered micro-interactions and `Swiper.js` for highly responsive, swipeable carousels.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+*   **Frontend:** React.js (ES6+), React Router DOM v6
+*   **State Management:** Zustand
+*   **Styling & UI:** Tailwind CSS, CSS Modules, Glassmorphism Aesthetics
+*   **Animations:** GSAP, Swiper.js, React Lenis (Smooth Scrolling)
+*   **Data Fetching:** Axios
+*   **Icons:** React Icons
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Core Folder Structure
+
+```text
+src/
+├── assets/          # Static images and media files
+├── components/      # Reusable UI components (Button, Container, Flex, Product Cards)
+├── hooks/           # Custom React Hooks (e.g., useTranslation)
+├── layouts/         # Major page sections (Banner, DailyDeals, BestSellers, etc.)
+├── pages/           # Route-level components (Home, ProductDetails)
+├── store/           # Zustand global state (useStore.js)
+└── utils/           # Helper functions and localization dictionaries (translations.js)
