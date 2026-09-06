@@ -25,7 +25,7 @@ const Product = ({
     const currentId = productId || productTitle;
     const productSlug = productTitle 
         ? productTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') 
-        : productId;
+        : String(productId);
     // price formatter function
     const formatPrice = (priceStr) => {
         if (!priceStr) return "";
@@ -36,14 +36,17 @@ const Product = ({
         if (currency === 'INR') return `₹${converted.toFixed(0)}`;
         return `$${converted.toFixed(2)}`;
     };
+
     const productData = {
         id: currentId,
         title: productTitle,
         price: parseFloat(productPrice?.toString().replace(/[^0-9.]/g, '') || 0), 
         image: imgString || "", 
     };
+
     const isAlreadyInWishlist = wishlist.some(item => item.id === currentId);
     const isAlreadyInCart = cart.some(item => item.id === currentId);
+
     const handleWishlistToggle = (e) => {
         e.preventDefault();
         if (isAlreadyInWishlist) {
@@ -62,6 +65,7 @@ const Product = ({
             });
         }
     };
+
     const handleCartToggle = (e) => {
         e.preventDefault();
         if (isAlreadyInCart) {
@@ -80,11 +84,14 @@ const Product = ({
             });
         }
     };
+
     const handleZoomClick = (e) => {
         e.preventDefault();
         setIsZoomOpen(true);
     };
+
     const iconClass = "bg-white text-[#80B500] rounded-full p-2.5 hover:bg-[#80B500] hover:text-white duration-300 cursor-pointer opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 flex items-center justify-center";
+
     return (
         <>
             <div className={`w-full group duration-300 overflow-hidden bg-white shadow-customMade border border-[#e5e5e5] hover:border-[#80B500] rounded-md 
