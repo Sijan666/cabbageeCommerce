@@ -1,7 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import Banner from "../layouts/Banner";
-// import Member from "../layouts/Member";
 import Faq from "../layouts/Faq";
 import Counter from "../layouts/Counter";
 import Blog from "../layouts/Blog";
@@ -37,7 +36,6 @@ const Home = () => {
             <TopCategories />
             <ProductSpotlight />
             <NewArrivals />
-            {/* <Member /> */}
             <BestSellers />
             <Faq />
             <Counter />
