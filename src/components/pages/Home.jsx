@@ -1,19 +1,19 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import Ads from "../layouts/Ads";
 import Banner from "../layouts/Banner";
-import Contact from "../layouts/Contact";
-import Deals from "../layouts/Deals";
-import Faciliti from "../layouts/Faciliti";
-import Featuredproduct from "../layouts/Featuredproduct";
-import Member from "../layouts/Member";
-import Review from "../layouts/Review";
-import Ourproduct from "../layouts/Ourproducts";
-import Topcategories from "../layouts/Topcategories";
+// import Member from "../layouts/Member";
 import Faq from "../layouts/Faq";
 import Counter from "../layouts/Counter";
 import Blog from "../layouts/Blog";
 import CompLogo from "../layouts/CompLogo";
+import PromoBanners from "../layouts/PromoBanners";
+import FeaturedProducts from "../layouts/FeaturedProducts";
+import DailyDeals from "../layouts/DailyDeals";
+import ProductCollection from "../layouts/ProductCollection";
+import TopCategories from "../layouts/TopCategories";
+import ProductSpotlight from "../layouts/ProductSpotlight";
+import NewArrivals from "../layouts/NewArrivals";
+import BestSellers from "../layouts/BestSellers";
 
 const Home = () => {
     return (
@@ -30,15 +30,15 @@ const Home = () => {
                 />
             </Helmet>
             <Banner />
-            <Ads />
-            <Featuredproduct />
-            <Deals />
-            <Ourproduct />
-            <Topcategories />
-            <Faciliti />
-            <Review />
-            <Member />
-            <Contact />
+            <PromoBanners />
+            <FeaturedProducts />
+            <DailyDeals />
+            <ProductCollection />
+            <TopCategories />
+            <ProductSpotlight />
+            <NewArrivals />
+            {/* <Member /> */}
+            <BestSellers />
             <Faq />
             <Counter />
             <Blog />
