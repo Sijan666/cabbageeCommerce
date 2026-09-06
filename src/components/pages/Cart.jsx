@@ -16,13 +16,13 @@ const Cart = () => {
         user, 
         currency, 
         exchangeRates, 
-        coupons, 
         appliedCoupon, 
         applyCoupon, 
         removeCoupon 
     } = useStore();
     const navigate = useNavigate();
     const [couponInput, setCouponInput] = useState("");
+
     // format price based on selected currency
     const formatPrice = (price) => {
         const converted = price * exchangeRates[currency];
@@ -31,18 +31,24 @@ const Cart = () => {
         if (currency === 'INR') return `₹${converted.toFixed(0)}`;
         return `$${converted.toFixed(2)}`;
     };
+
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     // calculate discount if coupon is applied
     const discountAmount = appliedCoupon ? (subtotal * appliedCoupon.discountPercentage) / 100 : 0;
     const finalTotal = subtotal - discountAmount;
-    // handle coupon apply
+
+    // handle coupon apply directly from admin's localstorage
     const handleApplyCoupon = (e) => {
         e.preventDefault();
         if (!couponInput.trim()) {
             showToast({ message: 'Please enter a coupon code', type: 'danger' });
             return;
         }
-        const foundCoupon = coupons.find(c => c.code.toLowerCase() === couponInput.toLowerCase() && c.isActive);
+
+        // fetch dynamic coupons created in Admin Panel
+        const savedCoupons = JSON.parse(localStorage.getItem("cabbage_coupons")) || [];
+        const foundCoupon = savedCoupons.find(c => c.code.toLowerCase() === couponInput.toLowerCase());
+
         if (foundCoupon) {
             applyCoupon(foundCoupon);
             setCouponInput("");
@@ -51,11 +57,13 @@ const Cart = () => {
             showToast({ message: 'Invalid or expired coupon code', type: 'danger' });
         }
     };
+
     // handle coupon remove
     const handleRemoveCoupon = () => {
         removeCoupon();
         showToast({ message: 'Coupon removed', type: 'danger' });
     };
+
     // checkout validation handler
     const handleCheckout = () => {
         if (user) {
@@ -65,6 +73,7 @@ const Cart = () => {
             navigate('/login');
         }
     };
+
     // empty cart state
     if (cart.length === 0) {
         return (
@@ -90,6 +99,7 @@ const Cart = () => {
             </div>
         );
     }
+
     return (
         <div className="bg-[#F9FBF5] min-h-[70vh] py-20 pb-24">
             <Container className="px-4 lg:px-0">
@@ -117,7 +127,7 @@ const Cart = () => {
                                         {/* product info */}
                                         <Flex className="w-full md:w-1/2 items-center gap-4">
                                             <div className="w-20 h-20 bg-[#f4f6f8] rounded-lg p-2 flex items-center justify-center shrink-0">
-                                                <Images imgSrc={item.image} className="max-w-full max-h-full object-contain" />
+                                                <Images imgSrc={item.image || item.thumbnail} className="max-w-full max-h-full object-contain mix-blend-multiply" />
                                             </div>
                                             <div>
                                                 <h4 className="text-[#232323] font-bold font-int text-base hover:text-[#80B500] transition-colors cursor-pointer line-clamp-2">
@@ -171,14 +181,14 @@ const Cart = () => {
                                 <form onSubmit={handleApplyCoupon} className="flex flex-col sm:flex-row gap-3">
                                     <input 
                                         type="text" 
-                                        placeholder="Enter coupon code" 
+                                        placeholder="Enter coupon code (e.g. EID50)" 
                                         value={couponInput}
                                         onChange={(e) => setCouponInput(e.target.value)}
-                                        className="flex-1 border border-gray-200 rounded-md px-4 py-3 outline-none focus:border-[#80B500] font-nuni transition-colors"
+                                        className="flex-1 border border-gray-200 rounded-md px-4 py-3 outline-none focus:border-[#80B500] font-nuni transition-colors uppercase placeholder:normal-case"
                                     />
                                     <button 
                                         type="submit"
-                                        className="bg-[#232323] hover:bg-[#111] text-white font-bold font-nuni uppercase tracking-widest px-8 py-3 rounded-md transition-colors cursor-pointer"
+                                        className="bg-[#232323] hover:bg-[#80B500] text-white font-bold font-nuni uppercase tracking-widest px-8 py-3 rounded-md transition-colors cursor-pointer"
                                     >
                                         Apply
                                     </button>
@@ -212,7 +222,7 @@ const Cart = () => {
                         {/* checkout button */}
                         <button 
                             onClick={handleCheckout} 
-                            className="cursor-pointer w-full bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold font-nuni uppercase tracking-widest py-4 rounded-md transition-all duration-300"
+                            className="cursor-pointer w-full bg-[#80B500] hover:bg-[#6c9a00] text-white font-bold font-nuni uppercase tracking-widest py-4 rounded-md transition-all duration-300 shadow-md"
                         >
                             Proceed to Checkout
                         </button>
