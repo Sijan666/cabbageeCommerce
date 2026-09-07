@@ -62,6 +62,7 @@ export const useStore = create(
                 })),
             clearCart: () => set({ cart: [] }),
             clearWishlist: () => set({ wishlist: [] }),
+            
             // user and auth
             user: null,
             loginUser: (userData) => set({ user: userData }),
@@ -69,6 +70,11 @@ export const useStore = create(
                 localStorage.removeItem("shop-storage");
                 set({ user: null });
             },
+
+            // multi language
+            language: 'en', 
+            setLanguage: (lang) => set({ language: lang }),
+
             // multi currency
             currency: 'USD',
             exchangeRates: {
@@ -78,6 +84,7 @@ export const useStore = create(
                 INR: 83
             },
             setCurrency: (newCurrency) => set({ currency: newCurrency }),
+            
             // coupon and discount
             coupons: [
                 { id: 1, code: 'EID20', discountPercentage: 20, isActive: true },
@@ -87,16 +94,32 @@ export const useStore = create(
             appliedCoupon: null, 
             applyCoupon: (coupon) => set({ appliedCoupon: coupon }),
             removeCoupon: () => set({ appliedCoupon: null }),
+            
             // user addresses and profile
             addresses: [],
             addAddress: (address) => set((state) => ({ addresses: [...state.addresses, address] })),
             removeAddress: (id) => set((state) => ({ addresses: state.addresses.filter(addr => addr.id !== id) })),
+            
             // admin dash and custom product
             customProducts: [], 
             addCustomProduct: (product) => set((state) => ({ customProducts: [...state.customProducts, product] })),
+            
+            // add multiple products at once (bulk upload)
+            addBulkProducts: (bulkItems) => set((state) => {
+                const formattedItems = bulkItems.map((item, index) => ({
+                    ...item,
+                    id: Date.now() + index, 
+                    isDeleted: false,
+                }));
+                return {
+                    customProducts: [...formattedItems, ...state.customProducts]
+                };
+            }),
+
             updateCustomProduct: (id, updatedProduct) => set((state) => ({
                 customProducts: state.customProducts.map(p => p.id === id ? { ...p, ...updatedProduct } : p)
             })),
+            
             // soft delete
             softDeleteProduct: (id) => set((state) => ({
                 customProducts: state.customProducts.map(p => p.id === id ? { ...p, isDeleted: true } : p)
