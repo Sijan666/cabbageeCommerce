@@ -26,7 +26,7 @@ const Error = lazy(() => import('./components/pages/Error'));
 const Cart = lazy(() => import('./components/pages/Cart'));
 const Wishlist = lazy(() => import('./components/pages/Wishlist'));
 const Checkout = lazy(() => import('./components/pages/Checkout'));
-const AdminDashboard = lazy(() => import('./components/pages/AdminDashboard'));
+const AdminDashboard = lazy(() => import('./components/pages/AdminDashboard/AdminDashboard'));
 
 function App() {
   const lenisOptions = {
