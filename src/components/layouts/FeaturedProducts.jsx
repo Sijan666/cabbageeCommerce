@@ -73,8 +73,9 @@ const FeaturedProducts = () => {
         <section className="pb-15 pt-60 overflow-hidden">
             <Container className="px-4 lg:px-0">
                 <div className="text-center max-w-2xl mx-auto">
-                    <h3 className="text-[36px] md:text-[48px] font-int text-[#232323] font-bold leading-tight">
+                    <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
                         Featured Products
+                        <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
                     </h3>
                     <p className="text-[15px] md:text-base font-nuni text-[#546375] pt-4 md:pt-5">
                         A highly efficient slip-ring scanner for today's diagnostic requirements.
