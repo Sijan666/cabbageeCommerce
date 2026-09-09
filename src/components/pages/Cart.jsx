@@ -181,7 +181,7 @@ const Cart = () => {
                                 <form onSubmit={handleApplyCoupon} className="flex flex-col sm:flex-row gap-3">
                                     <input 
                                         type="text" 
-                                        placeholder="Enter coupon code (e.g. EID50)" 
+                                        placeholder="Enter coupon code" 
                                         value={couponInput}
                                         onChange={(e) => setCouponInput(e.target.value)}
                                         className="flex-1 border border-gray-200 rounded-md px-4 py-3 outline-none focus:border-[#80B500] font-nuni transition-colors uppercase placeholder:normal-case"
