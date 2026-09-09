@@ -75,12 +75,12 @@ const ProductSpotlight = () => {
     { 
       img: Fac2, 
       title: "Highly Rated", 
-      desc: `Customers love this! Rated ${product.rating} out of 5 stars by verified buyers.` 
+      desc: `Customers love this! Rated ${product.rating} out of 5 stars.` 
     },
     { 
       img: Fac3, 
       title: "Stock Status", 
-      desc: `Currently ${product.availabilityStatus || 'in stock'} with ${product.stock} units available.` 
+      desc: `Currently ${product.availabilityStatus || 'in stock'} with ${product.stock} units.` 
     },
   ] : [];
 
@@ -88,106 +88,112 @@ const ProductSpotlight = () => {
     { 
       img: Fac4, 
       title: "Fast Shipping", 
-      desc: `${product.shippingInformation || 'Ships within 1-2 business days'} directly to your door.` 
+      desc: `${product.shippingInformation || 'Ships within 1-2 business days'}.` 
     },
     { 
       img: Fac5, 
       title: "Special Offer", 
-      desc: `Get it now and enjoy ${product.discountPercentage}% off the regular retail price.` 
+      desc: `Get it now and enjoy ${product.discountPercentage}% off the retail price.` 
     },
     { 
       img: Fac6, 
       title: "Buyer Protection", 
-      desc: `${product.returnPolicy || '30 days return policy'} - shop with full confidence.` 
+      desc: `${product.returnPolicy || '30 days return policy'} - shop with confidence.` 
     },
   ] : [];
 
   return (
-    <div className="mt-20 lg:mt-25 mb-16 lg:mb-24 overflow-hidden">
-      <Container className="px-4 md:px-8 lg:px-0">
-        <div className="text-center mb-16 md:mb-20">
-          <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
+    <div className="mt-12 md:mt-20 lg:mt-25 mb-12 md:mb-16 lg:mb-24 overflow-hidden">
+      <Container className="px-4 md:px-8 xl:px-0">
+        {/* header */}
+        <div className="text-center mb-10 md:mb-16 lg:mb-20">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
             Product Spotlight
-            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
+            <span className="absolute -bottom-2 sm:-bottom-3 left-1/2 -translate-x-1/2 w-12 sm:w-16 h-1 bg-[#80B500] rounded-full"></span>
           </h3>
-          <p className="text-sm md:text-base text-[#546375] font-nuni mt-6 max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-[#546375] font-nuni mt-4 sm:mt-6 max-w-2xl mx-auto px-2">
             Discover the amazing features and benefits of our top-picked product for the day.
           </p>
         </div>
+        {/* content */}
         {isLoading ? (
-          <div className="flex justify-center items-center h-100">
-              <div className="w-14 h-14 border-4 border-[#F4F9EB] border-t-[#80B500] rounded-full animate-spin"></div>
+          <div className="flex justify-center items-center h-75 sm:h-100">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 border-4 border-[#F4F9EB] border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : product ? (
-          <Flex className={`flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-16 lg:gap-y-0 lg:gap-x-8 transition-all duration-500 ease-in-out ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-            {/* Left */}
-            <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
+          <Flex className={`flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-y-12 lg:gap-y-0 lg:gap-x-4 xl:gap-x-8 transition-all duration-500 ease-in-out ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+            {/* left features */}
+            <div className="w-full lg:w-1/3 grid grid-cols-2 lg:grid-cols-1 gap-x-3 gap-y-6 sm:gap-6 lg:gap-y-14">
               {leftFeatures.map((item, index) => (
-                <Flex key={index} className="group flex-col sm:flex-row-reverse items-center sm:items-start text-center sm:text-right gap-y-4 sm:gap-y-0 sm:gap-x-5">
-                  <div className="shrink-0 w-17.5 h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
-                    <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
+                <div 
+                  key={index} 
+                  className={`group flex flex-col lg:flex-row-reverse items-center text-center lg:text-right gap-y-2.5 lg:gap-y-0 lg:gap-x-5 
+                    ${index === 2 ? 'col-span-2 lg:col-span-1 max-w-50 lg:max-w-none mx-auto lg:mx-0' : ''}`}
+                >
+                  <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-17.5 lg:h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
+                    <Images imgSrc={item.img} className="w-7 sm:w-8 lg:w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
-                  <div className="w-full sm:pt-1">
-                    <h5 className="text-[#223645] text-xl md:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
+                  <div className="w-full">
+                    <h5 className="text-[#223645] text-[13px] sm:text-base lg:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
                       {item.title}
                     </h5>
-                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-65 mt-2 leading-relaxed sm:ml-auto">
+                    <p className="text-[#666E77] text-[10px] sm:text-xs lg:text-base font-nuni w-full lg:max-w-65 mt-1 sm:mt-1.5 lg:mt-2 leading-relaxed mx-auto lg:ml-auto">
                       {item.desc}
                     </p>
                   </div>
-                </Flex>
+                </div>
               ))}
             </div>
             {/* API Product */}
-            <div className="w-full lg:w-1/3 flex flex-col items-center justify-center order-first lg:order-0 mb-12 lg:mb-0 relative group">
-              <div className="text-center w-full max-w-87.5">
-                {/* Product Image */}
+            <div className="w-full lg:w-1/3 flex flex-col items-center justify-center order-first lg:order-0 mb-2 lg:mb-0 relative group shrink-0">
+              <div className="text-center w-full max-w-70 xs:max-w-[320px] sm:max-w-90 lg:max-w-87.5 mx-auto">
                 <Link to={`/product/${productSlug}`} className="block">
-                  <div className="relative bg-white rounded-full w-70 h-70 sm:w-[320px] sm:h-80 mx-auto flex justify-center items-center p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500 cursor-pointer">
+                  <div className="relative bg-white rounded-full w-64 h-64 xs:w-72 xs:h-72 sm:w-80 sm:h-80 mx-auto flex justify-center items-center p-4 sm:p-6 border-4 border-[#F4F9EB] shadow-[0_10px_40px_-10px_rgba(128,181,0,0.2)] group-hover:border-[#80B500] transition-colors duration-500 cursor-pointer">
                     <img 
                       src={product.thumbnail} 
                       alt={product.title} 
                       className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500" 
                     />
-                    {/* price badge */}
-                    <div className="absolute top-4 right-4 bg-[#80B500] text-white font-bold font-nuni px-4 py-2 rounded-full shadow-md transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-[#80B500] text-white font-bold font-nuni px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-full shadow-md transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
                       {formatPrice(product.price)}
                     </div>
                   </div>
                 </Link>
-                <div className="mt-8">
-                  <p className="text-[#80B500] font-nuni font-bold text-sm tracking-widest uppercase mb-2">
+                <div className="mt-6 sm:mt-8 px-2">
+                  <p className="text-[#80B500] font-nuni font-bold text-xs sm:text-sm tracking-widest uppercase mb-1.5 sm:mb-2">
                     {product.brand ? `${product.brand} - ` : ''}{product.category.replace('-', ' ')}
                   </p>
-                  {/* Product */}
-                  <h4 className="text-[24px] font-int font-bold text-[#232323] line-clamp-1">
+                  <h4 className="text-xl sm:text-[24px] font-int font-bold text-[#232323] line-clamp-1">
                     <Link to={`/product/${productSlug}`} className="hover:text-[#80B500] transition-colors">
                       {product.title}
                     </Link>
                   </h4>
-                  {/* View Details */}
-                  <Link to={`/product/${productSlug}`} className="inline-block mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold py-2.5 px-8 rounded-full transition-all duration-300 cursor-pointer">
+                  <Link to={`/product/${productSlug}`} className="inline-block mt-4 sm:mt-5 bg-transparent hover:bg-[#80B500] text-[#232323] hover:text-white border-2 border-[#232323] hover:border-[#80B500] font-nuni font-bold text-[13px] sm:text-base py-2 px-6 sm:py-2.5 sm:px-8 rounded-full transition-all duration-300 cursor-pointer">
                     View Details
                   </Link>
                 </div>
               </div>
             </div>
-            {/* Right */}
-            <div className="w-full lg:w-1/3 flex flex-col gap-y-10 md:gap-y-14">
+            {/* right features */}
+            <div className="w-full lg:w-1/3 grid grid-cols-2 lg:grid-cols-1 gap-x-3 gap-y-6 sm:gap-6 lg:gap-y-14 mt-4 lg:mt-0">
               {rightFeatures.map((item, index) => (
-                <Flex key={index} className="group flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-y-4 sm:gap-y-0 sm:gap-x-5">
-                  <div className="shrink-0 w-17.5 h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
-                    <Images imgSrc={item.img} className="w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
+                <div 
+                  key={index} 
+                  className={`group flex flex-col lg:flex-row items-center text-center lg:text-left gap-y-2.5 lg:gap-y-0 lg:gap-x-5 
+                    ${index === 2 ? 'col-span-2 lg:col-span-1 max-w-50 lg:max-w-none mx-auto lg:mx-0' : ''}`}
+                >
+                  <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-17.5 lg:h-17.5 bg-[#F4F9EB] group-hover:bg-[#80B500] transition-colors duration-500 rounded-full flex justify-center items-center shadow-sm">
+                    <Images imgSrc={item.img} className="w-7 sm:w-8 lg:w-10 object-contain group-hover:scale-110 group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                   </div>
-                  <div className="w-full sm:pt-1">
-                    <h5 className="text-[#223645] text-xl md:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
+                  <div className="w-full">
+                    <h5 className="text-[#223645] text-[13px] sm:text-base lg:text-[22px] font-bold font-int group-hover:text-[#80B500] transition-colors duration-300">
                       {item.title}
                     </h5>
-                    <p className="text-[#666E77] text-sm md:text-base font-nuni w-full sm:max-w-65 mt-2 leading-relaxed">
+                    <p className="text-[#666E77] text-[10px] sm:text-xs lg:text-base font-nuni w-full lg:max-w-65 mt-1 sm:mt-1.5 lg:mt-2 leading-relaxed mx-auto lg:mx-0">
                       {item.desc}
                     </p>
                   </div>
-                </Flex>
+                </div>
               ))}
             </div>
           </Flex>
