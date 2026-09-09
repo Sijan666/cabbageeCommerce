@@ -10,8 +10,40 @@ import Container from "../Container";
 import Images from "../Images";
 import Button from "../Button";
 import footerlogo from '../../assets/footerlogo.png';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const usefulLinks = [
+    { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
+    { name: "About Us", path: "/about" },
+    { name: "Blog", path: "/blogs" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const helpLinks = [
+    { name: "My Account", path: "/profile" },
+    { name: "Shopping Cart", path: "/cart" },
+    { name: "Wishlist", path: "/wishlist" },
+  ];
+
+  // icon component arrays
+  const socialIcons = [
+    { id: 1, component: <FaFacebook className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" /> },
+    { id: 2, component: <BsTwitter className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" /> },
+    { id: 3, component: <SiVimeo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" /> },
+    { id: 4, component: <PiPinterestLogo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" /> },
+  ];
+
+  const paymentIcons = [
+    { id: 1, title: "Visa", component: <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" title="Visa" /> },
+    { id: 2, title: "MasterCard", component: <FaCcMastercard className="hover:text-white transition-colors duration-300 cursor-pointer" title="MasterCard" /> },
+    { id: 3, title: "PayPal", component: <FaCcPaypal className="hover:text-white transition-colors duration-300 cursor-pointer" title="PayPal" /> },
+    { id: 4, title: "Apple Pay", component: <FaCcApplePay className="hover:text-white transition-colors duration-300 cursor-pointer" title="Apple Pay" /> },
+    { id: 5, title: "Google Pay", component: <FaGooglePay className="hover:text-white transition-colors duration-300 cursor-pointer text-3xl" title="Google Pay" /> },
+  ];
+
   return (
     <>
       <footer className="bg-[url('/src/assets/footer.png')] py-20 lg:py-27.5 bg-no-repeat bg-center bg-cover relative">
@@ -22,40 +54,39 @@ const Footer = () => {
             <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int mb-6">About Us</h4>
               <p className="font-nuni text-sm md:text-base text-gray-300 leading-relaxed mb-6">Corporate clients and leisure travelers have been relying on Cabbage for dependable, safe, and professional service across major cities worldwide.</p>
-              {/* social icons */}
+              {/* social icons map */}
               <div className="flex gap-3 justify-center lg:justify-start">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
-                  <FaFacebook className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
-                  <BsTwitter className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
-                  <SiVimeo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
-                  <PiPinterestLogo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" />
-                </div>
+                {socialIcons.map((social) => (
+                  <div key={social.id} className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
+                    {social.component}
+                  </div>
+                ))}
               </div>
             </div>
-            {/* useful links */}
+            {/* useful */}
             <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int mb-6">Useful Links</h4>
               <ul className="space-y-3">
-                <li><Link to="/" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Home</Link></li>
-                <li><Link to="/shop" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Shop</Link></li>
-                <li><Link to="/about" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">About Us</Link></li>
-                <li><Link to="/blogs" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Blog</Link></li>
-                <li><Link to="/contact" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Contact</Link></li>
+                {usefulLinks.map((link, index) => (
+                  <li key={index}>
+                    <Link to={link.path} className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* help */}
             <div className="text-center lg:text-left">
               <h4 className="text-white font-bold text-[22px] font-int mb-6">Help</h4>
               <ul className="space-y-3">
-                <li><Link to="/profile" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">My Account</Link></li>
-                <li><Link to="/cart" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Shopping Cart</Link></li>
-                <li><Link to="/wishlist" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Wishlist</Link></li>
+                {helpLinks.map((link, index) => (
+                  <li key={index}>
+                    <Link to={link.path} className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* newsletter and contact */}
@@ -80,13 +111,13 @@ const Footer = () => {
         <Container className="px-4 lg:px-0">
           <div className="flex flex-col sm:flex-row lg:justify-between justify-center items-center gap-y-4 text-center">
             <p className="text-sm font-nuni text-gray-400">© Cabbage {currentYear} All rights reserved.</p>
-            {/* payment method icons */}
+            {/* payment method icons map */}
             <div className="flex items-center gap-3 text-2xl text-gray-400">
-              <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" title="Visa" />
-              <FaCcMastercard className="hover:text-white transition-colors duration-300 cursor-pointer" title="MasterCard" />
-              <FaCcPaypal className="hover:text-white transition-colors duration-300 cursor-pointer" title="PayPal" />
-              <FaCcApplePay className="hover:text-white transition-colors duration-300 cursor-pointer" title="Apple Pay" />
-              <FaGooglePay className="hover:text-white transition-colors duration-300 cursor-pointer text-3xl" title="Google Pay" />
+              {paymentIcons.map((payment) => (
+                <React.Fragment key={payment.id}>
+                  {payment.component}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </Container>
@@ -94,4 +125,5 @@ const Footer = () => {
     </>
   );
 };
+
 export default Footer;
