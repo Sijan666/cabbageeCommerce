@@ -21,7 +21,6 @@ const Profile = () => {
     const [addrText, setAddrText] = useState("");
     const [addrPhone, setAddrPhone] = useState("");
     const fileInputRef = useRef(null);
-    
     // dynamic price formatter
     const formatPrice = (price) => {
         const converted = price * exchangeRates[currency];
