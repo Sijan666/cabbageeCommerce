@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
 import { SiVimeo } from "react-icons/si";
@@ -9,8 +10,8 @@ import Container from "../Container";
 import Images from "../Images";
 import Button from "../Button";
 import footerlogo from '../../assets/footerlogo.png';
-
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <footer className="bg-[url('/src/assets/footer.png')] py-20 lg:py-27.5 bg-no-repeat bg-center bg-cover relative">
@@ -19,12 +20,8 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 items-start">
             {/* about us */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int mb-6">
-                About Us
-              </h4>
-              <p className="font-nuni text-sm md:text-base text-gray-300 leading-relaxed mb-6">
-                Corporate clients and leisure travelers have been relying on Cabbage for dependable, safe, and professional service across major cities worldwide.
-              </p>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">About Us</h4>
+              <p className="font-nuni text-sm md:text-base text-gray-300 leading-relaxed mb-6">Corporate clients and leisure travelers have been relying on Cabbage for dependable, safe, and professional service across major cities worldwide.</p>
               {/* social icons */}
               <div className="flex gap-3 justify-center lg:justify-start">
                 <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#80B500] group cursor-pointer transition-colors duration-300">
@@ -43,67 +40,46 @@ const Footer = () => {
             </div>
             {/* useful links */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int mb-6">
-                Useful Links
-              </h4>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">Useful Links</h4>
               <ul className="space-y-3">
-                {["About", "News", "Partners", "Shop", "Gallery", "Contacts"].map((item, index) => (
-                  <li key={index}>
-                    <a href="#" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                <li><Link to="/" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Home</Link></li>
+                <li><Link to="/shop" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Shop</Link></li>
+                <li><Link to="/about" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">About Us</Link></li>
+                <li><Link to="/blogs" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Blog</Link></li>
+                <li><Link to="/contact" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Contact</Link></li>
               </ul>
             </div>
             {/* help */}
             <div className="text-center lg:text-left">
-              <h4 className="text-white font-bold text-[22px] font-int mb-6">
-                Help
-              </h4>
+              <h4 className="text-white font-bold text-[22px] font-int mb-6">Help</h4>
               <ul className="space-y-3">
-                {["FAQ", "Term & Conditions", "Reporting", "Documentation", "Support Policy", "Privacy"].map((item, index) => (
-                  <li key={index}>
-                    <a href="#" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                <li><Link to="/profile" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">My Account</Link></li>
+                <li><Link to="/cart" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Shopping Cart</Link></li>
+                <li><Link to="/wishlist" className="text-sm md:text-base text-gray-300 hover:text-[#80B500] font-nuni transition-colors duration-300">Wishlist</Link></li>
               </ul>
             </div>
-            {/* newsletter & contact */}
+            {/* newsletter and contact */}
             <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
               <Images imgSrc={footerlogo} className="mx-auto lg:mx-0 mb-4" />
-              <p className="text-sm md:text-base text-gray-300 font-nuni mb-6 leading-relaxed">
-                We are a team of designers and developers creating high-quality organic solutions.
-              </p>
+              <p className="text-sm md:text-base text-gray-300 font-nuni mb-6 leading-relaxed">We are a team of designers and developers creating high-quality organic solutions.</p>
               <div className="flex items-center gap-x-3 mb-6 justify-center lg:justify-start">
                 <LuMapPin className="text-[#80B500] text-xl shrink-0" />
-                <p className="text-sm md:text-base text-gray-300 font-nuni">
-                  254 Lillian Blvd, Holbrook
-                </p>
+                <p className="text-sm md:text-base text-gray-300 font-nuni">254 Lillian Blvd, Holbrook</p>
               </div>
-              {/* Newsletter */}
+              {/* newsletter input */}
               <div className="w-full max-w-[320px] bg-white flex items-center justify-between p-1 rounded-md shadow-sm">
-                <input 
-                  type="email" 
-                  placeholder="Enter email address" 
-                  className="text-[#232323] bg-transparent px-3 py-2.5 w-full outline-none text-sm font-nuni placeholder:text-gray-400"
-                />
+                <input type="email" placeholder="Enter email address" className="text-[#232323] bg-transparent px-3 py-2.5 w-full outline-none text-sm font-nuni placeholder:text-gray-400" />
                 <Button btnText={'Subscribe'} className={'py-2.5! px-4! text-xs font-bold'} />
               </div>
             </div>
           </div>
         </Container>
       </footer>
-      {/* Copyright */}
+      {/* copyright */}
       <div className="bg-[#070C17] py-5 border-t border-white/5">
         <Container className="px-4 lg:px-0">
           <div className="flex flex-col sm:flex-row lg:justify-between justify-center items-center gap-y-4 text-center">
-            {/* Copyright Text */}
-            <p className="text-sm font-nuni text-gray-400">
-              © Cabbage 2026 All rights reserved.
-            </p>
+            <p className="text-sm font-nuni text-gray-400">© Cabbage {currentYear} All rights reserved.</p>
             {/* payment method icons */}
             <div className="flex items-center gap-3 text-2xl text-gray-400">
               <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" title="Visa" />
@@ -118,5 +94,4 @@ const Footer = () => {
     </>
   );
 };
-
 export default Footer;
