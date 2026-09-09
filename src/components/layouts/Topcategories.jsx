@@ -50,8 +50,9 @@ const TopCategories = () => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-white opacity-[0.02] blur-[100px] pointer-events-none"></div>
                 <Container className="px-4 lg:px-0 relative z-10">
                     <div className="text-center">
-                        <h3 className="text-3xl md:text-5xl font-extrabold text-white font-int mb-5 tracking-tight">
+                        <h3 className="ttext-3xl md:text-4xl lg:text-[42px] font-bold text-white font-int mb-5 relative tracking-tight">
                             Top Categories
+                            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
                         </h3>
                         <p className="text-[15px] md:text-[17px] text-gray-300 font-nuni max-w-2xl mx-auto leading-relaxed">
                             A highly efficient slip-ring scanner for today's diagnostic requirements, crafted for your needs.
