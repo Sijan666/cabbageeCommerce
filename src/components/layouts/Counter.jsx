@@ -15,7 +15,6 @@ const Counter = () => {
         <>
         <div className="lg:bg-[url('/src/assets/counter.png')] bg-no-repeat bg-center bg-cover py-12 sm:py-16 lg:py-18">
             <Container className={'px-4 sm:px-6 lg:px-0'}>
-                {/* main wrapper */}
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:flex lg:flex-row gap-y-10 lg:gap-y-0 items-center justify-between w-full">
                     {/* counter 1 */}
                     <div className="mx-auto text-center w-full lg:w-auto">
