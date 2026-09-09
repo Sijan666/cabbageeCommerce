@@ -59,8 +59,9 @@ const ProductCollection = () => {
     return (
         <div className="pb-10 md:pb-15">
             <Container className="px-4 lg:px-0">
-                <h3 className='text-[32px] md:text-[48px] font-int text-[#232323] font-bold text-center leading-tight'>
+                <h3 className='text-3xl md:text-4xl lg:text-[42px] font-int text-[#232323] font-bold text-center relative leading-tight'>
                     Our Products
+                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
                 </h3>
                 <p className='text-sm md:text-base font-nuni text-[#546375] pt-3 md:pt-5 text-center'>
                     A highly efficient slip-ring scanner for today's diagnostic requirements.
