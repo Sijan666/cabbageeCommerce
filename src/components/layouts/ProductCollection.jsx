@@ -61,22 +61,37 @@ const ProductCollection = () => {
             <Container className="px-4 lg:px-0">
                 <h3 className='text-3xl md:text-4xl lg:text-[42px] font-int text-[#232323] font-bold text-center relative leading-tight'>
                     Our Products
-                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
+                    <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full" aria-hidden="true"></span>
                 </h3>
                 <p className='text-sm md:text-base font-nuni text-[#546375] pt-3 md:pt-5 text-center'>
                     A highly efficient slip-ring scanner for today's diagnostic requirements.
                 </p>
                 {/* filter */}
-                <div className="pt-6 md:pt-9">
+                <div className="pt-6 md:pt-9" aria-label="Product Categories">
                     <Flex className={'justify-center gap-x-4 sm:gap-x-6 md:gap-x-10 gap-y-3 flex-wrap'}>
-                        <p data-filter="all" className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'>
+                        <p 
+                            data-filter="all" 
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Show all products"
+                            className='font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'
+                            onKeyDown={(e) => {
+                                if(e.key === 'Enter' || e.key === ' ') e.target.click();
+                            }}
+                        >
                             All
                         </p>
                         {categories.map((category, index) => (
                             <p 
                                 key={index} 
                                 data-filter={`.${category}`} 
+                                role="button"
+                                tabIndex={0}
+                                aria-label={`Filter by ${category.replace("-", " ")}`}
                                 className='capitalize font-bold font-nuni text-[16px] md:text-[18px] cursor-pointer text-[#223645] hover:text-[#80B500] duration-300'
+                                onKeyDown={(e) => {
+                                    if(e.key === 'Enter' || e.key === ' ') e.target.click();
+                                }}
                             >
                                 {category.replace("-", " ")}
                             </p>
@@ -84,9 +99,9 @@ const ProductCollection = () => {
                     </Flex>
                 </div>
                 {/* Products */}
-                <div className="product pt-10 md:pt-13" ref={containerRef}>
+                <div className="product pt-10 md:pt-13" ref={containerRef} aria-live="polite">
                     {isLoading ? (
-                        <div className="flex justify-center items-center h-75">
+                        <div className="flex justify-center items-center h-75" aria-label="Loading products">
                             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
@@ -100,7 +115,7 @@ const ProductCollection = () => {
                                             productsImg={
                                                 <Images
                                                     imgSrc={product.thumbnail} 
-                                                    alt={product.title} 
+                                                    alt={`Image of ${product.title}`} 
                                                     className="w-full h-37.5 md:h-50 object-contain mix-blend-multiply drop-shadow-sm p-4" 
                                                 />
                                             }
