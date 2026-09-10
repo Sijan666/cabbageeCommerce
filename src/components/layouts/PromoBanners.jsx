@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Container from '../Container';
 import Images from '../Images';
-
+// card styles configuration
+const cardStyles = [
+    { bg: 'bg-[#F79300]', label: 'MEGA DEAL' },
+    { bg: 'bg-[#183605]', label: 'TOP DISCOUNT' },
+    { bg: 'bg-[#81B615]', label: 'HOT OFFER' }
+];
 const PromoBanners = ({ slug = 'beauty' }) => {
     const [displayedDeals, setDisplayedDeals] = useState([]); 
     const [loading, setLoading] = useState(true);
-
-    const cardStyles = [
-        { bg: 'bg-[#F79300]', label: 'MEGA DEAL' },
-        { bg: 'bg-[#183605]', label: 'TOP DISCOUNT' },
-        { bg: 'bg-[#81B615]', label: 'HOT OFFER' }
-    ];
-
+    // fetch deals by category slug
     useEffect(() => {
         const fetchDealsBySlug = async () => {
             try {
@@ -21,7 +20,6 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                 const url = slug && slug !== 'all' 
                     ? `https://dummyjson.com/products/category/${slug}` 
                     : 'https://dummyjson.com/products?limit=50';
-                
                 const response = await axios.get(url);
                 const products = response.data.products || [];
                 // sort and get top 3 deals
@@ -35,7 +33,6 @@ const PromoBanners = ({ slug = 'beauty' }) => {
         };
         fetchDealsBySlug();
     }, [slug]);
-
     return (
         <div className="relative z-20"> 
             <Container className="lg:relative px-4 lg:px-0">
@@ -54,11 +51,11 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                                 if (!ad) return null;
                                 const style = cardStyles[index];
                                 const productSlug = ad.title ? ad.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '';
-                                
                                 return (
                                     <Link 
                                         to={`/product/${productSlug}`} 
                                         key={ad?.id || index} 
+                                        aria-label={`shop ${ad?.title} with ${Math.round(ad?.discountPercentage || 0)}% off`}
                                         className={`block ${style.bg} rounded-md overflow-hidden shadow-lg hover:shadow-2xl relative flex items-center p-6 md:p-8 min-h-45 md:min-h-55 transition-transform duration-300 transform`}
                                     >
                                         <div className="w-[60%] z-10 text-white">
@@ -73,7 +70,7 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                                             </p>
                                             <span className="inline-flex items-center text-sm font-bold hover:underline cursor-pointer">
                                                 Shop Now 
-                                                <svg className="w-4 h-4 ml-1 bg-white text-black rounded-full p-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg className="w-4 h-4 ml-1 bg-white text-black rounded-full p-0.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                                 </svg>
                                             </span>
@@ -96,5 +93,4 @@ const PromoBanners = ({ slug = 'beauty' }) => {
         </div>
     );
 };
-
 export default PromoBanners;
