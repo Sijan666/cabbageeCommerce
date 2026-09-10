@@ -6,12 +6,11 @@ import Product from '../Product';
 import Images from '../Images';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useStore } from '../../store/useStore';
-
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { customProducts } = useStore();
-
+    // fetch featured products from api and admin store
     useEffect(() => {
         async function fetchFeatured() {
             try {
@@ -43,48 +42,46 @@ const FeaturedProducts = () => {
         }
         fetchFeatured();
     }, [customProducts]);
-
+    // calculate original price before discount
     const getOriginalPrice = (price, discount) => { 
         return `$${(price / (1 - discount / 100)).toFixed(2)}`; 
     };
-
+    // dynamic star rating renderer
     const renderStars = (rating, reviewCount) => {
         const stars = [];
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating - fullStars >= 0.5;
         for (let i = 1; i <= 5; i++) {
             if (i <= fullStars) {
-                stars.push(<FaStar key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" />);
+                stars.push(<FaStar key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" aria-hidden="true" />);
             } else if (i === fullStars + 1 && hasHalfStar) {
-                stars.push(<FaStarHalfAlt key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" />);
+                stars.push(<FaStarHalfAlt key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" aria-hidden="true" />);
             } else {
-                stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" />);
+                stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" aria-hidden="true" />);
             }
         }
         return (
-            <Flex className="items-center gap-x-2">
+            <Flex className="items-center gap-x-2" aria-label={`Rated ${rating.toFixed(1)} out of 5 stars`}>
                 <Flex className="items-center gap-x-0.5">{stars}</Flex>
                 <span className="text-[#80B500] bg-[#f0f8eb] text-[10px] font-bold px-1.5 py-0.5 rounded-sm">({reviewCount})</span>
             </Flex>
         );
     };
-
     return (
-        <section className="pb-15 pt-60 overflow-hidden">
+        <section className="pb-15 pt-60 overflow-hidden" aria-label="Featured Products Section">
             <Container className="px-4 lg:px-0">
                 <div className="text-center max-w-2xl mx-auto">
                     <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
                         Featured Products
-                        <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
+                        <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full" aria-hidden="true"></span>
                     </h3>
                     <p className="text-[15px] md:text-base font-nuni text-[#546375] pt-4 md:pt-5">
                         A highly efficient slip-ring scanner for today's diagnostic requirements.
                     </p>
                 </div>
-                
                 <div className="pt-10 md:pt-13">
                     {isLoading ? (
-                        <div className="flex justify-center items-center h-75">
+                        <div className="flex justify-center items-center h-75" aria-label="Loading products">
                             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
@@ -94,7 +91,7 @@ const FeaturedProducts = () => {
                                     <Product 
                                         productId={product.id}
                                         imgString={product.thumbnail}
-                                        productImg={<Images imgSrc={product.thumbnail} alt={product.title} className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 mix-blend-multiply" />}
+                                        productImg={<Images imgSrc={product.thumbnail} alt={`Image of ${product.title}`} className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 mix-blend-multiply" />}
                                         productTitle={product.title}
                                         productPrice={`$${product.price.toFixed(2)}`}
                                         productOffer={product.discountPercentage ? getOriginalPrice(product.price, product.discountPercentage) : null}
@@ -110,5 +107,4 @@ const FeaturedProducts = () => {
         </section>
     );
 }
-
 export default FeaturedProducts;
