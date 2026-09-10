@@ -6,7 +6,6 @@ import Container from "../Container";
 import Flex from "../Flex";
 import Images from "../Images";
 import { useStore } from "../../store/useStore";
-
 const DailyDeals = () => {
   const { currency, exchangeRates, customProducts } = useStore();
   const [dealProduct, setDealProduct] = useState(null);
@@ -18,12 +17,7 @@ const DailyDeals = () => {
   });
 
   // countdown state
-  const [timeLeft, setTimeLeft] = useState({
-    days: 1,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+  const [timeLeft, setTimeLeft] = useState({ days: 1, hours: 0, minutes: 0, seconds: 0 });
 
   // dynamic price formatter
   const formatPrice = (price) => {
@@ -42,16 +36,14 @@ const DailyDeals = () => {
         const response = await axios.get("https://dummyjson.com/products?limit=30");
         const apiProducts = response.data.products || [];
         // format admin custom products
-        const formattedCustom = customProducts
-          .filter(p => !p.isDeleted)
-          .map(p => ({
-            id: `custom-${p.id}`,
-            title: p.title,
-            description: p.desc || "",
-            price: parseFloat(p.price) || 0,
-            discountPercentage: parseFloat(p.discountPercentage) || 15,
-            thumbnail: p.image,
-          }));
+        const formattedCustom = customProducts.filter(p => !p.isDeleted).map(p => ({
+          id: `custom-${p.id}`,
+          title: p.title,
+          description: p.desc || "",
+          price: parseFloat(p.price) || 0,
+          discountPercentage: parseFloat(p.discountPercentage) || 15,
+          thumbnail: p.image,
+        }));
         // combine and filter products with discounts
         const combined = [...formattedCustom, ...apiProducts];
         setAllDeals(combined);
@@ -60,19 +52,20 @@ const DailyDeals = () => {
           setDealProduct(combined[validIndex]);
         }
       } catch (error) {
-        console.error("Deal products not found", error.message);
+        console.error("deal products not found", error.message);
       } finally {
         setIsLoading(false);
       }
     }
+
     fetchDealProducts();
   }, [customProducts, currentIndex]);
 
+  // timer logic
   useEffect(() => {
     const getTargetTime = () => {
       const savedTarget = localStorage.getItem('dealTargetTime');
       const now = new Date().getTime();
-
       if (savedTarget && Number(savedTarget) > now) {
         return Number(savedTarget);
       } else {
@@ -81,13 +74,11 @@ const DailyDeals = () => {
         return newTarget;
       }
     };
-
+  
     let targetTime = getTargetTime();
-
     const updateTimer = () => {
       const now = new Date().getTime();
       const difference = targetTime - now;
-
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -103,23 +94,21 @@ const DailyDeals = () => {
         targetTime = freshTarget;
       }
     };
-
     updateTimer();
     const timer = setInterval(updateTimer, 1000);
-
     return () => clearInterval(timer);
   }, [currentIndex, allDeals.length]);
 
+  // time formatter
   const formatTime = (time) => String(time).padStart(2, '0');
-  const productSlug = dealProduct?.title 
-    ? dealProduct.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') 
-    : '';
 
+  const productSlug = dealProduct?.title ? dealProduct.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '';
+  
   return (
     <div className="bg-[#F7F5EB] my-16 lg:my-30">
       <Container className="px-4 lg:px-0">
         {isLoading || !dealProduct ? (
-          <div className="flex justify-center items-center py-20">
+          <div className="flex justify-center items-center py-20" aria-label="loading daily deals" role="status">
             <div className="w-12 h-12 border-4 border-[#80B500] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
@@ -128,14 +117,13 @@ const DailyDeals = () => {
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <Images 
                 imgSrc={dealProduct?.thumbnail || ""} 
+                alt={dealProduct?.title || "daily deal product"}
                 className="max-w-full h-87.5 md:h-105 object-contain mix-blend-multiply drop-shadow-md transition-all duration-500" 
               />
             </div>
             {/* right side */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
-              <p className="text-[#80B500] font-nuni font-bold text-sm md:text-base">
-                Todays Hot Deals
-              </p>
+              <p className="text-[#80B500] font-nuni font-bold text-sm md:text-base">Todays Hot Deals</p>
               {/* product title */}
               <h3 className="text-3xl md:text-4xl lg:text-[42px] text-[#232323] font-bold font-int w-full max-w-128.75 leading-tight lg:leading-13 pt-2 pb-4 lg:pb-5">
                 {dealProduct?.title || "Original Stock Honey Combo Package"}
@@ -145,53 +133,37 @@ const DailyDeals = () => {
                 {dealProduct?.description || "Cur tantas regiones barbarorum obiit, tot maria transmist summo bono fruitur id est voluptate barbarorum"}
               </p>
               {/* countdown timer */}
-              <Flex className={"pt-6 pb-7.5 gap-x-4 sm:gap-x-8 justify-center lg:justify-start"}>
+              <Flex className={"pt-6 pb-7.5 gap-x-4 sm:gap-x-8 justify-center lg:justify-start"} aria-label="countdown timer">
                 <div className="flex flex-col items-center">
                   <div className="relative text-[#80B500] hover:text-white hover:bg-[#80B500] bg-white text-[16px] md:text-[18px] font-bold font-nuni w-12 h-12 md:w-14 md:h-14 rounded-full transition-colors duration-300 cursor-pointer shadow-sm">
-                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-                      {formatTime(timeLeft.days)}
-                    </p>
+                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">{formatTime(timeLeft.days)}</p>
                   </div>
-                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">
-                    Days
-                  </p>
+                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">Days</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="relative text-[#80B500] hover:text-white hover:bg-[#80B500] bg-white text-[16px] md:text-[18px] font-bold font-nuni w-12 h-12 md:w-14 md:h-14 rounded-full transition-colors duration-300 cursor-pointer shadow-sm">
-                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-                      {formatTime(timeLeft.hours)}
-                    </p>
+                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">{formatTime(timeLeft.hours)}</p>
                   </div>
-                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">
-                    Hours
-                  </p>
+                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">Hours</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="relative text-[#80B500] hover:text-white hover:bg-[#80B500] bg-white text-[16px] md:text-[18px] font-bold font-nuni w-12 h-12 md:w-14 md:h-14 rounded-full transition-colors duration-300 cursor-pointer shadow-sm">
-                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-                      {formatTime(timeLeft.minutes)}
-                    </p>
+                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">{formatTime(timeLeft.minutes)}</p>
                   </div>
-                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">
-                    Minutes
-                  </p>
+                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">Minutes</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="relative text-[#80B500] hover:text-white hover:bg-[#80B500] bg-white text-[16px] md:text-[18px] font-bold font-nuni w-12 h-12 md:w-14 md:h-14 rounded-full transition-colors duration-300 cursor-pointer shadow-sm">
-                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-                      {formatTime(timeLeft.seconds)}
-                    </p>
+                    <p className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">{formatTime(timeLeft.seconds)}</p>
                   </div>
-                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">
-                    Seconds
-                  </p>
+                  <p className="pt-2 text-xs md:text-sm text-[#223645] font-int">Seconds</p>
                 </div>
               </Flex>
               <Flex className={"gap-x-4 items-center flex-col sm:flex-row gap-y-4 sm:gap-y-0"}>
-                <Link to={`/product/${productSlug}`} className="w-full sm:w-auto block">
+                <Link to={`/product/${productSlug}`} className="w-full sm:w-auto block" aria-label={`shop ${dealProduct?.title}`}>
                   <Button btnText={"Shop Now"} className="w-full sm:w-auto cursor-pointer" />
                 </Link>
-                <Link to={`/product/${productSlug}`}>
+                <Link to={`/product/${productSlug}`} aria-label={`view deal of the day for ${dealProduct?.title}`}>
                   <u className="text-[#80B500] text-sm md:text-base font-bold font-nuni cursor-pointer hover:text-[#6a9600] transition-colors">
                     Deal of The Day ({formatPrice(dealProduct?.price || 32.00)})
                   </u>
@@ -204,5 +176,4 @@ const DailyDeals = () => {
     </div>
   );
 };
-
 export default DailyDeals;
