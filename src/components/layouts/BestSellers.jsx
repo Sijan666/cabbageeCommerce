@@ -12,6 +12,7 @@ const BestSellers = () => {
   const [loading, setLoading] = useState(true);
   const { customProducts } = useStore();
 
+  // fetch best sellers
   useEffect(() => {
     const fetchBestSellers = async () => {
       try {
@@ -34,7 +35,7 @@ const BestSellers = () => {
         const combined = [...formattedCustom, ...apiProducts].slice(0, 8);
         setBestSellers(combined);
       } catch (error) {
-        console.error("Failed to fetch best seller products:", error);
+        console.error("failed to fetch best seller products:", error);
       } finally {
         setLoading(false);
       }
@@ -42,25 +43,27 @@ const BestSellers = () => {
     fetchBestSellers();
   }, [customProducts]);
 
+  // calculate original price
   const getOriginalPrice = (price, discount) => { 
     return `$${(price / (1 - discount / 100)).toFixed(2)}`; 
   };
 
+  // render star ratings dynamically
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating - fullStars >= 0.5;
     for (let i = 1; i <= 5; i++) {
         if (i <= fullStars) {
-            stars.push(<FaStar key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" />);
+            stars.push(<FaStar key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" aria-hidden="true" />);
         } else if (i === fullStars + 1 && hasHalfStar) {
-            stars.push(<FaStarHalfAlt key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" />);
+            stars.push(<FaStarHalfAlt key={i} className="text-[#FFB800] text-[11px] sm:text-[13px]" aria-hidden="true" />);
         } else {
-            stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" />);
+            stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" aria-hidden="true" />);
         }
     }
     return (
-        <Flex className="items-center gap-x-2">
+        <Flex className="items-center gap-x-2" aria-label={`Rated ${rating.toFixed(1)} out of 5 stars`}>
             <Flex className="items-center gap-x-0.5">{stars}</Flex>
             <span className="text-[#80B500] bg-[#f0f8eb] text-[10px] font-bold px-1.5 py-0.5 rounded-sm">(25)</span>
         </Flex>
@@ -68,20 +71,20 @@ const BestSellers = () => {
   };
 
   return (
-    <div className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-200 bg-white opacity-40 blur-[120px] rounded-full pointer-events-none"></div>
+    <div className="py-16 md:py-24 relative overflow-hidden" aria-label="Best Sellers Section">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-200 bg-white opacity-40 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
       <Container className="px-4 lg:px-0 relative z-10">
         <div className="text-center mb-16">
           <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#232323] font-int relative inline-block">
             Best Sellers
-            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
+            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full" aria-hidden="true"></span>
           </h3>
           <p className="text-sm md:text-base text-[#546375] font-nuni mt-6 max-w-2xl mx-auto">
             Explore our customer favorites and top-rated products that everyone is talking about.
           </p>
         </div>
         {loading ? (
-          <div className="flex justify-center items-center py-32">
+          <div className="flex justify-center items-center py-32" role="status" aria-label="loading best sellers">
             <div className="w-12 h-12 border-4 border-gray-200 border-t-[#80B500] rounded-full animate-spin"></div>
           </div>
         ) : (
@@ -94,7 +97,7 @@ const BestSellers = () => {
                   productImg={
                     <Images 
                       imgSrc={product.thumbnail} 
-                      alt={product.title} 
+                      alt={`Image of ${product.title}`} 
                       className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 mix-blend-multiply p-4" 
                     />
                   }
