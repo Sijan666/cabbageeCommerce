@@ -4,7 +4,7 @@ import axios from 'axios';
 import Images from '../Images';
 import Container from '../Container';
 
-// Swiper
+// swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -37,7 +37,7 @@ const TopCategories = () => {
                 });
                 setCategories(uniqueCategories);
             } catch (error) {
-                console.error("Failed to fetch categories:", error.message);
+                console.error("failed to fetch categories:", error.message);
             }
         };
         
@@ -45,14 +45,14 @@ const TopCategories = () => {
     }, []);
 
     return (
-        <section className="w-full mb-16 md:mb-28"> 
+        <section className="w-full mb-16 md:mb-28" aria-label="Top Categories"> 
             <div className="bg-linear-to-b from-[#2A2B2D] to-[#424345] pt-20 md:pt-28 pb-35 md:pb-45 relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-white opacity-[0.02] blur-[100px] pointer-events-none"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-white opacity-[0.02] blur-[100px] pointer-events-none" aria-hidden="true"></div>
                 <Container className="px-4 lg:px-0 relative z-10">
                     <div className="text-center">
-                        <h3 className="ttext-3xl md:text-4xl lg:text-[42px] font-bold text-white font-int mb-5 relative tracking-tight">
+                        <h3 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-white font-int mb-5 relative tracking-tight">
                             Top Categories
-                            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full"></span>
+                            <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 h-1 bg-[#80B500] rounded-full" aria-hidden="true"></span>
                         </h3>
                         <p className="text-[15px] md:text-[17px] text-gray-300 font-nuni max-w-2xl mx-auto leading-relaxed">
                             A highly efficient slip-ring scanner for today's diagnostic requirements, crafted for your needs.
@@ -60,7 +60,7 @@ const TopCategories = () => {
                     </div>
                 </Container>
             </div>
-            {/* Slider */}
+            {/* slider */}
             <Container className="px-4 lg:px-0 relative z-20 -mt-22.5 md:-mt-27.5">
                 <div className='bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-50 p-6 md:p-10 lg:py-12 lg:px-14 w-full mx-auto relative'>
                     {categories.length > 0 ? (
@@ -94,9 +94,10 @@ const TopCategories = () => {
                                             to={`/category/${cat.slug}`}
                                             className="flex flex-col items-center justify-center text-center outline-none cursor-pointer group py-4" 
                                             onClick={() => setSelected(cat.slug)}
+                                            aria-label={`view category ${cat.name}`}
                                         >
                                             <div className="w-25 h-25 rounded-full bg-[#F9FBF5] border border-gray-100 group-hover:bg-[#F4F9EB] group-hover:border-[#80B500]/30 flex justify-center items-center transform group-hover:-translate-y-2 group-hover:shadow-md transition-all duration-400 overflow-hidden">
-                                                <Images imgSrc={cat.image} className="w-17.5 h-17.5 object-contain group-hover:scale-110 transition-transform duration-300"/>
+                                                <Images imgSrc={cat.image} alt={cat.name} className="w-17.5 h-17.5 object-contain group-hover:scale-110 transition-transform duration-300"/>
                                             </div>
                                             <h4 className={`text-[16px] md:text-[18px] capitalize font-bold font-int pt-6 transition-colors duration-300 ${selected === cat.slug ? 'text-[#80B500]' : 'text-[#232323] group-hover:text-[#80B500]'}`}>
                                                 {cat.name.replace('-', ' ')}
@@ -106,19 +107,29 @@ const TopCategories = () => {
                                 ))}
                             </Swiper>
                             {/* navigation arrows */}
-                            <div className="custom-prev absolute top-[40%] -translate-y-1/2 -left-4 md:-left-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300">
-                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div 
+                                className="custom-prev absolute top-[40%] -translate-y-1/2 -left-4 md:-left-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300"
+                                role="button"
+                                tabIndex={0}
+                                aria-label="previous category"
+                            >
+                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                                 </svg>
                             </div>
-                            <div className="custom-next absolute top-[40%] -translate-y-1/2 -right-4 md:-right-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300">
-                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div 
+                                className="custom-next absolute top-[40%] -translate-y-1/2 -right-4 md:-right-8 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex justify-center items-center cursor-pointer z-10 text-gray-400 hover:text-white hover:bg-[#80B500] hover:border-[#80B500] hover:scale-110 transition-all duration-300"
+                                role="button"
+                                tabIndex={0}
+                                aria-label="next category"
+                            >
+                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                                 </svg>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col justify-center items-center py-20">
+                        <div className="flex flex-col justify-center items-center py-20" role="status" aria-label="loading categories">
                             <div className="w-12 h-12 border-4 border-gray-100 border-t-[#80B500] rounded-full animate-spin mb-4"></div>
                             <p className="text-gray-400 font-nuni text-sm">Loading amazing categories...</p>
                         </div>
