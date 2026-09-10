@@ -16,33 +16,48 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { cart, wishlist, currency, setCurrency } = useStore();
+
+  // scroll handler
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
+
   return (
     <>
       {/* main navigation */}
-      <div
+      <nav
+        aria-label="Main Navigation"
         className={`sticky top-0 z-50 w-full transition-all duration-500 border-b ${
           scrolled
             ? "bg-[#051117]/85 backdrop-blur-xl border-white/10 py-3 shadow-2xl shadow-black/50"
             : "bg-[#051117]/60 backdrop-blur-md border-transparent py-5"
-        }`}>
+        }`}
+      >
         <Container className="px-5 lg:px-0">
           <Flex className="justify-between items-center">
-            <Link to="/">
+            {/* brand logo */}
+            <Link to="/" aria-label="Go to homepage">
               <Flex className="items-center cursor-pointer group">
                 <div className="relative">
                   <Images
                     imgSrc={Logo}
+                    alt="Cabbage Logo"
                     className="w-9 md:w-11 relative z-10 transform group-hover:rotate-360 transition-transform duration-700 ease-in-out"
                   />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#80B500]/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#80B500]/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
                 </div>
                 <h3 className="pl-3 text-2xl md:text-[28px] text-white font-black font-int tracking-tight">
                   Cabbage<span className="text-[#80B500]">.</span>
@@ -57,7 +72,7 @@ const Header = () => {
                     <Link to={item === "Home" ? "/" : `/${item.toLowerCase()}`}>
                       {item}
                     </Link>
-                    <span className="absolute left-1/2 -bottom-1 w-1.5 h-1.5 bg-[#80B500] rounded-full opacity-0 transform -translate-x-1/2 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_8px_#80B500]"></span>
+                    <span className="absolute left-1/2 -bottom-1 w-1.5 h-1.5 bg-[#80B500] rounded-full opacity-0 transform -translate-x-1/2 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_8px_#80B500]" aria-hidden="true"></span>
                   </li>
                 ))}
               </ul>
@@ -69,6 +84,7 @@ const Header = () => {
                 {/* multi currency dropdown desktop */}
                 <div className="flex items-center border-r border-white/20 pr-4 mr-1">
                   <select
+                    aria-label="Select Currency"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
                     className="bg-transparent text-white/80 font-nuni text-[14px] font-bold uppercase tracking-widest outline-none cursor-pointer hover:text-[#80B500] transition-colors"
@@ -80,31 +96,33 @@ const Header = () => {
                   </select>
                 </div>
                 {/* wishlist icon */}
-                <Link to="/wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
-                  <MdFavoriteBorder className="text-[19px]" />
+                <Link to="/wishlist" aria-label="View Wishlist" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
+                  <MdFavoriteBorder className="text-[19px]" aria-hidden="true" />
                   {wishlist.length > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
                       {wishlist.length}
+                      <span className="sr-only">items in wishlist</span>
                     </span>
                   )}
                 </Link>
                 {/* user icon */}
-                <Link to="/login" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
-                  <FaRegUser className="text-[16px]" />
+                <Link to="/login" aria-label="User Profile or Login" className="group flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
+                  <FaRegUser className="text-[16px]" aria-hidden="true" />
                 </Link>
                 {/* cart icon */}
-                <Link to="/cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
-                  <BsCart3 className="text-[18px]" />
+                <Link to="/cart" aria-label="View Shopping Cart" className="group relative flex items-center justify-center bg-white/5 border border-white/10 hover:border-[#80B500]/50 hover:bg-[#80B500]/10 h-10 w-10 rounded-full text-white/70 hover:text-[#80B500] transition-colors duration-300 cursor-pointer">
+                  <BsCart3 className="text-[18px]" aria-hidden="true" />
                   {cart.length > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-[#80B500] text-white text-[10px] font-extrabold h-4.5 w-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(128,181,0,0.6)]">
                       {cart.length}
+                      <span className="sr-only">items in cart</span>
                     </span>
                   )}
                 </Link>
               </Flex>
               {/* get quote button desktop */}
               <div className="hidden md:block">
-                <Link to="/quote">
+                <Link to="/quote" aria-label="Get a Quote">
                   <Button
                     btnText="GET A QUOTE"
                     className="font-bold text-[13px] tracking-widest uppercase py-3 px-8 rounded-full bg-[#80B500] text-[#030a0e] shadow-[0_4px_20px_-5px_rgba(128,181,0,0.5)] hover:shadow-[0_8px_25px_-5px_rgba(128,181,0,0.7)] transition-shadow duration-300 cursor-pointer"
@@ -112,12 +130,14 @@ const Header = () => {
                 </Link>
               </div>
               {/* hamburger mobile */}
-              <div
+              <button
+                aria-expanded={isMenuOpen}
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="lg:hidden text-2xl text-white cursor-pointer hover:text-[#80B500] transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <HiX /> : <HiOutlineMenuAlt3 />}
-              </div>
+                {isMenuOpen ? <HiX aria-hidden="true" /> : <HiOutlineMenuAlt3 aria-hidden="true" />}
+              </button>
             </Flex>
           </Flex>
           {/* mobile dropdown menu */}
@@ -142,6 +162,7 @@ const Header = () => {
                 {/* multi currency dropdown mobile */}
                 <li className="pt-4 mt-2 border-t border-white/10">
                   <select
+                    aria-label="Select Currency"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
                     className="bg-transparent text-white font-nuni text-[15px] font-bold uppercase tracking-wider outline-none w-full cursor-pointer hover:text-[#80B500] transition-colors"
@@ -155,21 +176,19 @@ const Header = () => {
               </ul>
               {/* mobile action icons */}
               <Flex className="mt-6 pt-6 border-t border-white/10 gap-x-5 justify-center sm:hidden">
-                <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="relative">
-                  <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
+                <Link to="/wishlist" aria-label="View Wishlist" onClick={() => setIsMenuOpen(false)} className="relative">
+                  <MdFavoriteBorder className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" aria-hidden="true" />
                   {wishlist.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                       {wishlist.length}
                     </span>
                   )}
                 </Link>
-                {/* user icon mobile */}
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" />
+                <Link to="/login" aria-label="User Profile" onClick={() => setIsMenuOpen(false)}>
+                  <FaRegUser className="text-2xl text-white/60 hover:text-[#80B500] transition-colors cursor-pointer" aria-hidden="true" />
                 </Link>
-                {/* cart icon mobile */}
-                <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="relative">
-                  <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" />
+                <Link to="/cart" aria-label="View Shopping Cart" onClick={() => setIsMenuOpen(false)} className="relative">
+                  <BsCart3 className="text-2xl text-white/60 hover:text-[#80B500] transition-colors" aria-hidden="true" />
                   {cart.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-[#80B500] text-[#030a0e] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                       {cart.length}
@@ -189,7 +208,7 @@ const Header = () => {
             </div>
           </div>
         </Container>
-      </div>
+      </nav>
     </>
   );
 };
