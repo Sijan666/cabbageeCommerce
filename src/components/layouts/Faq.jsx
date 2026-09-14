@@ -52,8 +52,10 @@ const Faq = () => {
                         Find answers to the most common questions about our organic products, shipping, and returns.
                     </p>
                 </div>
+
                 {/* content */}
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+                    
                     {/* left side */}
                     <div className="w-full lg:w-1/2 flex flex-col">
                         <Accordion type="single" collapsible defaultValue="item-1" className="w-full h-full">
@@ -73,52 +75,63 @@ const Faq = () => {
                             ))}
                         </Accordion>
                     </div>
+
                     {/* right side */}
                     <div className="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
+                        
                         {/* live chat */}
                         <div 
                             onClick={handleOpenChat}
-                            className="md:col-span-2 relative bg-[#0B1120] rounded-3xl p-8 md:p-10 overflow-hidden group cursor-pointer border border-white/10 shadow-lg hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] transition-shadow duration-300 flex flex-col justify-center"
+                            role="button"
+                            tabIndex={0}
+                            aria-label="open live chat support"
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpenChat(); }}
+                            className="md:col-span-2 relative bg-[#0B1120] rounded-3xl p-8 md:p-10 overflow-hidden group cursor-pointer border border-white/10 shadow-lg hover:shadow-[0_20px_40px_rgba(128,181,0,0.15)] transition-shadow duration-300 flex flex-col justify-center outline-none focus-visible:ring-2 focus-visible:ring-[#80B500]"
                         >
-                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#80B500]/30 rounded-full blur-[70px] group-hover:bg-[#80B500]/40 transition-colors duration-500 pointer-events-none"></div>
+                            <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#80B500]/30 rounded-full blur-[70px] group-hover:bg-[#80B500]/40 transition-colors duration-500 pointer-events-none" aria-hidden="true"></div>
+                            
                             {/* header */}
                             <div className="flex justify-between items-start mb-8 relative z-10">
                                 <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex justify-center items-center border border-white/10">
-                                    <FaComments className="text-[#80B500] text-2xl" />
+                                    <FaComments className="text-[#80B500] text-2xl" aria-hidden="true" />
                                 </div>
-                                <div className="flex items-center gap-2 bg-[#80B500]/10 px-3 py-1.5 rounded-full border border-[#80B500]/30 backdrop-blur-sm cursor-default">
-                                    <span className="w-2 h-2 rounded-full bg-[#80B500] animate-pulse"></span>
+                                <div className="flex items-center gap-2 bg-[#80B500]/10 px-3 py-1.5 rounded-full border border-[#80B500]/30 backdrop-blur-sm cursor-default" aria-label="status: online">
+                                    <span className="w-2 h-2 rounded-full bg-[#80B500] animate-pulse" aria-hidden="true"></span>
                                     <span className="text-[#80B500] text-xs font-bold font-nuni uppercase tracking-wider">Online</span>
                                 </div>
                             </div>
+
                             {/* text */}
                             <div className="relative z-10">
                                 <h4 className="text-white text-[28px] font-int font-bold mb-3 group-hover:text-[#80B500] transition-colors duration-300">Live Chat Support</h4>
                                 <p className="text-gray-400 font-nuni text-base mb-8 max-w-87.5">Can't find the answer? Chat with our organic food experts directly.</p>
                                 <div className="flex items-center text-white font-bold text-sm font-int uppercase tracking-widest group-hover:text-[#80B500] transition-colors duration-300">
-                                    Start Chatting <FaArrowRight className="ml-2 text-[#80B500]" />
+                                    Start Chatting <FaArrowRight className="ml-2 text-[#80B500]" aria-hidden="true" />
                                 </div>
                             </div>
                         </div>
+
                         {/* call us */}
-                        <div className="col-span-1 bg-white border border-gray-100 shadow-sm rounded-3xl p-6 md:p-8 cursor-pointer hover:border-[#80B500]/30 hover:shadow-lg transition-all duration-300 group flex flex-col justify-center">
+                        <a href="tel:+880123456789" aria-label="call us at +880 123 456 789" className="col-span-1 bg-white border border-gray-100 shadow-sm rounded-3xl p-6 md:p-8 cursor-pointer hover:border-[#80B500]/30 hover:shadow-lg transition-all duration-300 group flex flex-col justify-center outline-none focus-visible:ring-2 focus-visible:ring-[#80B500]">
                             <div className="w-12 h-12 bg-[#F9FBF5] rounded-full flex justify-center items-center mb-5 group-hover:bg-[#80B500] transition-colors duration-300">
-                                <FaHeadset className="text-[#80B500] text-xl group-hover:text-white transition-colors duration-300" />
+                                <FaHeadset className="text-[#80B500] text-xl group-hover:text-white transition-colors duration-300" aria-hidden="true" />
                             </div>
                             <h4 className="text-[#232323] font-int font-bold text-xl mb-1">Call Us</h4>
                             <p className="text-[#546375] font-nuni text-sm">+880 123 456 789</p>
-                        </div>
+                        </a>
+
                         {/* email */}
-                        <div className="col-span-1 bg-linear-to-br from-[#80B500] to-[#658f00] rounded-3xl p-6 md:p-8 cursor-pointer hover:shadow-xl hover:shadow-[#80B500]/40 transition-shadow duration-300 group flex flex-col justify-center overflow-hidden relative">
-                            <div className="absolute -bottom-4 -right-4 text-white/10 text-7xl -rotate-12 pointer-events-none">
+                        <a href="mailto:support@cabbage.com" aria-label="email us at support@cabbage.com" className="col-span-1 bg-linear-to-br from-[#80B500] to-[#658f00] rounded-3xl p-6 md:p-8 cursor-pointer hover:shadow-xl hover:shadow-[#80B500]/40 transition-shadow duration-300 group flex flex-col justify-center overflow-hidden relative outline-none focus-visible:ring-2 focus-visible:ring-white">
+                            <div className="absolute -bottom-4 -right-4 text-white/10 text-7xl -rotate-12 pointer-events-none" aria-hidden="true">
                                 <FaEnvelope />
                             </div>
                             <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex justify-center items-center mb-5 relative z-10">
-                                <FaEnvelope className="text-white text-xl" />
+                                <FaEnvelope className="text-white text-xl" aria-hidden="true" />
                             </div>
                             <h4 className="text-white font-int font-bold text-xl mb-1 relative z-10">Email</h4>
                             <p className="text-white/90 font-nuni text-sm relative z-10">support@cabbage.com</p>
-                        </div>
+                        </a>
+
                     </div>
                 </div>
             </Container>
