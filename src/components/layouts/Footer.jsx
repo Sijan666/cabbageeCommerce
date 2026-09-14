@@ -10,7 +10,8 @@ import Container from "../Container";
 import Images from "../Images";
 import Button from "../Button";
 import footerlogo from '../../assets/footerlogo.png';
-// static arrays extracted for performance
+
+
 const usefulLinks = [
   { name: "Home", path: "/" },
   { name: "Shop", path: "/shop" },
@@ -18,17 +19,20 @@ const usefulLinks = [
   { name: "Blog", path: "/blogs" },
   { name: "Contact", path: "/contact" },
 ];
+
 const helpLinks = [
   { name: "My Account", path: "/profile" },
   { name: "Shopping Cart", path: "/cart" },
   { name: "Wishlist", path: "/wishlist" },
 ];
+
 const socialIcons = [
   { id: 1, label: "Facebook", component: <FaFacebook className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" aria-hidden="true" /> },
   { id: 2, label: "Twitter", component: <BsTwitter className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" aria-hidden="true" /> },
   { id: 3, label: "Vimeo", component: <SiVimeo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" aria-hidden="true" /> },
   { id: 4, label: "Pinterest", component: <PiPinterestLogo className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300" aria-hidden="true" /> },
 ];
+
 const paymentIcons = [
   { id: 1, title: "Visa", component: <FaCcVisa className="hover:text-white transition-colors duration-300 cursor-pointer" title="Visa" aria-label="Pay with Visa" /> },
   { id: 2, title: "MasterCard", component: <FaCcMastercard className="hover:text-white transition-colors duration-300 cursor-pointer" title="MasterCard" aria-label="Pay with MasterCard" /> },
@@ -36,6 +40,8 @@ const paymentIcons = [
   { id: 4, title: "Apple Pay", component: <FaCcApplePay className="hover:text-white transition-colors duration-300 cursor-pointer" title="Apple Pay" aria-label="Pay with Apple Pay" /> },
   { id: 5, title: "Google Pay", component: <FaGooglePay className="hover:text-white transition-colors duration-300 cursor-pointer text-3xl" title="Google Pay" aria-label="Pay with Google Pay" /> },
 ];
+
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
