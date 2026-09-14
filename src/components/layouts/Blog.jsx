@@ -125,7 +125,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <div className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#F9FBF5]">
+    <section aria-labelledby="blog-heading" className="pt-20 md:pt-28 pb-24 md:pb-40 bg-[#F9FBF5]">
       <Container className={"px-4 lg:px-0"}>
         {/* header section */}
         <div className="flex flex-col md:flex-row items-end justify-between border-b border-gray-200 pb-8 md:pb-10 mb-10 md:mb-14">
@@ -133,7 +133,7 @@ const Blog = () => {
             <span className="text-[#80B500] font-nuni font-bold tracking-[0.2em] uppercase text-sm mb-3 block">
               Our Insights
             </span>
-            <h3 className="text-4xl md:text-[50px] font-bold text-[#232323] font-int leading-tight">
+            <h3 id="blog-heading" className="text-4xl md:text-[50px] font-bold text-[#232323] font-int leading-tight">
               Latest Articles
             </h3>
           </div>
@@ -147,11 +147,12 @@ const Blog = () => {
         {/* blogs grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedBlogs.map((post) => (
-            <div key={post.id} className="bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 flex flex-col group shadow-sm hover:shadow-md">
+            <article key={post.id} className="bg-white border border-gray-200 rounded-3xl p-6 hover:border-[#80B500]/50 transition-colors duration-500 flex flex-col group shadow-sm hover:shadow-md">
               {/* image section */}
-              <Link to={`/blogs/${post.id}`} className="w-full h-56 rounded-2xl overflow-hidden mb-6 block bg-gray-100">
+              <Link to={`/blogs/${post.id}`} aria-hidden="true" tabIndex={-1} className="w-full h-56 rounded-2xl overflow-hidden mb-6 block bg-gray-100">
                 <Images 
                   imgSrc={post.image} 
+                  alt="" 
                   className="w-full h-full object-cover" 
                 />
               </Link>
@@ -162,14 +163,14 @@ const Blog = () => {
                     {post.category}
                   </span>
                   <Flex className="items-center gap-2">
-                    <FaRegCalendarDays className="text-gray-400 text-xs" />
+                    <FaRegCalendarDays className="text-gray-400 text-xs" aria-hidden="true" />
                     <p className="text-xs font-nuni">{post.date}</p>
                   </Flex>
                 </div>
                 <Link to={`/blogs/${post.id}`}>
-                  <h3 className="text-xl md:text-2xl font-bold font-int text-[#232323] leading-snug mb-4 hover:text-[#80B500] transition-colors duration-300 line-clamp-2">
+                  <h4 className="text-xl md:text-2xl font-bold font-int text-[#232323] leading-snug mb-4 hover:text-[#80B500] transition-colors duration-300 line-clamp-2">
                     {post.title}
-                  </h3>
+                  </h4>
                 </Link>
                 <p className="text-[#546375] font-nuni leading-relaxed mb-6 text-sm line-clamp-3">
                   {post.excerpt}
@@ -177,19 +178,19 @@ const Blog = () => {
                 {/* footer section */}
                 <Flex className="items-center justify-between text-[#232323] mt-auto pt-5 border-t border-gray-100">
                   <Flex className="items-center gap-2 text-[#546375]">
-                    <FaRegUser className="text-[#80B500] text-sm" />
+                    <FaRegUser className="text-[#80B500] text-sm" aria-hidden="true" />
                     <p className="text-sm font-nuni font-semibold">{post.author}</p>
                   </Flex>
-                  <Link to={`/blogs/${post.id}`} className="flex items-center gap-2 text-sm font-bold font-nuni uppercase tracking-widest text-[#232323] hover:text-[#80B500] transition-colors duration-300">
-                    Read <FaArrowRight />
+                  <Link to={`/blogs/${post.id}`} aria-label={`read article: ${post.title}`} className="flex items-center gap-2 text-sm font-bold font-nuni uppercase tracking-widest text-[#232323] hover:text-[#80B500] transition-colors duration-300">
+                    Read <FaArrowRight aria-hidden="true" />
                   </Link>
                 </Flex>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 
