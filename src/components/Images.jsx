@@ -1,8 +1,6 @@
-
-
-const Images = ({imgSrc , className}) => {
+const Images = ({ imgSrc, className, alt = "", loading = "lazy", fetchPriority }) => {
     return (
-        <img className={`${className}`} src={imgSrc} alt="" loading="lazy" />
+        <img className={`${className}`} src={imgSrc} alt={alt} loading={loading} fetchpriority={fetchPriority} />
     )
 }
 
