@@ -13,11 +13,13 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import gsap from "gsap";
 import { useStore } from "../../store/useStore";
+
 const Banner = () => {
   const [bannerData, setBannerData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { currency, exchangeRates } = useStore();
+
   // dynamic price formatter
   const formatPrice = (price) => {
     const converted = price * exchangeRates[currency];
@@ -26,6 +28,7 @@ const Banner = () => {
     if (currency === 'INR') return `₹${converted.toFixed(0)}`;
     return `$${converted.toFixed(2)}`;
   };
+
   // fetch banners
   useEffect(() => {
     const fetchPremiumBanners = async () => {
@@ -62,8 +65,10 @@ const Banner = () => {
     };
     fetchPremiumBanners();
   }, []);
+
   // handle route navigation
   const handleRoute = (categorySlug) => { navigate(`/category/${categorySlug}`); };
+
   // gsap animation for active slide
   const animateActiveSlide = () => {
     gsap.killTweensOf(".hero-elem, .hero-image, .hero-watermark");
@@ -74,6 +79,7 @@ const Banner = () => {
     gsap.to(".swiper-slide-active .hero-elem", { y: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: "power3.out", delay: 0.08 });
     gsap.to(".swiper-slide-active .hero-image", { opacity: 1, rotation: 0, duration: 0.75, ease: "power3.out", delay: 0.15 });
   };
+
   return (
     <div className="w-full bg-[#F9FAFB] overflow-hidden relative">
       {isLoading ? (
@@ -98,6 +104,7 @@ const Banner = () => {
             const halfIndex = Math.ceil(titleWords.length / 2);
             const firstPart = titleWords.slice(0, halfIndex).join(' ');
             const secondPart = titleWords.slice(halfIndex).join(' ') || "Edition";
+
             return (
               <SwiperSlide key={index}>
                 <div className="relative w-full min-h-137.5 sm:min-h-150 lg:h-187.5 flex items-center justify-center overflow-hidden bg-[#F9FAFB] py-12 lg:py-0">
@@ -110,7 +117,7 @@ const Banner = () => {
                     <Flex className="flex-col-reverse lg:flex-row items-center justify-between gap-y-8 lg:gap-y-0 h-full">
                       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left z-10">
                         <div className="hero-elem flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5 opacity-0">
-                          <Images imgSrc={Harb} alt="Premium Quality" className="w-4 sm:w-5 lg:w-6 object-contain pb-1" />
+                          <Images imgSrc={Harb} alt="Premium Quality" className="w-4 sm:w-5 lg:w-6 object-contain pb-1" loading={index === 0 ? "eager" : "lazy"} />
                           <p className="text-[#80B500] text-xs sm:text-sm lg:text-base font-bold font-nuni uppercase tracking-[0.155em] sm:tracking-[0.2em]">
                             100% Genuine {data.name.replace('-', ' ')}
                           </p>
@@ -132,7 +139,13 @@ const Banner = () => {
                       <div className="w-full lg:w-1/2 flex justify-center items-center relative h-62.5 sm:h-80 lg:h-full">
                         <div className="absolute w-50 h-50 sm:w-87.5 sm:h-87.5 lg:w-112.5 lg:h-112.5 bg-[#80B500] opacity-[0.04] rounded-full blur-[50px] lg:blur-[60px] pointer-events-none" aria-hidden="true"></div>
                         <div onClick={() => handleRoute(data.slug)} className="hero-image opacity-0 relative z-10 w-[65%] sm:w-[70%] lg:w-[85%] lg:max-w-150 flex justify-center items-center cursor-pointer group" aria-label={`View ${data.productName} details`} role="button" tabIndex={0}>
-                          <Images imgSrc={data.image} alt={`${data.productName} display`} className="max-h-55 sm:max-h-75 md:max-h-95 lg:max-h-137.5 object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-500" />
+                          <Images 
+                            imgSrc={data.image} 
+                            alt={`${data.productName} display`} 
+                            className="max-h-55 sm:max-h-75 md:max-h-95 lg:max-h-137.5 object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-500" 
+                            loading={index === 0 ? "eager" : "lazy"}
+                            fetchPriority={index === 0 ? "high" : "auto"}
+                          />
                         </div>
                       </div>
                     </Flex>
@@ -146,4 +159,5 @@ const Banner = () => {
     </div>
   );
 };
+
 export default Banner;
