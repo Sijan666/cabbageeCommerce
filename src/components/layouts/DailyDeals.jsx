@@ -6,6 +6,7 @@ import Container from "../Container";
 import Flex from "../Flex";
 import Images from "../Images";
 import { useStore } from "../../store/useStore";
+
 const DailyDeals = () => {
   const { currency, exchangeRates, customProducts } = useStore();
   const [dealProduct, setDealProduct] = useState(null);
@@ -176,4 +177,5 @@ const DailyDeals = () => {
     </div>
   );
 };
+
 export default DailyDeals;
