@@ -6,10 +6,12 @@ import Product from '../Product';
 import Images from '../Images';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useStore } from '../../store/useStore';
+
 const FeaturedProducts = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { customProducts } = useStore();
+
     // fetch featured products from api and admin store
     useEffect(() => {
         async function fetchFeatured() {
@@ -17,7 +19,6 @@ const FeaturedProducts = () => {
                 setIsLoading(true);
                 const response = await axios.get("https://dummyjson.com/products?limit=8");
                 const apiProducts = response.data.products;
-                // format custom products from admin panel to match api structure
                 const formattedCustomProducts = customProducts
                     .filter(p => !p.isDeleted)
                     .map(p => ({
@@ -32,7 +33,6 @@ const FeaturedProducts = () => {
                         category: p.category || 'uncategorized',
                         brand: p.brand || 'Cabbage'
                     }));
-                // combine custom products and api products
                 setFeaturedProducts([...formattedCustomProducts, ...apiProducts].slice(0, 8));
             } catch (error) {
                 console.error("data not found", error.message);
@@ -42,10 +42,12 @@ const FeaturedProducts = () => {
         }
         fetchFeatured();
     }, [customProducts]);
+
     // calculate original price before discount
     const getOriginalPrice = (price, discount) => { 
         return `$${(price / (1 - discount / 100)).toFixed(2)}`; 
     };
+
     // dynamic star rating renderer
     const renderStars = (rating, reviewCount) => {
         const stars = [];
@@ -67,6 +69,7 @@ const FeaturedProducts = () => {
             </Flex>
         );
     };
+
     return (
         <section className="pb-15 pt-60 overflow-hidden" aria-label="Featured Products Section">
             <Container className="px-4 lg:px-0">
@@ -79,6 +82,7 @@ const FeaturedProducts = () => {
                         A highly efficient slip-ring scanner for today's diagnostic requirements.
                     </p>
                 </div>
+                
                 <div className="pt-10 md:pt-13">
                     {isLoading ? (
                         <div className="flex justify-center items-center h-75" aria-label="Loading products">
@@ -107,4 +111,5 @@ const FeaturedProducts = () => {
         </section>
     );
 }
+
 export default FeaturedProducts;
