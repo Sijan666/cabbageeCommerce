@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Container from '../Container';
 import Images from '../Images';
+
 // card styles configuration
 const cardStyles = [
     { bg: 'bg-[#F79300]', label: 'MEGA DEAL' },
     { bg: 'bg-[#183605]', label: 'TOP DISCOUNT' },
     { bg: 'bg-[#81B615]', label: 'HOT OFFER' }
 ];
+
 const PromoBanners = ({ slug = 'beauty' }) => {
     const [displayedDeals, setDisplayedDeals] = useState([]); 
     const [loading, setLoading] = useState(true);
+
     // fetch deals by category slug
     useEffect(() => {
         const fetchDealsBySlug = async () => {
@@ -20,8 +23,10 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                 const url = slug && slug !== 'all' 
                     ? `https://dummyjson.com/products/category/${slug}` 
                     : 'https://dummyjson.com/products?limit=50';
+                
                 const response = await axios.get(url);
                 const products = response.data.products || [];
+                
                 // sort and get top 3 deals
                 const sortedProducts = products.sort((a, b) => b.discountPercentage - a.discountPercentage);
                 setDisplayedDeals(sortedProducts.slice(0, 3));
@@ -31,8 +36,10 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                 setLoading(false);
             }
         };
+
         fetchDealsBySlug();
     }, [slug]);
+
     return (
         <div className="relative z-20"> 
             <Container className="lg:relative px-4 lg:px-0">
@@ -49,8 +56,10 @@ const PromoBanners = ({ slug = 'beauty' }) => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
                             {displayedDeals.map((ad, index) => {
                                 if (!ad) return null;
+                                
                                 const style = cardStyles[index];
                                 const productSlug = ad.title ? ad.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '';
+                                
                                 return (
                                     <Link 
                                         to={`/product/${productSlug}`} 
@@ -93,4 +102,5 @@ const PromoBanners = ({ slug = 'beauty' }) => {
         </div>
     );
 };
+
 export default PromoBanners;
