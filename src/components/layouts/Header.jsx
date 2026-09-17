@@ -12,6 +12,9 @@ import { FaRegUser } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 
+// static data extracted for performance
+const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -32,8 +35,6 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navLinks = ["Home", "About", "Shop", "Blogs", "Contact"];
 
   return (
     <>
@@ -56,6 +57,8 @@ const Header = () => {
                     imgSrc={Logo}
                     alt="Cabbage Logo"
                     className="w-9 md:w-11 relative z-10 transform group-hover:rotate-360 transition-transform duration-700 ease-in-out"
+                    loading="eager"
+                    fetchPriority="high"
                   />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#80B500]/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
                 </div>
@@ -212,4 +215,5 @@ const Header = () => {
     </>
   );
 };
+
 export default Header;
