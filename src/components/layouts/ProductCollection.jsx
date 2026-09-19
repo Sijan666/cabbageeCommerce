@@ -98,7 +98,7 @@ const ProductCollection = () => {
                         ))}
                     </Flex>
                 </div>
-                {/* Products */}
+                {/* products */}
                 <div className="product pt-10 md:pt-13" ref={containerRef} aria-live="polite">
                     {isLoading ? (
                         <div className="flex justify-center items-center h-75" aria-label="Loading products">
