@@ -62,6 +62,7 @@ const BestSellers = () => {
             stars.push(<FaStar key={i} className="text-[#e5e7eb] text-[11px] sm:text-[13px]" aria-hidden="true" />);
         }
     }
+    
     return (
         <Flex className="items-center gap-x-2" aria-label={`Rated ${rating.toFixed(1)} out of 5 stars`}>
             <Flex className="items-center gap-x-0.5">{stars}</Flex>
