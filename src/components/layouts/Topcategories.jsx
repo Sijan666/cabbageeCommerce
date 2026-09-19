@@ -60,6 +60,7 @@ const TopCategories = () => {
                     </div>
                 </Container>
             </div>
+
             {/* slider */}
             <Container className="px-4 lg:px-0 relative z-20 -mt-22.5 md:-mt-27.5">
                 <div className='bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-50 p-6 md:p-10 lg:py-12 lg:px-14 w-full mx-auto relative'>
