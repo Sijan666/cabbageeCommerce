@@ -43,7 +43,7 @@ const NewArrivals = () => {
     fetchNewArrivals();
   }, [customProducts]);
 
-  // get original price
+  // price
   const getOriginalPrice = (price, discount) => { 
     return `$${(price / (1 - discount / 100)).toFixed(2)}`; 
   };
