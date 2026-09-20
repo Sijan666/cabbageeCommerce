@@ -3,14 +3,14 @@ import { FiX, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 
 const OrderDetailsModal = ({ selectedOrder, setSelectedOrder, formatPrice }) => {
     return (
-        <div className="fixed inset-0 z-9999 flex items-center justify-center p-3 sm:p-4 bg-[#051117]/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-9999 flex items-center justify-center p-3 sm:p-4 bg-[#051117]/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <div className="bg-white rounded-2xl lg:rounded-4xl shadow-[0_30px_100px_rgba(0,0,0,0.3)] w-full max-w-150 overflow-hidden transform transition-all flex flex-col max-h-[90vh]" style={{ animation: 'slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
                 {/* modal header */}
                 <div className="bg-[#232323] p-5 sm:p-6 text-white relative shrink-0">
-                    <button onClick={() => setSelectedOrder(null)} className="absolute top-4 sm:top-5 right-4 sm:right-5 bg-white/10 p-2 sm:p-2.5 rounded-full hover:bg-red-500 transition-colors cursor-pointer">
-                        <FiX className="text-base sm:text-lg" />
+                    <button onClick={() => setSelectedOrder(null)} aria-label="Close details" className="absolute top-4 sm:top-5 right-4 sm:right-5 bg-white/10 p-2 sm:p-2.5 rounded-full hover:bg-red-500 transition-colors cursor-pointer">
+                        <FiX className="text-base sm:text-lg" aria-hidden="true" />
                     </button>
-                    <h3 className="text-lg sm:text-[22px] font-black font-int mb-1">Order Details</h3>
+                    <h3 id="modal-title" className="text-lg sm:text-[22px] font-black font-int mb-1">Order Details</h3>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <span className="text-[#80B500] font-nuni font-bold tracking-widest uppercase text-[10px] sm:text-xs">{selectedOrder.orderNum}</span>
                         <span className="text-gray-400 text-[10px] sm:text-xs">| {selectedOrder.date}</span>
@@ -23,11 +23,11 @@ const OrderDetailsModal = ({ selectedOrder, setSelectedOrder, formatPrice }) => 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div>
                                 <p className="font-bold text-[#232323] text-sm sm:text-[15px]">{selectedOrder.buyerDetails.name}</p>
-                                <p className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#546375] mt-1"><FiMail className="text-[#80B500]" /> {selectedOrder.buyerDetails.email}</p>
-                                <p className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#546375] mt-1"><FiPhone className="text-[#80B500]" /> {selectedOrder.buyerDetails.phone}</p>
+                                <p className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#546375] mt-1"><FiMail className="text-[#80B500]" aria-hidden="true" /> {selectedOrder.buyerDetails.email}</p>
+                                <p className="flex items-center gap-1.5 text-[11px] sm:text-xs text-[#546375] mt-1"><FiPhone className="text-[#80B500]" aria-hidden="true" /> {selectedOrder.buyerDetails.phone}</p>
                             </div>
                             <div>
-                                <p className="flex items-start gap-1.5 text-[11px] sm:text-xs text-[#546375]"><FiMapPin className="text-[#80B500] shrink-0 mt-0.5" /> 
+                                <p className="flex items-start gap-1.5 text-[11px] sm:text-xs text-[#546375]"><FiMapPin className="text-[#80B500] shrink-0 mt-0.5" aria-hidden="true" /> 
                                     <span>{selectedOrder.buyerDetails.address}, <br/>{selectedOrder.buyerDetails.city} - {selectedOrder.buyerDetails.zip}</span>
                                 </p>
                             </div>
