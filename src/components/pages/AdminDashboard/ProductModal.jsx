@@ -105,20 +105,20 @@ const ProductModal = ({ editId, setIsProductModalOpen }) => {
     };
 
     return (
-        <div className="fixed inset-0 z-9999 flex items-center justify-center p-3 sm:p-4 bg-[#051117]/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-9999 flex items-center justify-center p-3 sm:p-4 bg-[#051117]/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
             <div className="bg-white rounded-2xl lg:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.3)] w-full max-w-lg overflow-hidden transform transition-all max-h-[90vh] flex flex-col" style={{ animation: 'slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
                 <div className="p-4 sm:p-6 border-b border-gray-100 flex justify-between items-center bg-[#F4F7F0] shrink-0">
-                    <h3 className="text-lg lg:text-xl font-black font-int text-[#232323]">{editId ? "Edit Product" : "Add Product"}</h3>
-                    <button onClick={closeProductModal} className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"><FiX size={22} /></button>
+                    <h3 id="product-modal-title" className="text-lg lg:text-xl font-black font-int text-[#232323]">{editId ? "Edit Product" : "Add Product"}</h3>
+                    <button onClick={closeProductModal} aria-label="Close product modal" className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"><FiX size={22} aria-hidden="true" /></button>
                 </div>
                 <form onSubmit={handleProductSubmit} className="p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 overflow-y-auto custom-scrollbar">
                     <div>
                         <label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#546375] mb-1 block">Product Image</label>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
-                                {productForm.image ? <img src={productForm.image} alt="preview" className="w-full h-full object-contain" /> : <FiImage className="text-gray-300 text-xl sm:text-2xl" />}
+                                {productForm.image ? <img src={productForm.image} alt="preview" className="w-full h-full object-contain" /> : <FiImage className="text-gray-300 text-xl sm:text-2xl" aria-hidden="true" />}
                             </div>
-                            <input type="file" accept="image/*" onChange={handleProductImage} className="text-[11px] sm:text-sm font-nuni text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] sm:file:text-xs file:font-bold file:bg-[#80B500]/10 file:text-[#80B500] hover:file:bg-[#80B500]/20 cursor-pointer w-full" />
+                            <input type="file" accept="image/*" onChange={handleProductImage} aria-label="Upload product image" className="text-[11px] sm:text-sm font-nuni text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] sm:file:text-xs file:font-bold file:bg-[#80B500]/10 file:text-[#80B500] hover:file:bg-[#80B500]/20 cursor-pointer w-full" />
                         </div>
                     </div>
                     <div>
