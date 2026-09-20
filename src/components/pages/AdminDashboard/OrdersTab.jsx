@@ -8,11 +8,11 @@ const OrdersTab = ({ orders, formatPrice, setSelectedOrder }) => {
                     <table className="w-full text-left min-w-150">
                         <thead className="bg-[#F4F7F0] text-[#546375] text-[10px] lg:text-[11px] uppercase tracking-widest">
                             <tr>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Order ID</th>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Customer</th>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Date</th>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Total</th>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Action</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Order ID</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Customer</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Date</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Total</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,7 +26,7 @@ const OrdersTab = ({ orders, formatPrice, setSelectedOrder }) => {
                                     <td className="px-4 lg:px-6 py-3 lg:py-4 text-xs lg:text-sm text-[#546375]">{order.date}</td>
                                     <td className="px-4 lg:px-6 py-3 lg:py-4 font-bold text-[#80B500] text-xs lg:text-sm">{formatPrice(order.subtotal + order.shipping)}</td>
                                     <td className="px-4 lg:px-6 py-3 lg:py-4">
-                                        <button onClick={() => setSelectedOrder(order)} className="bg-[#232323] hover:bg-[#80B500] transition-colors text-white text-[10px] lg:text-xs px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg font-bold cursor-pointer whitespace-nowrap shadow-md">
+                                        <button aria-label={`View details for order ${order.orderNum}`} onClick={() => setSelectedOrder(order)} className="bg-[#232323] hover:bg-[#80B500] transition-colors text-white text-[10px] lg:text-xs px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg font-bold cursor-pointer whitespace-nowrap shadow-md">
                                             View Details
                                         </button>
                                     </td>
