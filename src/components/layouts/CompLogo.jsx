@@ -44,7 +44,6 @@ const CompLogo = () => {
               <div className="w-14 h-14 shrink-0 bg-[#F9FBF5] rounded-full flex justify-center items-center group-hover:bg-[#80B500]/10 transition-colors duration-300">
                 <Images imgSrc={feature.img} alt="" aria-hidden="true" className="w-8 h-8 object-contain" />
               </div>
-              {/* text */}
               <div>
                 <h5 className="text-[#232323] text-[18px] font-int font-bold pb-1 group-hover:text-[#80B500] transition-colors duration-300">
                   {feature.title}
