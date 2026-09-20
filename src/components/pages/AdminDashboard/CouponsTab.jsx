@@ -55,9 +55,9 @@ const CouponsTab = ({ coupons, setCoupons }) => {
                             <table className="w-full text-left min-w-100">
                                 <thead className="bg-[#F4F7F0] text-[#546375] text-[10px] lg:text-[11px] uppercase tracking-widest">
                                     <tr>
-                                        <th className="px-4 lg:px-6 py-3 lg:py-4">Code</th>
-                                        <th className="px-4 lg:px-6 py-3 lg:py-4">Discount</th>
-                                        <th className="px-4 lg:px-6 py-3 lg:py-4 text-right">Action</th>
+                                        <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Code</th>
+                                        <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Discount</th>
+                                        <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4 text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,8 +66,8 @@ const CouponsTab = ({ coupons, setCoupons }) => {
                                             <td className="px-4 lg:px-6 py-3 lg:py-4 font-black font-int text-[#80B500] text-sm lg:text-base tracking-wider">{c.code}</td>
                                             <td className="px-4 lg:px-6 py-3 lg:py-4 font-bold text-[#232323] text-xs lg:text-sm">{c.discountPercentage}% OFF</td>
                                             <td className="px-4 lg:px-6 py-3 lg:py-4 text-right">
-                                                <button onClick={() => handleDeleteCoupon(c.id)} className="bg-red-50 hover:bg-red-500 text-red-500 hover:text-white p-2 lg:p-2.5 rounded-lg lg:rounded-xl transition-colors cursor-pointer" title="Delete Coupon">
-                                                    <FiTrash2 />
+                                                <button aria-label={`Delete coupon ${c.code}`} onClick={() => handleDeleteCoupon(c.id)} className="bg-red-50 hover:bg-red-500 text-red-500 hover:text-white p-2 lg:p-2.5 rounded-lg lg:rounded-xl transition-colors cursor-pointer" title="Delete Coupon">
+                                                    <FiTrash2 aria-hidden="true" />
                                                 </button>
                                             </td>
                                         </tr>
