@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiPlus, FiMenu } from "react-icons/fi";
 import { useStore } from "../../../store/useStore"; 
 import { showToast } from "../../Toast";
 import Sidebar from "./Sidebar";
-import OverviewTab from "./OverviewTab";
-import ProductsTab from "./ProductsTab";
-import OrdersTab from "./OrdersTab";
-import CouponsTab from "./CouponsTab";
-import UsersTab from "./UsersTab";
-import ProductModal from "./ProductModal";
-import OrderDetailsModal from "./OrderDetailsModal";
+
+// lazy loaded components for code splitting
+const OverviewTab = lazy(() => import("./OverviewTab"));
+const ProductsTab = lazy(() => import("./ProductsTab"));
+const OrdersTab = lazy(() => import("./OrdersTab"));
+const CouponsTab = lazy(() => import("./CouponsTab"));
+const UsersTab = lazy(() => import("./UsersTab"));
+const ProductModal = lazy(() => import("./ProductModal"));
+const OrderDetailsModal = lazy(() => import("./OrderDetailsModal"));
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -75,6 +77,7 @@ const AdminDashboard = () => {
                 <div 
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity" 
                     onClick={() => setIsMobileMenuOpen(false)} 
+                    aria-hidden="true"
                 />
             )}
             {/* sidebar component */}
@@ -90,19 +93,19 @@ const AdminDashboard = () => {
                 {/* header */}
                 <div className="mb-6 lg:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                     <div className="flex items-center gap-3 sm:gap-0">
-                        <button className="lg:hidden p-2 bg-white rounded-lg shadow-sm border border-gray-200 text-gray-700" onClick={() => setIsMobileMenuOpen(true)}>
-                            <FiMenu size={22} />
+                        <button aria-label="Open Mobile Menu" aria-expanded={isMobileMenuOpen} className="lg:hidden p-2 bg-white rounded-lg shadow-sm border border-gray-200 text-gray-700" onClick={() => setIsMobileMenuOpen(true)}>
+                            <FiMenu size={22} aria-hidden="true" />
                         </button>
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-black font-int text-[#232323] capitalize">{activeTab}</h1>
                             <p className="text-[#546375] text-xs sm:text-sm mt-1">Manage your store data and performance.</p>
                         </div>
                     </div>
-                    
                     <div className="flex flex-wrap items-center gap-3">
                         <select 
                             value={currency} 
                             onChange={(e) => setCurrency(e.target.value)}
+                            aria-label="Select Currency"
                             className="bg-white border border-[#ececec] text-[#546375] text-[13px] font-bold font-nuni rounded-lg px-3 py-2 sm:py-2.5 outline-none focus:border-[#80B500] cursor-pointer shadow-sm w-full sm:w-auto"
                         >
                             <option value="USD">USD ($)</option>
@@ -111,22 +114,30 @@ const AdminDashboard = () => {
                             <option value="INR">INR (₹)</option>
                         </select>
                         {activeTab === "products" && (
-                            <button onClick={() => { setEditId(null); setIsProductModalOpen(true); }} className="bg-[#232323] hover:bg-[#80B500] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg text-[13px] sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md w-full sm:w-auto">
-                                <FiPlus /> Add Product
+                            <button aria-label="Add new product" onClick={() => { setEditId(null); setIsProductModalOpen(true); }} className="bg-[#232323] hover:bg-[#80B500] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg text-[13px] sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md w-full sm:w-auto">
+                                <FiPlus aria-hidden="true" /> Add Product
                             </button>
                         )}
                     </div>
                 </div>
                 {/* dynamic tab rendering */}
-                {activeTab === "overview" && <OverviewTab orders={orders} users={users} formatPrice={formatPrice} getCurrencySymbol={getCurrencySymbol} />}
-                {activeTab === "products" && <ProductsTab formatPrice={formatPrice} setEditId={setEditId} setIsProductModalOpen={setIsProductModalOpen} />}
-                {activeTab === "orders" && <OrdersTab orders={orders} formatPrice={formatPrice} setSelectedOrder={setSelectedOrder} />}
-                {activeTab === "coupons" && <CouponsTab coupons={coupons} setCoupons={setCoupons} />}
-                {activeTab === "users" && <UsersTab users={users} />}
+                <Suspense fallback={
+                    <div className="flex justify-center items-center h-64" aria-label="Loading content">
+                        <div className="w-10 h-10 border-4 border-gray-200 border-t-[#80B500] rounded-full animate-spin"></div>
+                    </div>
+                }>
+                    {activeTab === "overview" && <OverviewTab orders={orders} users={users} formatPrice={formatPrice} getCurrencySymbol={getCurrencySymbol} />}
+                    {activeTab === "products" && <ProductsTab formatPrice={formatPrice} setEditId={setEditId} setIsProductModalOpen={setIsProductModalOpen} />}
+                    {activeTab === "orders" && <OrdersTab orders={orders} formatPrice={formatPrice} setSelectedOrder={setSelectedOrder} />}
+                    {activeTab === "coupons" && <CouponsTab coupons={coupons} setCoupons={setCoupons} />}
+                    {activeTab === "users" && <UsersTab users={users} />}
+                </Suspense>
             </div>
             {/* modals */}
-            {isProductModalOpen && <ProductModal editId={editId} setIsProductModalOpen={setIsProductModalOpen} />}
-            {selectedOrder && <OrderDetailsModal selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} formatPrice={formatPrice} />}
+            <Suspense fallback={null}>
+                {isProductModalOpen && <ProductModal editId={editId} setIsProductModalOpen={setIsProductModalOpen} />}
+                {selectedOrder && <OrderDetailsModal selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} formatPrice={formatPrice} />}
+            </Suspense>
             <style>{`
                 @keyframes slideUpModal {
                     from { opacity: 0; transform: translateY(40px) scale(0.95); }
