@@ -118,7 +118,6 @@ const blogPosts = [
 ];
 
 const Blog = () => {
-  // get random blogs safely
   const displayedBlogs = useMemo(() => {
     // eslint-disable-next-line react-hooks/purity
     return [...blogPosts].sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -143,7 +142,6 @@ const Blog = () => {
             </p>
           </div>
         </div>
-
         {/* blogs grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedBlogs.map((post) => (
