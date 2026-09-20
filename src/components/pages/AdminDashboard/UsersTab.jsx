@@ -8,8 +8,8 @@ const UsersTab = ({ users }) => {
                     <table className="w-full text-left min-w-100">
                         <thead className="bg-[#F4F7F0] text-[#546375] text-[10px] lg:text-[11px] uppercase tracking-widest">
                             <tr>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Name</th>
-                                <th className="px-4 lg:px-6 py-3 lg:py-4">Email</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Name</th>
+                                <th scope="col" className="px-4 lg:px-6 py-3 lg:py-4">Email</th>
                             </tr>
                         </thead>
                         <tbody>
