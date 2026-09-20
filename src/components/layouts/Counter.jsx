@@ -1,13 +1,11 @@
 import React from 'react'
 import Container from '../Container'
 import Images from '../Images'
-
 import c1 from '../../assets/c1.png'
 import c2 from '../../assets/c2.png'
 import c3 from '../../assets/c3.png'
 import c4 from '../../assets/c4.png'
 import path from '../../assets/path.png'
-
 import SlotCounter from 'react-slot-counter';
 
 const Counter = () => {
