@@ -51,7 +51,7 @@ const FloatingChat = () => {
         }
     }, [messages, isRegistered]);
 
-    // CRISP API INTEGRATION & FAQ EVENT LISTENER
+    // crisp api integration and faq event listener 
     useEffect(() => {
         window.$crisp = [];
         window.CRISP_WEBSITE_ID = "cd24f333-e004-47f2-8049-bfa54ee02495"; 
@@ -89,7 +89,7 @@ const FloatingChat = () => {
         };
     }, [isRegistered, visitorEmail, visitorName]);
 
-    // REGISTER USER (PRE-CHAT FORM SUBMIT)
+    // register user
     const handleRegister = (e) => {
         e.preventDefault();
         if (!visitorName.trim() || !visitorEmail.trim()) return;
@@ -101,7 +101,7 @@ const FloatingChat = () => {
         localStorage.setItem("cabbage_visitor_email", visitorEmail);
     };
 
-    // MESSAGE SEND
+    // message send
     const handleSendMessage = (e) => {
         e.preventDefault();
         if (!inputMessage.trim()) return;
@@ -126,7 +126,7 @@ const FloatingChat = () => {
             }
         `}</style>
         <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-8 z-9999 flex flex-col items-end">
-            {/* CHAT BOX CONTAINER */}
+            {/* chat box */}
             <div 
             className={`absolute bottom-17.5 sm:bottom-19 right-0 w-[90vw] sm:w-95 bg-white rounded-[28px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 origin-bottom-right flex flex-col ${
                 isChatBoxOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-4 pointer-events-none"
