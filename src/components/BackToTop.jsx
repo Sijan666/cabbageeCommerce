@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 const BackToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -9,7 +8,7 @@ const BackToTop = () => {
     const radius = 22;
     const circumference = 2 * Math.PI * radius;
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const docHeight = document.documentElement.scrollHeight;
         const winHeight = document.documentElement.clientHeight;
@@ -23,7 +22,7 @@ const BackToTop = () => {
             }
         }
         setIsVisible(scrollTop > 300);
-    };
+    }, [circumference]);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -34,11 +33,11 @@ const BackToTop = () => {
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll, { passive: true });
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         handleScroll(); 
         
         return () => window.removeEventListener("scroll", handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [handleScroll]);
 
     return (
         <div 
@@ -51,7 +50,7 @@ const BackToTop = () => {
                 className="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white shadow-lg hover:shadow-[0_8px_30px_rgba(128,181,0,0.3)] transition-all duration-500 cursor-pointer"
                 aria-label="Back to top"
             >
-                <svg className="absolute inset-0 w-full h-full -rotate-90 transform" viewBox="0 0 50 50">
+                <svg className="absolute inset-0 w-full h-full -rotate-90 transform" viewBox="0 0 50 50" aria-hidden="true">
                     <circle
                         cx="25"
                         cy="25"
@@ -85,6 +84,7 @@ const BackToTop = () => {
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
+                        aria-hidden="true"
                     >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
                     </svg>
