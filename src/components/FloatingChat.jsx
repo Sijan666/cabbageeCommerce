@@ -219,7 +219,7 @@ const FloatingChat = () => {
                             ))}
                             <div ref={messagesEndRef} className="shrink-0" />
                         </div>
-                        {/* INPUT AREA */}
+                        {/* input area */}
                         <div className="p-3.5 sm:p-4 bg-white relative z-10 shrink-0 border-t border-gray-50">
                             <form onSubmit={handleSendMessage} className="flex items-center bg-[#f1f5f9] focus-within:bg-white focus-within:ring-1 focus-within:ring-[#80B500] focus-within:shadow-[0_0_15px_rgba(128,181,0,0.1)] rounded-full p-1.5 transition-all duration-300">
                                 <input 
