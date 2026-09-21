@@ -156,7 +156,7 @@ const FloatingChat = () => {
                         </button>
                     </div>
                 </div>
-                {/* CHAT AREA */}
+                {/* chat area */}
                 {!isRegistered ? (
                     // PRE-CHAT FORM
                     <div className="h-90 sm:h-96.25 px-6 py-8 bg-[#f8fafc] flex flex-col justify-center items-center font-nuni">
