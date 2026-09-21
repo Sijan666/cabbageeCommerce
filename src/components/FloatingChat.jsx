@@ -131,15 +131,16 @@ const FloatingChat = () => {
             className={`absolute bottom-17.5 sm:bottom-19 right-0 w-[90vw] sm:w-95 bg-white rounded-[28px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] overflow-hidden transition-all duration-300 origin-bottom-right flex flex-col ${
                 isChatBoxOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-4 pointer-events-none"
             }`}
+            aria-hidden={!isChatBoxOpen}
             >
                 <div className="px-5 sm:px-6 py-5 bg-white relative z-10 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
                     <div className="flex justify-between items-start">
                         <div className="flex gap-3.5 sm:gap-4 items-center">
                             <div className="relative shrink-0">
                                 <div className="w-10 sm:w-11 h-10 sm:h-11 bg-linear-to-tr from-[#80B500] to-[#99d600] rounded-[14px] flex justify-center items-center text-white shadow-md transform rotate-3">
-                                    <FaLeaf className="text-lg sm:text-xl -rotate-3" />
+                                    <FaLeaf className="text-lg sm:text-xl -rotate-3" aria-hidden="true" />
                                 </div>
-                                <span className="absolute -bottom-1 -right-1 w-3 sm:w-3.5 h-3 sm:h-3.5 bg-green-500 border-2 border-white rounded-full"></span>
+                                <span className="absolute -bottom-1 -right-1 w-3 sm:w-3.5 h-3 sm:h-3.5 bg-green-500 border-2 border-white rounded-full" aria-hidden="true"></span>
                             </div>
                             <div>
                                 <h3 className="font-extrabold font-int text-[#1e293b] text-[17px] sm:text-[19px] leading-tight tracking-tight">Cabbage Support</h3>
@@ -148,9 +149,10 @@ const FloatingChat = () => {
                         </div>
                         <button 
                             onClick={() => setIsChatBoxOpen(false)} 
+                            aria-label="Close chat window"
                             className="w-8 h-8 flex justify-center items-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors cursor-pointer shrink-0"
                         >
-                            <FaTimes size={14} />
+                            <FaTimes size={14} aria-hidden="true" />
                         </button>
                     </div>
                 </div>
@@ -159,7 +161,7 @@ const FloatingChat = () => {
                     // PRE-CHAT FORM
                     <div className="h-90 sm:h-96.25 px-6 py-8 bg-[#f8fafc] flex flex-col justify-center items-center font-nuni">
                         <div className="w-14 h-14 bg-[#80B500]/10 text-[#80B500] rounded-full flex justify-center items-center mb-4 shrink-0">
-                            <FiMessageSquare className="text-2xl" />
+                            <FiMessageSquare className="text-2xl" aria-hidden="true" />
                         </div>
                         <h4 className="text-lg font-bold text-[#1e293b] mb-1 font-int">Let's get started</h4>
                         <p className="text-[13px] text-[#64748b] text-center mb-6">Please enter your details to connect with our support team.</p>
@@ -167,6 +169,7 @@ const FloatingChat = () => {
                             <input 
                                 type="text" 
                                 placeholder="Your Name" 
+                                aria-label="Your Name"
                                 required
                                 value={visitorName}
                                 onChange={(e) => setVisitorName(e.target.value)}
@@ -175,6 +178,7 @@ const FloatingChat = () => {
                             <input 
                                 type="email" 
                                 placeholder="Your Email Address" 
+                                aria-label="Your Email Address"
                                 required
                                 value={visitorEmail}
                                 onChange={(e) => setVisitorEmail(e.target.value)}
@@ -188,7 +192,7 @@ const FloatingChat = () => {
                 ) : (
                     // MESSAGES AREA
                     <>
-                        <div className="h-80 sm:h-87.5 px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll">
+                        <div className="h-80 sm:h-87.5 px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll" aria-live="polite">
                             <div className="flex justify-center mb-2 shrink-0">
                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-100/80 px-3 py-1 rounded-full">
                                     Today
@@ -223,23 +227,27 @@ const FloatingChat = () => {
                                     value={inputMessage} 
                                     onChange={(e) => setInputMessage(e.target.value)} 
                                     placeholder="Message Support..." 
+                                    aria-label="Type your message"
                                     className="flex-1 bg-transparent text-[#1e293b] text-[13.5px] sm:text-[14px] font-nuni px-3.5 sm:px-4 outline-none placeholder:text-gray-400 min-w-0" 
                                 />
                                 <button 
                                     type="submit" 
+                                    aria-label="Send message"
                                     className="w-9 h-9 flex items-center justify-center bg-[#80B500] text-white rounded-full hover:bg-[#6c9a00] transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-sm cursor-pointer"
                                     disabled={!inputMessage.trim()}
                                 >
-                                    <FaPaperPlane className="text-[12px] -ml-0.5" />
+                                    <FaPaperPlane className="text-[12px] -ml-0.5" aria-hidden="true" />
                                 </button>
                             </form>
                         </div>
                     </>
                 )}
             </div>
-            {/* MAIN BUTTON */}
+            {/* main */}
             <button
                 onClick={() => setIsChatBoxOpen(!isChatBoxOpen)}
+                aria-label={isChatBoxOpen ? "Close Live Chat" : "Open Live Chat"}
+                aria-expanded={isChatBoxOpen}
                 className={`flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 text-white rounded-full transition-all duration-300 cursor-pointer relative z-10 overflow-hidden ${
                     isChatBoxOpen 
                     ? "bg-[#1e293b] shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:bg-[#334155]" 
@@ -247,10 +255,10 @@ const FloatingChat = () => {
                 }`}
             >
                 <div className={`transition-all duration-300 absolute flex justify-center items-center ${isChatBoxOpen ? 'rotate-90 opacity-0' : 'rotate-0 opacity-100'}`}>
-                    <FiMessageSquare className="text-[22px] sm:text-[24px]" />
+                    <FiMessageSquare className="text-[22px] sm:text-[24px]" aria-hidden="true" />
                 </div>
                 <div className={`transition-all duration-300 absolute flex justify-center items-center ${isChatBoxOpen ? 'rotate-0 opacity-100' : '-rotate-90 opacity-0'}`}>
-                    <FaTimes className="text-[20px] sm:text-[22px]" />
+                    <FaTimes className="text-[20px] sm:text-[22px]" aria-hidden="true" />
                 </div>
             </button>
         </div>
