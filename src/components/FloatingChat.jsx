@@ -190,7 +190,7 @@ const FloatingChat = () => {
                         </form>
                     </div>
                 ) : (
-                    // MESSAGES AREA
+                    // message area
                     <>
                         <div className="h-80 sm:h-87.5 px-5 sm:px-6 py-5 sm:py-6 overflow-y-auto bg-[#f8fafc] flex flex-col gap-4 font-nuni chat-scroll" aria-live="polite">
                             <div className="flex justify-center mb-2 shrink-0">
