@@ -158,7 +158,7 @@ const FloatingChat = () => {
                 </div>
                 {/* chat area */}
                 {!isRegistered ? (
-                    // PRE-CHAT FORM
+                    // pre chat form
                     <div className="h-90 sm:h-96.25 px-6 py-8 bg-[#f8fafc] flex flex-col justify-center items-center font-nuni">
                         <div className="w-14 h-14 bg-[#80B500]/10 text-[#80B500] rounded-full flex justify-center items-center mb-4 shrink-0">
                             <FiMessageSquare className="text-2xl" aria-hidden="true" />
