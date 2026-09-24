@@ -32,7 +32,7 @@ const AdminDashboard = () => {
 
     // check admin access
     useEffect(() => {
-        if (!user || user.email !== "666majharulislam@gmail.com") {
+        if (!user || user.email !== "cabbage@gmail.com") {
             showToast({ message: "Access Denied! Admins only.", type: "danger" });
             navigate("/", { replace: true });
         } else {
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
         }
     }, [user, navigate]);
 
-    if (!user || user.email !== "666majharulislam@gmail.com") return null;
+    if (!user || user.email !== "cabbage@gmail.com") return null;
 
     // dynamic price formatter
     const formatPrice = (price) => {
