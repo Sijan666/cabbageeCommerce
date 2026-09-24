@@ -176,12 +176,12 @@ const Profile = () => {
                         </h2>
                         <p className="text-[13px] sm:text-[15px] md:text-base text-[#546375] font-medium mb-3 sm:mb-4">{user.email}</p>
                         <div className="inline-block bg-[#80B500]/10 text-[#80B500] font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-widest border border-[#80B500]/20">
-                            {user.email === "666majharulislam@gmail.com" ? "Admin" : "Active Member"}
+                            {user.email === "cabbage@gmail.com" ? "Admin" : "Active Member"}
                         </div>
                     </div>
                     {/* action buttons admin logout */}
                     <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto mt-4 md:mt-0 z-10 shrink-0">
-                        {user.email === "666majharulislam@gmail.com" && (
+                        {user.email === "cabbage@gmail.com" && (
                             <button 
                                 onClick={() => navigate("/admin")}
                                 className="flex items-center justify-center gap-2 w-full sm:w-auto bg-[#232323] hover:bg-black text-white px-6 py-3.5 rounded-xl font-bold transition-all duration-300 cursor-pointer"
