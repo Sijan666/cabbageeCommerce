@@ -5,22 +5,21 @@ import {
 } from 'recharts';
 
 const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }) => {
-    // 1. Calculate General Overview Metrics
+    // Calculate General Overview Metrics
     const totalRevenue = orders.reduce((sum, order) => sum + (order.subtotal || 0) + (order.shipping || 0), 0);
     const totalOrders = orders.length;
     const totalUsers = users.length;
 
-    // 2. Calculate Risk Management Metrics
+    // Calculate Risk Management Metrics
     // Assuming your order objects have properties like 'status', 'riskLevel', etc.
     const highRiskOrders = orders.filter(order => order.riskLevel === 'high').length;
     const refundRequests = orders.filter(order => order.status === 'refund_requested' || order.status === 'refunded').length;
     const failedPayments = orders.filter(order => order.status === 'failed').length;
 
-    // 3. Prepare Data for Recharts (Grouping revenue by date)
-    // This groups orders by their date to show a trend line
+    // Prepare Data for Recharts
     const chartData = useMemo(() => {
         const groupedData = orders.reduce((acc, order) => {
-            // Assuming order.createdAt exists (e.g., "2023-10-05")
+            // Assuming order.createdAt exists
             const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Unknown';
             if (!acc[date]) {
                 acc[date] = { date, revenue: 0, orders: 0 };
@@ -30,13 +29,13 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
             return acc;
         }, {});
 
-        // Convert object to array and sort by date (simplified)
-        return Object.values(groupedData).slice(-10); // Last 10 days/entries
+        // Convert object to array and sort by date
+        return Object.values(groupedData).slice(-10);
     }, [orders]);
 
     return (
         <div className="space-y-8">
-            {/* --- GENERAL OVERVIEW SECTION --- */}
+            {/* general overview */}
             <div>
                 <h2 className="text-lg font-bold text-[#232323] mb-4">General Overview</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -69,8 +68,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-
-            {/* --- RISK MANAGEMENT SECTION --- */}
+            {/* risk management */}
             <div>
                 <h2 className="text-lg font-bold text-[#232323] mb-4">Risk Management</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -103,8 +101,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-
-            {/* --- RECHARTS SECTION --- */}
+            {/* recharts */}
             <div className="bg-white p-5 lg:p-6 rounded-2xl lg:rounded-3xl border border-[#ececec] shadow-sm">
                 <h2 className="text-lg font-bold text-[#232323] mb-6">Revenue & Order Trend</h2>
                 <div className="w-full h-[300px] lg:h-[400px]">
