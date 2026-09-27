@@ -13,12 +13,10 @@ const Sidebar = ({ activeTab, setActiveTab, isMobileMenuOpen, setIsMobileMenuOpe
         <div className={`w-64 bg-white border-r border-[#ececec] fixed h-full flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-50 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
             <div className="p-6 lg:p-7 border-b border-[#ececec] flex justify-between items-center">
                 <div>
-                    <Link to="/">
-                        <h2 className="text-2xl font-black font-int text-[#232323] tracking-tight">
-                            Cabbage<span className="text-[#80B500]">.</span>
-                        </h2>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#80B500] bg-[#80B500]/10 px-2 py-0.5 rounded-full mt-1 inline-block">Admin Panel</span>
-                    </Link>
+                    <h2 className="text-2xl font-black font-int text-[#232323] tracking-tight">
+                        Cabbage<span className="text-[#80B500]">.</span>
+                    </h2>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#80B500] bg-[#80B500]/10 px-2 py-0.5 rounded-full mt-1 inline-block">Admin Panel</span>
                 </div>
                 <button aria-label="Close menu" className="lg:hidden text-gray-500 hover:text-red-500 cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
                     <FiX size={24} aria-hidden="true" />
