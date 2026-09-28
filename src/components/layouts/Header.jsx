@@ -56,7 +56,7 @@ const Header = () => {
                   <Images
                     imgSrc={Logo}
                     alt="Cabbage Logo"
-                    className="w-9 md:w-11 relative z-10 transform group-hover:rotate-360 transition-transform duration-700 ease-in-out"
+                    className="w-9 md:w-11 relative z-10 "
                     loading="eager"
                     fetchPriority="high"
                   />

@@ -70,7 +70,7 @@ const ToastContainer = () => {
                     </div>
                 ))}
             </div>
-            {/* custom entrance and exit animations */}
+            {/* entrance and exit animations */}
             <style>{`
                 @keyframes slideInRight {
                     from { 
