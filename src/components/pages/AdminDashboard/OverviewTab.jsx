@@ -4,7 +4,6 @@ import {
     ComposedChart, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
 } from 'recharts';
 
-// eslint-disable-next-line no-unused-vars
 const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }) => {
     // General Metrics
     const totalRevenue = orders.reduce((sum, order) => sum + (order.subtotal || 0) + (order.shipping || 0), 0);
@@ -19,6 +18,9 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
     const safeOrders = totalOrders - (highRiskOrders + refundRequests + failedPayments);
 
     const getPercent = (value) => totalOrders > 0 ? Math.round((value / totalOrders) * 100) : 0;
+
+    // Dynamic Locale for Chart (Tk = Lakh/Crore, Dollar = K/M)
+    const chartLocale = getCurrencySymbol() === '৳' ? 'en-IN' : 'en-US';
 
     // Chart Data
     const chartData = useMemo(() => {
@@ -44,16 +46,14 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Gross Revenue</p>
                         </div>
                         <h2 className="text-4xl sm:text-5xl font-black tracking-tight flex items-center">
-                            <span className="mr-1">{getCurrencySymbol()}</span>
-                            {totalRevenue.toLocaleString('en-US')}
+                            {formatPrice(totalRevenue)}
                         </h2>
                     </div>
                     <div className="flex gap-10 mt-10 border-t border-gray-800/80 pt-5">
                         <div>
                             <p className="text-xs text-gray-400 mb-1">Avg. Order Value</p>
                             <p className="font-bold text-lg flex items-center">
-                                <span className="mr-0.5">{getCurrencySymbol()}</span>
-                                {Math.round(avgOrderValue).toLocaleString('en-US')}
+                                {formatPrice(Math.round(avgOrderValue))}
                             </p>
                         </div>
                         <div>
@@ -84,7 +84,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-            {/* bottom row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* chart */}
                 <div className="lg:col-span-2 bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
@@ -109,7 +108,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                         axisLine={false} 
                                         tickLine={false} 
                                         tick={{ fontSize: 11, fill: '#9CA3AF' }} 
-                                        tickFormatter={(val) => Intl.NumberFormat('en-US', { notation: 'compact', compactDisplay: 'short' }).format(val)}
+                                        tickFormatter={(val) => Intl.NumberFormat(chartLocale, { notation: 'compact', compactDisplay: 'short' }).format(val)}
                                         width={60}
                                     />
                                     <YAxis 
