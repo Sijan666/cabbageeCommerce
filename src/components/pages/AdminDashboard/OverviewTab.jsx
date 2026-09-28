@@ -145,7 +145,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         </div>
                     </div>
                     <div className="flex-1 flex flex-col justify-center space-y-6">
-                        {/* Safe Orders */}
+                        {/* safe orders */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
                                 <span className="font-medium text-gray-700 flex items-center gap-2.5">
