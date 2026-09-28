@@ -36,7 +36,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
     return (
         <div className="w-full space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* revenue card */}
+                {/* revenue */}
                 <div className="lg:col-span-2 bg-[#121621] rounded-3xl p-8 text-white flex flex-col justify-between shadow-sm min-h-60">
                     <div>
                         <div className="flex items-center gap-2 mb-3">
