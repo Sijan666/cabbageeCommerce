@@ -133,7 +133,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         )}
                     </div>
                 </div>
-                {/* Risk Profile Card */}
+                {/* risk profile */}
                 <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
                     <div className="mb-8 flex justify-between items-start">
                         <div>
