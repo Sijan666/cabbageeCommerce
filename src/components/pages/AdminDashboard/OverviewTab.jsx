@@ -34,10 +34,8 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
 
     return (
         <div className="w-full space-y-6">
-            
             {/* --- TOP ROW --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
                 {/* Dark Revenue Card */}
                 <div className="lg:col-span-2 bg-[#121621] rounded-[24px] p-8 text-white flex flex-col justify-between shadow-sm min-h-[240px]">
                     <div>
@@ -50,7 +48,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             {totalRevenue.toLocaleString('en-US')}
                         </h2>
                     </div>
-                    
                     <div className="flex gap-10 mt-10 border-t border-gray-800/80 pt-5">
                         <div>
                             <p className="text-xs text-gray-400 mb-1">Avg. Order Value</p>
@@ -65,7 +62,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         </div>
                     </div>
                 </div>
-
                 {/* Stacked Stat Cards */}
                 <div className="flex flex-col gap-6 h-full">
                     <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
@@ -77,7 +73,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             <FiShoppingBag />
                         </div>
                     </div>
-
                     <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500 mb-1">Total Users</p>
@@ -89,17 +84,14 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-
             {/* --- BOTTOM ROW --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
                 {/* Chart Section */}
                 <div className="lg:col-span-2 bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-900">Performance Metrics</h3>
                         <p className="text-sm text-gray-500 mt-1">Revenue & Order volume over the last 7 days</p>
                     </div>
-                    
                     <div className="w-full h-[320px]">
                         {chartData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
@@ -112,8 +104,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
                                     <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9CA3AF' }} dy={10} />
-                                    
-                                    {/* width={80} added to prevent text overlapping from large numbers */}
                                     <YAxis 
                                         yAxisId="left" 
                                         axisLine={false} 
@@ -130,12 +120,10 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                         tick={{ fontSize: 11, fill: '#9CA3AF' }} 
                                         width={30} 
                                     />
-                                    
                                     <Tooltip 
                                         contentStyle={{ backgroundColor: '#111827', borderRadius: '12px', border: 'none', color: '#fff', fontSize: '12px' }}
                                         cursor={{ fill: '#F9FAFB' }}
                                     />
-                                    
                                     <Bar yAxisId="right" dataKey="orders" name="Orders" fill="#E5E7EB" radius={[4, 4, 0, 0]} maxBarSize={40} />
                                     <Area yAxisId="left" type="monotone" dataKey="revenue" name="Revenue" stroke="#4F46E5" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" />
                                 </ComposedChart>
@@ -145,7 +133,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         )}
                     </div>
                 </div>
-
                 {/* Risk Profile Card */}
                 <div className="bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
                     <div className="mb-8 flex justify-between items-start">
@@ -157,7 +144,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             <FiShield size={18} />
                         </div>
                     </div>
-
                     <div className="flex-1 flex flex-col justify-center space-y-6">
                         {/* Safe Orders */}
                         <div>
@@ -171,7 +157,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                 <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${getPercent(safeOrders)}%` }}></div>
                             </div>
                         </div>
-
                         {/* High Risk */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
@@ -185,7 +170,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                 <div className="bg-rose-500 h-2 rounded-full" style={{ width: `${getPercent(highRiskOrders)}%` }}></div>
                             </div>
                         </div>
-
                         {/* Refunds */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
@@ -199,7 +183,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                 <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${getPercent(refundRequests)}%` }}></div>
                             </div>
                         </div>
-
                         {/* Failed */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
@@ -215,7 +198,6 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     );
