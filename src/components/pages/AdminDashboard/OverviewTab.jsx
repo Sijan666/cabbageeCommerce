@@ -6,13 +6,13 @@ import {
 
 // eslint-disable-next-line no-unused-vars
 const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }) => {
-    // 1. General Metrics
+    // General Metrics
     const totalRevenue = orders.reduce((sum, order) => sum + (order.subtotal || 0) + (order.shipping || 0), 0);
     const totalOrders = orders.length;
     const totalUsers = users.length;
     const avgOrderValue = totalOrders > 0 ? (totalRevenue / totalOrders) : 0;
 
-    // 2. Risk Metrics & Calculations
+    // Risk Metrics & Calculations
     const highRiskOrders = orders.filter(order => order.riskLevel === 'high').length;
     const refundRequests = orders.filter(order => order.status === 'refund_requested' || order.status === 'refunded').length;
     const failedPayments = orders.filter(order => order.status === 'failed').length;
@@ -20,7 +20,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
 
     const getPercent = (value) => totalOrders > 0 ? Math.round((value / totalOrders) * 100) : 0;
 
-    // 3. Chart Data
+    // Chart Data
     const chartData = useMemo(() => {
         const groupedData = orders.reduce((acc, order) => {
             const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }) : 'Unknown';
@@ -35,10 +35,9 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
 
     return (
         <div className="w-full space-y-6">
-            {/* --- TOP ROW --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Dark Revenue Card */}
-                <div className="lg:col-span-2 bg-[#121621] rounded-[24px] p-8 text-white flex flex-col justify-between shadow-sm min-h-[240px]">
+                {/* Revenue Card */}
+                <div className="lg:col-span-2 bg-[#121621] rounded-3xl p-8 text-white flex flex-col justify-between shadow-sm min-h-60">
                     <div>
                         <div className="flex items-center gap-2 mb-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
@@ -65,7 +64,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                 </div>
                 {/* Stacked Stat Cards */}
                 <div className="flex flex-col gap-6 h-full">
-                    <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
+                    <div className="flex-1 bg-white rounded-3xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500 mb-1">Total Orders</p>
                             <h3 className="text-3xl font-black text-gray-900">{totalOrders}</h3>
@@ -74,7 +73,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             <FiShoppingBag />
                         </div>
                     </div>
-                    <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
+                    <div className="flex-1 bg-white rounded-3xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500 mb-1">Total Users</p>
                             <h3 className="text-3xl font-black text-gray-900">{totalUsers}</h3>
@@ -85,7 +84,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-            {/* --- BOTTOM ROW --- */}
+            {/* bottom row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Chart Section */}
                 <div className="lg:col-span-2 bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
