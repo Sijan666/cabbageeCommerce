@@ -4,6 +4,7 @@ import {
     ComposedChart, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
 } from 'recharts';
 
+// eslint-disable-next-line no-unused-vars
 const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }) => {
     // 1. General Metrics
     const totalRevenue = orders.reduce((sum, order) => sum + (order.subtotal || 0) + (order.shipping || 0), 0);
