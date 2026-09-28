@@ -87,12 +87,12 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
             {/* bottom row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Chart Section */}
-                <div className="lg:col-span-2 bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
+                <div className="lg:col-span-2 bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-900">Performance Metrics</h3>
                         <p className="text-sm text-gray-500 mt-1">Revenue & Order volume over the last 7 days</p>
                     </div>
-                    <div className="w-full h-[320px]">
+                    <div className="w-full h-80">
                         {chartData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <ComposedChart data={chartData} margin={{ top: 10, right: 0, left: 10, bottom: 0 }}>
@@ -134,7 +134,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
                 {/* Risk Profile Card */}
-                <div className="bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
+                <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
                     <div className="mb-8 flex justify-between items-start">
                         <div>
                             <h3 className="text-lg font-bold text-gray-900">Risk Profile</h3>
