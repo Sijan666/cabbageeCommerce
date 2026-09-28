@@ -157,7 +157,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                 <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${getPercent(safeOrders)}%` }}></div>
                             </div>
                         </div>
-                        {/* High Risk */}
+                        {/* high risk */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
                                 <span className="font-medium text-gray-700 flex items-center gap-2.5">
