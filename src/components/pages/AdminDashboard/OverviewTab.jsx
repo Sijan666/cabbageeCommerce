@@ -35,10 +35,9 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
 
     return (
         <div className="w-full space-y-6">
-            {/* --- TOP ROW --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Dark Revenue Card */}
-                <div className="lg:col-span-2 bg-[#121621] rounded-[24px] p-8 text-white flex flex-col justify-between shadow-sm min-h-[240px]">
+                {/* Revenue Card */}
+                <div className="lg:col-span-2 bg-[#121621] rounded-3xl p-8 text-white flex flex-col justify-between shadow-sm min-h-60">
                     <div>
                         <div className="flex items-center gap-2 mb-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
@@ -65,7 +64,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                 </div>
                 {/* Stacked Stat Cards */}
                 <div className="flex flex-col gap-6 h-full">
-                    <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
+                    <div className="flex-1 bg-white rounded-3xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500 mb-1">Total Orders</p>
                             <h3 className="text-3xl font-black text-gray-900">{totalOrders}</h3>
@@ -74,7 +73,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                             <FiShoppingBag />
                         </div>
                     </div>
-                    <div className="flex-1 bg-white rounded-[24px] p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
+                    <div className="flex-1 bg-white rounded-3xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
                             <p className="text-sm font-medium text-gray-500 mb-1">Total Users</p>
                             <h3 className="text-3xl font-black text-gray-900">{totalUsers}</h3>
@@ -85,15 +84,15 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
             </div>
-            {/* --- BOTTOM ROW --- */}
+            {/* bottom row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Chart Section */}
-                <div className="lg:col-span-2 bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
+                <div className="lg:col-span-2 bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-900">Performance Metrics</h3>
                         <p className="text-sm text-gray-500 mt-1">Revenue & Order volume over the last 7 days</p>
                     </div>
-                    <div className="w-full h-[320px]">
+                    <div className="w-full h-80">
                         {chartData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <ComposedChart data={chartData} margin={{ top: 10, right: 0, left: 10, bottom: 0 }}>
@@ -135,7 +134,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                     </div>
                 </div>
                 {/* Risk Profile Card */}
-                <div className="bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
+                <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex flex-col">
                     <div className="mb-8 flex justify-between items-start">
                         <div>
                             <h3 className="text-lg font-bold text-gray-900">Risk Profile</h3>
@@ -184,7 +183,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                                 <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${getPercent(refundRequests)}%` }}></div>
                             </div>
                         </div>
-                        {/* Failed */}
+                        {/* failed */}
                         <div>
                             <div className="flex justify-between text-sm mb-2.5">
                                 <span className="font-medium text-gray-700 flex items-center gap-2.5">
