@@ -86,7 +86,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
             </div>
             {/* bottom row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Chart */}
+                {/* chart */}
                 <div className="lg:col-span-2 bg-white rounded-3xl p-6 lg:p-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-900">Performance Metrics</h3>
