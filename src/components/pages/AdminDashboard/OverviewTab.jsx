@@ -62,7 +62,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
                         </div>
                     </div>
                 </div>
-                {/* Stacked Stat Cards */}
+                {/* stacked stat */}
                 <div className="flex flex-col gap-6 h-full">
                     <div className="flex-1 bg-white rounded-3xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-gray-100/50 flex items-center justify-between">
                         <div>
