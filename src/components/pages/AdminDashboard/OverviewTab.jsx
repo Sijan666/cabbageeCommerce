@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 
 const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }) => {
-    // General Metrics
+    // general metrics
     const totalRevenue = orders.reduce((sum, order) => sum + (order.subtotal || 0) + (order.shipping || 0), 0);
     const totalOrders = orders.length;
     const totalUsers = users.length;
