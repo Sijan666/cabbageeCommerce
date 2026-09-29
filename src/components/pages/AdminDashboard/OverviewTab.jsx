@@ -22,7 +22,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
     // dynamic locale for chart
     const chartLocale = getCurrencySymbol() === '৳' ? 'en-IN' : 'en-US';
 
-    // Chart Data
+    // chart data
     const chartData = useMemo(() => {
         const groupedData = orders.reduce((acc, order) => {
             const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { day: '2-digit', month: 'short' }) : 'Unknown';
