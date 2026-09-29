@@ -11,7 +11,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
     const totalUsers = users.length;
     const avgOrderValue = totalOrders > 0 ? (totalRevenue / totalOrders) : 0;
 
-    // Risk Metrics & Calculations
+    // risk metrics & calculations
     const highRiskOrders = orders.filter(order => order.riskLevel === 'high').length;
     const refundRequests = orders.filter(order => order.status === 'refund_requested' || order.status === 'refunded').length;
     const failedPayments = orders.filter(order => order.status === 'failed').length;
