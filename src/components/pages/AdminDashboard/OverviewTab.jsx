@@ -19,7 +19,7 @@ const OverviewTab = ({ orders = [], users = [], formatPrice, getCurrencySymbol }
 
     const getPercent = (value) => totalOrders > 0 ? Math.round((value / totalOrders) * 100) : 0;
 
-    // Dynamic Locale for Chart (Tk = Lakh/Crore, Dollar = K/M)
+    // dynamic locale for chart
     const chartLocale = getCurrencySymbol() === '৳' ? 'en-IN' : 'en-US';
 
     // Chart Data
